@@ -1,5 +1,6 @@
 const env = require("../shared/env");
 const request = require("request");
+var Request = require("request");
 
 SubmitToServer = batchListBytes => {
     request.post({
@@ -10,6 +11,13 @@ SubmitToServer = batchListBytes => {
         (err, response) => {
             if (err) return console.log(err);
             console.log("response from processor", response.body);
+
+            // Request.get(JSON.parse(response.body).link, (error, response, body) => {
+            //     if (error) {
+            //         return console.dir(error);
+            //     }
+            //     console.dir(JSON.parse(body).data[0].status);
+            // });
         }
     );
 };

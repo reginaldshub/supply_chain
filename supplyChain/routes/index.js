@@ -36,16 +36,16 @@ router.post("/registration", function(req, res, next) {
 router.post("/landregistration", function(req, res, next) {
     var payload = req.body;
     payload.verb = "landregistration";
-    var landname = req.body.landname;
-    if (keyManager.doesKeyExist(landname)) {
-        console.log("keys are already created for" + landname);
+    let land_reg_no = req.body.reg_no;
+    if (keyManager.doesKeyExist(land_reg_no)) {
+        console.log("keys are already created for" + land_reg_no);
     } else {
-        var output = keyManager.createkeys(landname);
-        keyManager.savekeys(landname, output);
+        var output = keyManager.createkeys(land_reg_no);
+        keyManager.savekeys(land_reg_no, output);
     }
 
-    if (keyManager.doesKeyExist(landname)) {
-        if (batchlistBytes = prepareTransactions(payload, landname)) {
+    if (keyManager.doesKeyExist(land_reg_no)) {
+        if (batchlistBytes = prepareTransactions(payload, land_reg_no)) {
             SubmitToServer(batchlistBytes);
         }
     }

@@ -20,7 +20,7 @@ class SupplyChainHandler extends TransactionHandler {
         let payload = cbor.decode(transactionProcessRequest.payload);
         console.log(payload);
         if (payload.verb === 'landregistration') {
-            return land_registration(state, payload.reg_no, payload.farm_address, payload.farmer_name)
+            return land_registration(state, payload.reg_no, payload.farm_address, payload.farmer_name, payload.land_size)
         } else {
             throw new InvalidTransaction(`Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`)
         }

@@ -21,9 +21,9 @@ const prefix = {
     purchase: '06'
 }
 
-get_land_registry_address = (registration_no, farm_address, farmer_name) => {
+get_land_registry_address = (registration_no, farm_address, farmer_name, land_size) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
-    let land_hash = createHash('sha512').update(registration_no + farmer_name + farm_address).digest('hex').toLowerCase().substring(0, 64);
+    let land_hash = createHash('sha512').update(registration_no + farmer_name + farm_address + land_size).digest('hex').toLowerCase().substring(0, 64);
     return TP_NAMESPACE + land_hash
 }
 
