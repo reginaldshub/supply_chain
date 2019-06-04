@@ -35,6 +35,7 @@ router.post("/registration", function(req, res, next) {
 
 router.post("/landregistration", function(req, res, next) {
     var payload = req.body;
+    console.log("front receieved",payload)
     payload.verb = "landregistration";
     let land_reg_no = req.body.reg_no;
     if (keyManager.doesKeyExist(land_reg_no)) {
@@ -47,6 +48,7 @@ router.post("/landregistration", function(req, res, next) {
     if (keyManager.doesKeyExist(land_reg_no)) {
         if (batchlistBytes = prepareTransactions(payload, land_reg_no)) {
             SubmitToServer(batchlistBytes);
+            res.send("fucked")
         }
     }
 
