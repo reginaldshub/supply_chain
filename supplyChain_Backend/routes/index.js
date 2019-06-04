@@ -108,9 +108,8 @@ router.post("/login", function(req, res, next) {
 
 router.post("/landregistration", permit("farmer"), function(req, res, next) {
     var payload = new landRegistration(req.body);
-    var payload = req.body;
     payload.verb = "landregistration";
-    let land_reg_no = req.body.reg_no;
+    let RegistrationNo = req.body.RegistrationNo;
     if (keyManager.doesKeyExist(land_reg_no)) {
         console.log("keys are already created for" + land_reg_no);
     } else {
