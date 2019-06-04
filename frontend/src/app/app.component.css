@@ -1,0 +1,32 @@
+.form{
+    display:grid;
+    
+}
+.outer{
+    display: grid;
+    grid-template-columns:1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+}
+
+.mat-form-field{
+    width:40%;
+}
+
+.outer1{
+    display:grid; 
+    grid-template-columns: 8fr 1fr ;
+    grid-template-rows:35px 30px;
+    justify-items: center;
+    align-items: center;
+    font-family: 'Quattrocento Sans', sans-serif;
+    letter-spacing: 1px;
+}
+.savebtn{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+}
+.mat-stroked-button{
+    border: 1px solid currentColor;
+}

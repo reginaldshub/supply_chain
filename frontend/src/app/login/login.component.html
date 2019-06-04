@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+<div class="loginForm">
+<mat-card class="grid">
+<h2>Sign in</h2>     
+  <form [formGroup]="loginForm"  (submit)="onSubmit()">
+    <mat-form-field>
+      <input formControlName="email" matInput placeholder="Email">
+      <mat-error>Invalid email address.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password"  matTooltip=" Minimum eight characters, at least one Caps, one number and one special character:"  [type]="hide ? 'password' : 'text'" formControlName="password" [errorStateMatcher]="matcher">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+      <mat-error *ngIf="!loginForm.hasError('pattern')">
+       password is required
+        </mat-error>
+      </mat-form-field>
+  </form>
+  <div class="buttons">
+      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      <a [routerLink]="['/register']">
+        Register
+      </a>
+  </div>
+</mat-card>
+</div>
+

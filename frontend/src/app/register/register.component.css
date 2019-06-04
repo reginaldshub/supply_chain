@@ -1,0 +1,37 @@
+.registerForm{
+    display:grid;
+    grid-template-columns: 9fr 7fr 9fr;
+    grid-template-rows: 3fr 8fr 3fr;
+    height: 100vh;
+}
+app-navbar{
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    z-index: 2;
+    
+}
+.grid{
+    display:grid;
+    grid-row:2/3;
+    grid-column: 2/3;
+    grid-template-rows:1fr 8fr;
+}
+
+form{
+    display:grid;
+    justify-items: center;
+}
+
+mat-form-field{
+    width:80%;
+}
+h2{
+    font-family: 'Cabin', sans-serif;
+    align-self:center;
+    justify-self: center;
+}
+button{
+    align-self: center;
+}

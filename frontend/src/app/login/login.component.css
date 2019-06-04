@@ -1,0 +1,50 @@
+app-navbar{
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    z-index: 2;
+    
+}
+.abc{
+    position: relative;
+    background-color: aqua;
+}
+
+.loginForm{
+    display:grid;
+    grid-template-columns: 4fr 3fr 4fr;
+    grid-template-rows: 3fr 5fr 3fr;
+    height: 100vh;
+}
+
+.grid{
+    display:grid;
+    grid-row:2/3;
+    grid-column: 2/3;
+    grid-template-rows: 2fr 7fr 3fr
+}
+
+h2 {
+    justify-self: center;
+    align-self: end;
+}
+
+form{
+    display:grid;
+    justify-items: center; 
+}
+
+mat-form-field{
+    width:85%;
+}
+a{
+    text-decoration: none;
+}
+.buttons{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;  
+    align-items: start;
+}
+
