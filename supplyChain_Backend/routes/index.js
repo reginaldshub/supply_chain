@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 var User = require("../models/user");
+var landRegistration = require("./../models/landRegistration");
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -56,7 +57,7 @@ router.post("/registration", function(req, res, next) {
                         return console.log(error);
                     }
                     console.log('Message %s sent: %s', info.messageId, info.response);
-                    res.status(200).send({ success: true, message: "email is verified and token is sent your mail" });
+                    // res.status(200).send({ success: true, message: "email is verified and token is sent your mail" });
 
                 });
                 // }
@@ -80,7 +81,7 @@ router.post('/login', function(req, res, next) {
                     // generate token
                     let token = jwt.sign({ name: doc.name }, 'secret', { expiresIn: '20m' });
 
-                    return res.status(200).send({ success: true, message: "Succesfully fetched user details", token, doc });
+                    return res.status(200).send({ success: true, message: "Succesfully fetched user details", name: doc.name, id: doc.id, email: doc.email, role: doc.role, token });
 
                 } else {
                     return res.status(401).json({ message: ' Invalid Credentials' });
@@ -94,7 +95,8 @@ router.post('/login', function(req, res, next) {
 })
 
 router.post("/landregistration", permit('farmer'), function(req, res, next) {
-    var payload = req.body;
+    var payload = new landRegistration(req.body);
+
     payload.verb = "landregistration";
     let land_reg_no = req.body.reg_no;
     if (keyManager.doesKeyExist(land_reg_no)) {
