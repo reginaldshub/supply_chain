@@ -36,23 +36,27 @@ get_land_registry_address = (registration_no, farm_address, farmer_name, land_si
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
 //     return TP_NAMESPACE + record_id + prefix.cultivation + _hash1(id)
 // }
+
 // get_inspection_address = (record_id, id) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6);
 //     return TP_NAMESPACE + record_id + prefix.inspection + _hash1(id)
 // }
+
 // get_harvest_address = (record_id, id) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
 //     return TP_NAMESPACE + record_id + prefix.harvest + _hash1(id)
 // }
+
 // get_processing_address = (record_id, id) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
 //     return TP_NAMESPACE + record_id + prefix.processing + _hash1(id)
 // }
+
 // get_sale_address = (record_id, id) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
-
 //     return TP_NAMESPACE + record_id + prefix.sale + _hash1(id)
 // }
+
 // get_purchase_address = (record_id, id) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 64).substring(0, 6)
 //     return TP_NAMESPACE + record_id + prefix.purchase + _hash1(id)

@@ -7,10 +7,10 @@ const KeyManager = require('./keymanager');
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
 
-function prepareTransactions(payload, username) {
+function prepareTransactions(payload, land_reg_no) {
 
     var keyManager = new KeyManager();
-    var tempUserPublicKey = keyManager.readpublickey(username)
+    var tempUserPublicKey = keyManager.readpublickey(land_reg_no)
     const payloadBytes = cbor.encode(payload)
     const transactionHeaderBytes = protobuf.TransactionHeader.encode({
         familyName: env.familyName,
@@ -24,9 +24,7 @@ function prepareTransactions(payload, username) {
         nonce: (new Date()).toString()
     }).finish()
 
-
-
-    const signature = keyManager.sign(transactionHeaderBytes, username);
+    const signature = keyManager.sign(transactionHeaderBytes, land_reg_no);
 
     const transaction = protobuf.Transaction.create({
         header: transactionHeaderBytes,
@@ -41,7 +39,7 @@ function prepareTransactions(payload, username) {
         transactionIds: transactions.map((txn) => txn.headerSignature),
     }).finish()
 
-    headerSignature = keyManager.sign(batchHeaderBytes, username);
+    headerSignature = keyManager.sign(batchHeaderBytes, land_reg_no);
 
     const batch = protobuf.Batch.create({
         header: batchHeaderBytes,
