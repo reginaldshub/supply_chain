@@ -95,8 +95,13 @@ router.post('/login', function(req, res, next) {
 })
 
 router.post("/landregistration", permit('farmer'), function(req, res, next) {
+<<<<<<< HEAD
     var payload = new landRegistration(req.body);
 
+=======
+    var payload = req.body;
+    console.log("front receieved",payload)
+>>>>>>> 04882e477576af126bbc9c3fd437adf262e71269
     payload.verb = "landregistration";
     let land_reg_no = req.body.reg_no;
     if (keyManager.doesKeyExist(land_reg_no)) {
@@ -109,6 +114,7 @@ router.post("/landregistration", permit('farmer'), function(req, res, next) {
     if (keyManager.doesKeyExist(land_reg_no)) {
         if (batchlistBytes = prepareTransactions(payload, land_reg_no)) {
             SubmitToServer(batchlistBytes);
+            res.send("fucked")
         }
     }
 

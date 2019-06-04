@@ -11,6 +11,7 @@ SubmitToServer = batchListBytes => {
         (err, response) => {
             if (err) return console.log(err);
             console.log("response from processor", response.body);
+            // return "gotIt"
 
             // Request.get(JSON.parse(response.body).link, (error, response, body) => {
             //     if (error) {
