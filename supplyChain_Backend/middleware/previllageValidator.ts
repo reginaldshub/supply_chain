@@ -10,8 +10,8 @@ function permit(...allowed) {
 
     // return a middleware
     return (request, response, next) => {
-        console.log(request.body.name, request.body.role)
-        if ((request.body.name && isAllowed(request.body.role)))
+        console.log(request.body.role)
+        if ((request.body.FarmerName && isAllowed(request.body.role)))
             next(); // role is allowed, so continue on the next middleware
         else {
             response.status(403).json({ message: "user is forbidden" }); // user is forbidden

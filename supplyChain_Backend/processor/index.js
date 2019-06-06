@@ -10,3 +10,4 @@ transactionProcessor.start()
 
 console.log(`Starting SupplyChainHandler processor`)
 console.log(`Connecting to Sawtooth validator at ${env.validatorUrl}`)
+console.log(`${env.TP_NAMESPACE}`)

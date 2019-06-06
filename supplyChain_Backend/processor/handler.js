@@ -20,7 +20,7 @@ class SupplyChainHandler extends TransactionHandler {
         let payload = cbor.decode(transactionProcessRequest.payload);
         console.log(payload);
         if (payload.verb === 'landregistration') {
-            return land_registration(state, payload.reg_no, payload.farm_address, payload.farmer_name, payload.land_size)
+            return land_registration(state, payload.RegistrationNo, payload.FarmerName, payload.FarmAddress, payload.State, payload.Country, payload.ExporterName, payload.ImporterName, payload.DateOfRegistration, this.signer_public_keys)
         } else if (payload.verb === 'startcultivation') {
             return start_cultivation(state, payload.reg_no, payload.farm_address, payload.farmer_name)
         } else {

@@ -83,17 +83,15 @@ router.post("/login", function(req, res, next) {
                         expiresIn: "20m"
                     });
 
-                    return res
-                        .status(200)
-                        .send({
-                            success: true,
-                            message: "Succesfully fetched user details",
-                            name: doc.name,
-                            id: doc.id,
-                            email: doc.email,
-                            role: doc.role,
-                            token
-                        });
+                    return res.status(200).send({
+                        success: true,
+                        message: "Succesfully fetched user details",
+                        name: doc.name,
+                        id: doc.id,
+                        email: doc.email,
+                        role: doc.role,
+                        token
+                    });
                 } else {
                     return res.status(401).json({ message: " Invalid Credentials" });
                 }
@@ -107,42 +105,87 @@ router.post("/login", function(req, res, next) {
 });
 
 router.post("/landregistration", permit("farmer"), function(req, res, next) {
-    var payload = new landRegistration(req.body);
-    payload.verb = "landregistration";
-    let RegistrationNo = req.body.RegistrationNo;
-    if (keyManager.doesKeyExist(land_reg_no)) {
-        console.log("keys are already created for" + land_reg_no);
+    var payload = {
+        RegistrationNo: req.body.RegistrationNo,
+        FarmerName: req.body.FarmerName,
+        FarmAddress: req.body.FarmAddress,
+        State: req.body.State,
+        Country: req.body.Country,
+        ExporterName: req.body.ExporterName,
+        ImporterName: req.body.ImporterName,
+        DateOfRegistration: new Date(),
+        verb: "landregistration"
+    };
+    // payload.verb = "landregistration";
+    console.log(payload);
+    let FarmerName = req.body.FarmerName;
+    if (keyManager.doesKeyExist(FarmerName)) {
+        console.log("keys are already created for" + FarmerName);
     } else {
-        var output = keyManager.createkeys(land_reg_no);
-        keyManager.savekeys(land_reg_no, output);
+        var output = keyManager.createkeys(FarmerName);
+        keyManager.savekeys(FarmerName, output);
     }
 
-    if (keyManager.doesKeyExist(land_reg_no)) {
-        if ((batchlistBytes = prepareTransactions(payload, land_reg_no))) {
-            SubmitToServer(batchlistBytes);
-            res.send("done");
+    if (keyManager.doesKeyExist(FarmerName)) {
+        if ((batchlistBytes = prepareTransactions(payload, FarmerName))) {
+            SubmitToServer(batchlistBytes).then(respo => {
+                console.log("respo", respo);
+                var savepayload = new landRegistration({
+                    RegistrationNo: req.body.RegistrationNo,
+                    FarmerName: req.body.FarmerName,
+                    FarmAddress: req.body.FarmAddress,
+                    State: req.body.State,
+                    Country: req.body.Country,
+                    ExporterName: req.body.ExporterName,
+                    ImporterName: req.body.ImporterName,
+                    DateOfRegistration: new Date()
+                });
+
+                savepayload
+                    .save()
+                    .then(function(doc) {
+                        console.log(doc);
+                        res.status(200).json({ status: respo })
+                    })
+                    .catch(error => {
+                        console.log("error", error);
+                    });
+            });
         }
     }
 });
 
-router.post("/startcultivation", function(req, res, next) {
-    var payload = req.body;
-    payload.verb = "startcultivation";
-    // reg_no, farm_address
-    // , farmer_name
-    let land_reg_no = req.body.reg_no;
-    if (keyManager.doesKeyExist(land_reg_no)) {
-        console.log("keys are already created for" + land_reg_no);
-    } else {
-        // var output = keyManager.createkeys(land_reg_no);
-        // keyManager.savekeys(land_reg_no, output);
-        console.log("land not registered");
-    }
+router.get("/allLands", function(req, res, next) {
+    landRegistration.find({}, (error, lands) => {
+        res.status(200).json({ allLands: lands })
+    })
+})
 
-    if (keyManager.doesKeyExist(land_reg_no)) {
-        if ((batchlistBytes = prepareTransactions(payload, land_reg_no))) {
-            SubmitToServer(batchlistBytes);
-        }
-    }
-});
+
+router.get("/getLandById/:RegistrationNo", function(req, res, next) {
+    landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, lands) => {
+        res.status(200).json({ land: lands })
+    })
+})
+
+// router.post("/startcultivation", function(req, res, next) {
+//     var payload = req.body;
+//     payload.verb = "startcultivation";
+//     // reg_no, farm_address
+//     // , farmer_name
+//     let land_reg_no = req.body.reg_no;
+//     if (keyManager.doesKeyExist(land_reg_no)) {
+//         console.log("keys are already created for" + land_reg_no);
+//     } else {
+//         // var output = keyManager.createkeys(land_reg_no);
+//         // keyManager.savekeys(land_reg_no, output);
+//         console.log("land not registered");
+//     }
+
+//     if (keyManager.doesKeyExist(land_reg_no)) {
+//         if ((batchlistBytes = prepareTransactions(payload, land_reg_no))) {
+//             SubmitToServer(batchlistBytes);
+//         }
+//     }
+// });
 module.exports = router;
