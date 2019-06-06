@@ -1,0 +1,19 @@
+<mat-toolbar> 
+  <h2>Land Registratian Details </h2>
+  <div class="menu">
+    <button mat-button [matMenuTriggerFor]="menu">
+        <i class="material-icons">
+            person_pin
+            </i>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Profile</button>
+      <a [routerLink]="['/login']"  mat-menu-item>Signout</a>
+    </mat-menu>
+  </div>
+  </mat-toolbar>
+
+
+   
+
+  

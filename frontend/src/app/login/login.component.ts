@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { Login } from '../interfaces/login';
 import { ServiceService } from '../service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { ServiceService } from '../service.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder,private service:ServiceService) { }
+  constructor(private formBuilder:FormBuilder,private router:Router,private service:ServiceService) { }
 
   loginForm: FormGroup;
 
@@ -24,15 +25,16 @@ export class LoginComponent implements OnInit {
 
   }
   onSubmit(){
-    console.log(this.loginForm.value);
-
-    this.service.login(this.loginForm.value).subscribe((res:any)=>{
-      console.log(res);
-    },
-    error=>{
-      console.log(error);
-    }
-)
+   console.log(this.loginForm.value);
+    this.router.navigate(['dashboard']);
+//     this.service.login(this.loginForm.value).subscribe((res:any)=>{
+//       console.log(res);
+      
+//     },
+//     error=>{
+//       console.log(error);
+//     }
+// )
 }
 
 }

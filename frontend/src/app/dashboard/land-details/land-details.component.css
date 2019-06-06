@@ -1,0 +1,7 @@
+.outer{
+    display:grid;
+    grid-template-columns: 12fr 2fr;
+    justify-items: center;
+    align-items: center;
+
+}

@@ -1,0 +1,42 @@
+app-navbar{
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    z-index: 2;
+    
+}
+
+.filter{
+    display:grid;
+    grid-template-columns: 8fr 2fr;
+}
+a{
+    color: goldenrod;
+}
+#addland{
+justify-self: end;
+align-self: center;
+}
+.landlist{
+    width:100%;
+   
+}
+table {
+    width: 100%;
+  }
+  .outer{
+      display:grid;
+      grid-template-columns: 1fr 9fr 1fr;
+  }
+  .inner{
+      grid-row:1/2;
+      grid-column:2/3;
+  }
+
+ .notRegistered{
+     display:grid;
+     grid-template-columns: 8fr 2fr;
+     justify-items: center;
+     align-items: center;
+ }
