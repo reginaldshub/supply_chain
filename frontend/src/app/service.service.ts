@@ -1,18 +1,36 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { map, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
 
+  landDetails:any;
   constructor(private http:HttpClient) { }
 
-  // land_register(data){
-  //   // const httpoption={'content-type':'application/json'}
-  //   console.log(data);
-  //   return this.http.post("http://localhost:3000/landregistration",data);
-  // }
+   lands(){
+    return this.http.get("http://localhost:3000/lands");
+  }
+
+  getlandbyId(data){
+    return this.http.get("http://localhost:3000/getlandbyId"+data)
+    .pipe(
+      map((data)=>{
+      this.landDetails =data;
+       return data;
+    }))
+  }
+
+  getlandDetails(){
+    return this.landDetails;
+  }
+
+  land_register(data){
+    console.log(data);
+    return this.http.post("http://localhost:3000/landregistration",data)
+  }
 
   login(data:any){
     return this.http.post("http://localhost:3000/login",data)
@@ -21,5 +39,13 @@ export class ServiceService {
   registration(data:any){
     return this.http.post("http://localhost:3000/registration",data)
   }
-  
+
+  cultivate(data?:any){
+    return this.http.post("http://localhost:3000/cultivate",data);
+  }
+
+  harvest(data?:any){
+    return this.http.post("http://localhost:3000/harvest",data)
+  }
+
 }

@@ -2,7 +2,7 @@
 <div class="loginForm">
 <mat-card class="grid">
 <h2>Sign in</h2>     
-  <form [formGroup]="loginForm"  (submit)="onSubmit()">
+  <form [formGroup]="loginForm">
     <mat-form-field>
       <input formControlName="email" matInput placeholder="Email">
       <mat-error>Invalid email address.</mat-error>
@@ -16,7 +16,7 @@
       </mat-form-field>
   </form>
   <div class="buttons">
-      <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Login</button>
+      <button mat-raised-button color="primary" type="submit" (click)="onSubmit()" [disabled]="loginForm.invalid">Login</button>
       <a [routerLink]="['/register']">
         Register
       </a>

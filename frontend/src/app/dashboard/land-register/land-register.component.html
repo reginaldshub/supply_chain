@@ -1,0 +1,46 @@
+
+<div class ="landRegister">
+  <div class="outer">
+   <h2>Land Registration</h2>
+   <button mat-button mat-dialog-close><mat-icon>close</mat-icon></button>
+  </div>
+<form [formGroup]="landRegister" (submit)="onSubmit()">
+          <mat-form-field>
+            <input formControlName="RegistrationNo" matInput placeholder="Registration No">
+            <mat-error>This field is mandatory.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input formControlName="FarmerName" matInput placeholder="Farmer Name">
+            <mat-error>Id is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="farmAddress">
+            <input formControlName="farmAddress" matInput placeholder="Farm Address">
+            <mat-error>email is required.</mat-error>
+          </mat-form-field>
+            <mat-form-field>
+                <input formControlName="State" matInput placeholder="State">
+                <mat-error>Id is required</mat-error>
+              </mat-form-field>
+    
+              <mat-form-field>
+                <input formControlName="Country" matInput placeholder="Country">
+                <mat-error>email is required.</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                  <input formControlName="ExporterName" matInput placeholder=" ExporterName">
+                  <mat-error>Id is required</mat-error>
+                </mat-form-field>
+      
+                <mat-form-field>
+                  <input formControlName="ImporterName" matInput placeholder="ImporterName">
+                  <mat-error>email is required.</mat-error>
+                </mat-form-field>
+          <div class="end">
+          <button mat-raised-button color="primary" type="submit" [disabled]="landRegister.invalid">Register</button> 
+          <button mat-stroked-button color="primary" (click)="reset()">Clear</button>
+        </div>
+  </form>
+</div>
+
