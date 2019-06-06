@@ -124,6 +124,8 @@ import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-det
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LandRegisterComponent,LandDetailsComponent]
+  entryComponents: [LandRegisterComponent,LandDetailsComponent,
+                    CultivalteComponent,CultivateDetailsComponent,
+                     HarvestComponent,HarvestDetailsComponent]
 })
 export class AppModule { }

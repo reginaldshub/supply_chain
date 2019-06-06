@@ -16,7 +16,7 @@ export class LandRegisterComponent implements OnInit {
     this.landRegister  =  this.formBuilder.group({
       RegistrationNo:['',Validators.required],
       FarmerName:['',Validators.required],
-      farmAddress:['',Validators.required],
+      FarmAddress:['',Validators.required],
       State:['',Validators.required],
       Country:['',Validators.required],
       ExporterName:['',Validators.required],

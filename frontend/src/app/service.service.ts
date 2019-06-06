@@ -11,11 +11,11 @@ export class ServiceService {
   constructor(private http:HttpClient) { }
 
    lands(){
-    return this.http.get("http://localhost:3000/lands");
+    return this.http.get("http://localhost:3000/allLands");
   }
 
   getlandbyId(data){
-    return this.http.get("http://localhost:3000/getlandbyId"+data)
+    return this.http.get("http://localhost:3000/getLandById"+data)
     .pipe(
       map((data)=>{
       this.landDetails =data;

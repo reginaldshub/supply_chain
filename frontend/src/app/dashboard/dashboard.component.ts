@@ -63,6 +63,10 @@ getland(id:any){
   this.dialog.open(LandDetailsComponent,dailogconfig)
 }
 
+getcultivate(){
+  
+}
+
 }
   
 export interface LandData {
@@ -73,7 +77,7 @@ export interface LandData {
 }
 
  let ELEMENT_DATA: LandData[] ;
- 
+
 //   {RegistrationNo: 1, FarmerName: 'Hydrogen', farmAddress: 1.0079, State: 'H'},
 //   {RegistrationNo: 2, FarmerName: 'Helium', farmAddress: 4.0026, State: 'He'},
 //   {RegistrationNo: 3, FarmerName: 'Lithium', farmAddress: 6.941, State: 'Li'},

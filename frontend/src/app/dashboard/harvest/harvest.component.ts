@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
+import { MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-harvest',
@@ -8,7 +9,7 @@ import { ServiceService } from 'src/app/service.service';
 })
 export class HarvestComponent implements OnInit {
 
-  constructor(private service:ServiceService) { }
+  constructor(private service:ServiceService,private dialogRef:MatDialogRef<HarvestComponent>) { }
 
   ngOnInit() {
   }
