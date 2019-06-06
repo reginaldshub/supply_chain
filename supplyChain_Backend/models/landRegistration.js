@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 var bcrypt = require("bcrypt");
 
 var schema = new Schema({
-    RegistrationNo: { type: Number, required: true },
+    RegistrationNo: { type: String, required: true },
     FarmerName: { type: String, required: true },
     FarmAddress: { type: String, required: true },
     State: { type: String, required: true },
