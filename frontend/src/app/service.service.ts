@@ -15,7 +15,7 @@ export class ServiceService {
   }
 
   getlandbyId(data){
-    return this.http.get("http://localhost:3000/getLandById"+data)
+    return this.http.get("http://localhost:3000/getLandById/"+data)
     .pipe(
       map((data)=>{
       this.landDetails =data;
@@ -41,7 +41,7 @@ export class ServiceService {
   }
 
   cultivate(data?:any){
-    return this.http.post("http://localhost:3000/cultivate",data);
+    return this.http.post("http://localhost:3000/startcultivation",data);
   }
 
   harvest(data?:any){

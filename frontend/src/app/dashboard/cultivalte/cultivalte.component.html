@@ -1,3 +1,30 @@
-<p>
-  cultivalte works!
-</p>
+<app-header></app-header>
+<div class="grid">
+<div></div>
+  <mat-card>
+  <div class="outer">
+   <h2>Cultivation</h2>
+  </div>
+<form [formGroup]="cultivate" (submit)="onSubmit()">
+          <mat-form-field>
+            <input formControlName="CropVariety" matInput placeholder="Crop Variety">
+            <mat-error>Crop Variety is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+              <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Choose a date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          <div class="end">
+              <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
+                  arrow_back
+                  </i></button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="cultivate.invalid">Register</button> 
+          <!-- <button mat-stroked-button color="primary" (click)="reset()">Clear</button> -->
+        </div>
+  </form>
+
+</mat-card>
+<div></div>
+</div>

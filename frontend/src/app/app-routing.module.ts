@@ -5,6 +5,8 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandRegisterComponent } from './dashboard/land-register/land-register.component';
+import { LandDetailsComponent } from './dashboard/land-details/land-details.component';
+import { CultivalteComponent } from './dashboard/cultivalte/cultivalte.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -12,7 +14,9 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'navbar',component:NavbarComponent},
   {path:'dashboard',component:DashboardComponent},
-  {path:'landRegister',component:LandRegisterComponent}
+  {path:'cultivate',component:CultivalteComponent},
+  {path:'landRegister',component:LandRegisterComponent},
+  {path:'landDetails',component:LandDetailsComponent}
 ];
 
 @NgModule({

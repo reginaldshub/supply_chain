@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef} from '@angular/material';
+import { Component, OnInit } from '@angular/core';;
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ServiceService } from 'src/app/service.service';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-land-register',
@@ -10,7 +11,7 @@ import { ServiceService } from 'src/app/service.service';
 })
 export class LandRegisterComponent implements OnInit {
   landRegister:FormGroup;
-  constructor(private formBuilder: FormBuilder,private service:ServiceService,private dialogRef:MatDialogRef<LandRegisterComponent>) { }
+  constructor(private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
 
   ngOnInit() {
     this.landRegister  =  this.formBuilder.group({
@@ -33,6 +34,9 @@ export class LandRegisterComponent implements OnInit {
    this.service.land_register(this.landRegister.value).subscribe((res:any)=>{
      console.log(res);
    })
+  }
+  backtodash(){
+   this.route.navigate(['dashboard']);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef} from '@angular/material';
+
 import { ServiceService } from 'src/app/service.service';
 
 @Component({
@@ -8,12 +8,25 @@ import { ServiceService } from 'src/app/service.service';
   styleUrls: ['./land-details.component.css']
 })
 export class LandDetailsComponent implements OnInit {
-
-  constructor(private dialogRef:MatDialogRef<LandDetailsComponent>,private service:ServiceService) { }
+  data;
+  constructor(private service:ServiceService) { }
 
   ngOnInit() {
-   let data =this.service.getlandDetails();
-   console.log(data);
+   this.data = this.service.getlandDetails();
+   console.log(this.data as LandDetails)
+   console.log(this.data.land.RegistrationNo)
+   
   }
 
 }
+export interface LandDetails{
+  RegistrationNo:String
+  FarmerName:  String,
+  FarmAddress:  String, 
+  State:  String,
+  Country:  String,
+  ExporterName:  String, 
+  ImporterName: String,
+  DateOfRegistration:  String, 
+}
+

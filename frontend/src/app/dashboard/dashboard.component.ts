@@ -4,8 +4,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA,MatDialogConfig} from '@angular/material';
-import { LandRegisterComponent } from './land-register/land-register.component';
+
 import { LandDetailsComponent } from './land-details/land-details.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,27 +19,33 @@ export class DashboardComponent implements OnInit {
 
   // displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'farmAddress', 'State','Country','ExporterName','ImporterName','DateofRegistration'];
 
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'farmAddress', 'State','Action'];
+  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<LandData>(ELEMENT_DATA);
 
   display=false;
-  constructor(private service :ServiceService,public dialog: MatDialog) {
+
+  constructor(private service :ServiceService,private router:Router) {
     
    }
 
   ngOnInit(){
+
+   this.getAll();
+ }
+
+ getAll(){
   this.service.lands().subscribe((res:any)=>{
-    ELEMENT_DATA= res as LandData[];
+    console.log(res.allLands);
+    ELEMENT_DATA= res.allLands as LandData[];
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.display=true;
     })
  }
-
   applyFilter(filterValue: string){
      this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -47,20 +54,21 @@ export class DashboardComponent implements OnInit {
   }
 
 addLand(){
-  const dailogconfig=new MatDialogConfig();
-  dailogconfig.disableClose=true;
-  dailogconfig.autoFocus=true;
-  dailogconfig.width="50%";
-  this.dialog.open(LandRegisterComponent,dailogconfig);
+
+  this.router.navigate(['landRegister']);
 }
 
 getland(id:any){
-  console.log(id);
-  const dailogconfig=new MatDialogConfig();
-  dailogconfig.disableClose=true;
-  dailogconfig.autoFocus=true;
-  dailogconfig.width="50%";
-  this.dialog.open(LandDetailsComponent,dailogconfig)
+
+  this.service.getlandbyId(id).subscribe((res:any)=>{
+    this.router.navigate(['landDetails'])
+    const dailogconfig=new MatDialogConfig();
+    dailogconfig.disableClose=true;
+    dailogconfig.autoFocus=true;
+    dailogconfig.width="50%";
+    // this.dialog.open(LandDetailsComponent,dailogconfig)
+  })
+
 }
 
 getcultivate(){
@@ -72,7 +80,7 @@ getcultivate(){
 export interface LandData {
   FarmerName: string;
   RegistrationNo: number;
-  farmAddress: number;
+  FarmAddress: number;
   State: string;
 }
 

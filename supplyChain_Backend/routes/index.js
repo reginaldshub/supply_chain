@@ -104,7 +104,7 @@ router.post("/login", function(req, res, next) {
         });
 });
 
-router.post("/landregistration", permit("farmer"), function(req, res, next) {
+router.post("/landregistration", function(req, res, next) {
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
         FarmerName: req.body.FarmerName,
