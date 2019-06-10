@@ -23,6 +23,8 @@ class SupplyChainHandler extends TransactionHandler {
             return land_registration(state, payload.RegistrationNo, payload.FarmerName, payload.FarmAddress, payload.State, payload.Country, payload.ExporterName, payload.ImporterName, payload.DateOfRegistration, this.signer_public_keys)
         } else if (payload.verb === 'startcultivation') {
             return start_cultivation(state, payload.RegistrationNo, payload.CropVariety, payload.Dateofstart, payload.FarmerName, this.signer_public_keys)
+        } else if (payload.verb === 'startharvest') {
+            return start_harvest(state, payload.CropVariety, payload.Temperature, payload.Humidity, payload.Dateofharvest, payload.quantity, this.signer_public_keys)
         } else {
             throw new InvalidTransaction(`Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`)
         }
