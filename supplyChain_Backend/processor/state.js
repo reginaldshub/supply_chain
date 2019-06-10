@@ -24,4 +24,20 @@ land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Coun
     })
 }
 
-module.exports = { land_registration }
+start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName, signer_public_keys) => {
+    let address = get_cultivation_address(RegistrationNo, FarmerName)
+    console.log("address", address);
+    let cultivation_data = {
+        CropVariety: CropVariety,
+        Dateofstart: Dateofstart
+    }
+    let public_key = signer_public_keys;
+    return state.setState({
+        [address]: encode({ cultivation_data, public_key })
+    }).then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+module.exports = { land_registration, start_cultivation }

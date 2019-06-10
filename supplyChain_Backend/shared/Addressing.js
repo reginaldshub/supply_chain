@@ -26,10 +26,18 @@ const prefix = {
 
 get_land_registry_address = (RegistrationNo, FarmerName) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    console.log("TP_NAMESPACE", TP_NAMESPACE)
-    console.log(FarmerName, RegistrationNo)
-        // console.log(TP_NAMESPACE + prefix.land + _hash(FarmerName) + _hash(RegistrationNo))
     return TP_NAMESPACE + prefix.land + _hash(FarmerName) + _hash(RegistrationNo)
+}
+
+
+get_cultivation_address = (RegistrationNo, FarmerName) => {
+    let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
+    return TP_NAMESPACE + prefix.cultivation + _hash(FarmerName) + _hash(RegistrationNo)
+}
+
+get_harvest_address = (RegistrationNo, FarmerName) => {
+    let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
+    return TP_NAMESPACE + prefix.harvest + _hash(FarmerName) + _hash(RegistrationNo)
 }
 
 // get_farmer_registry_address = (registration_no, farm_address, farmer_name, land_size) => {
@@ -73,5 +81,5 @@ get_land_registry_address = (RegistrationNo, FarmerName) => {
 //     return TP_NAMESPACE + record_id + prefix.purchase + _hash1(id)
 // }
 
-module.exports = { _hash1, _hashforpayload, get_record_id, get_land_registry_address }
+module.exports = { _hash1, _hashforpayload, get_record_id, get_land_registry_address, get_cultivation_address }
     // , get_enrollement_address, get_cultivation_address, get_inspection_address, get_harvest_address, get_processing_address, get_sale_address, get_purchase_address }

@@ -10,7 +10,8 @@ var schema = new Schema({
     Country: { type: String, required: true },
     ExporterName: { type: String, required: true },
     ImporterName: { type: String, required: true },
-    DateOfRegistration: { type: String, required: true }
+    DateOfRegistration: { type: String, required: true },
+    status: { type: String, required: false }
 });
 
 schema.statics.hashPassword = function hashPassword(password) {

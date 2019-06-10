@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 var User = require("../models/user");
+var Cultivation = require("../models/Cultivation")
 var landRegistration = require("./../models/landRegistration");
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
@@ -114,7 +115,8 @@ router.post("/landregistration", function(req, res, next) {
         ExporterName: req.body.ExporterName,
         ImporterName: req.body.ImporterName,
         DateOfRegistration: new Date(),
-        verb: "landregistration"
+        verb: "landregistration",
+        status: "cultivate"
     };
     // payload.verb = "landregistration";
     console.log(payload);
@@ -138,7 +140,8 @@ router.post("/landregistration", function(req, res, next) {
                     Country: req.body.Country,
                     ExporterName: req.body.ExporterName,
                     ImporterName: req.body.ImporterName,
-                    DateOfRegistration: new Date()
+                    DateOfRegistration: new Date(),
+                    status: "cultivate"
                 });
 
                 savepayload
@@ -168,7 +171,66 @@ router.get("/getLandById/:RegistrationNo", function(req, res, next) {
     })
 })
 
-// router.post("/startcultivation", function(req, res, next) {
+router.post("/startcultivation", function(req, res, next) {
+    console.log(req.body)
+    var payload = {
+        FarmerName: req.body.FarmerName,
+        RegistrationNo: req.body.RegistrationNo,
+        CropVariety: req.body.CropVariety,
+        Dateofstart: new Date(),
+        verb: "startcultivation",
+        status: "cultivate"
+    };
+
+    let updateStatus = { status: "harvest" }
+    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+        .then(updatedResponse => {
+            if (!updatedResponse) {
+                return res.status(404).send({
+                    message: "error"
+                });
+            } else {
+                console.log("updated")
+                if (keyManager.doesKeyExist(req.body.FarmerName)) {
+                    if ((batchlistBytes = prepareTransactions(payload, req.body.FarmerName))) {
+                        SubmitToServer(batchlistBytes).then(respo => {
+                            console.log("respo", respo);
+                            var savepayload = new Cultivation({
+                                CropVariety: req.body.CropVariety,
+                                Dateofstart: new Date(),
+                                verb: "startcultivation",
+                                status: "cultivate"
+                            });
+
+                            savepayload
+                                .save()
+                                .then(function(doc) {
+                                    console.log(doc);
+                                    res.status(200).json({ status: respo })
+                                })
+                                .catch(error => {
+                                    console.log("error", error);
+                                });
+                        });
+                    }
+                }
+
+            }
+
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Land not found with id " + req.body.RegistrationNo
+                });
+            }
+            return res.status(500).send({
+                message: "Error updating status with id " + req.body.RegistrationNo
+            });
+        })
+});
+
+
+// router.post("/startharvest", function(req, res, next) {
 //     var payload = req.body;
 //     payload.verb = "startcultivation";
 //     // reg_no, farm_address
