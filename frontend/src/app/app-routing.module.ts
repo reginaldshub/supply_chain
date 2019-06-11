@@ -18,9 +18,9 @@ const routes: Routes = [
   {path:'navbar',component:NavbarComponent},
   {path:'dashboard',component:DashboardComponent},
   {path:'harvest',component:HarvestComponent},
-  {path:'harvestDetails',component:HarvestDetailsComponent},
+  {path:'harvestDetails/:id',component:HarvestDetailsComponent},
   {path:'cultivate',component:CultivalteComponent},
-  {path:'cultivateDetails',component:CultivateDetailsComponent},
+  {path:'cultivateDetails/:id',component:CultivateDetailsComponent},
   {path:'landRegister',component:LandRegisterComponent},
   {path:'landDetails',component:LandDetailsComponent}
 ];

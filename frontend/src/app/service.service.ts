@@ -44,8 +44,8 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/startcultivation",data);
   }
 
-  cutivateDetails(){
-    return this.http.get("http://localhost:3000/startcultivation");
+  cutivateDetails(id){
+    return this.http.get("http://localhost:3000/startcultivation"+id);
   }
 
   harvest(data){
