@@ -40,4 +40,25 @@ start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName
         console.log(err);
     })
 }
+
+start_harvest = (state, CropVariety, Temperature, Humidity, Dateofharvest, quantity, signer_public_keys) => {
+    let address = get_harvest_address(RegistrationNo, FarmerName)
+    console.log("address", address);
+    let harvest_data = {
+        CropVariety: CropVariety,
+        Temperature: Temperature,
+        Humidity: Humidity,
+        Dateofharvest: Dateofharvest,
+        quantity: quantity
+    }
+    let public_key = signer_public_keys;
+    return state.setState({
+        [address]: encode({ harvest_data, public_key })
+    }).then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+
 module.exports = { land_registration, start_cultivation }

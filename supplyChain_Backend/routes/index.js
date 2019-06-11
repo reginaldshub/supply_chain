@@ -4,6 +4,7 @@ var jwt = require("jsonwebtoken");
 var User = require("../models/user");
 var Cultivation = require("../models/Cultivation")
 var landRegistration = require("./../models/landRegistration");
+var Harvest = require("./../models/Harvest")
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -178,8 +179,7 @@ router.post("/startcultivation", function(req, res, next) {
         RegistrationNo: req.body.RegistrationNo,
         CropVariety: req.body.CropVariety,
         Dateofstart: new Date(),
-        verb: "startcultivation",
-        status: "cultivate"
+        verb: "startcultivation"
     };
 
     let updateStatus = { status: "harvest" }
@@ -198,8 +198,70 @@ router.post("/startcultivation", function(req, res, next) {
                             var savepayload = new Cultivation({
                                 CropVariety: req.body.CropVariety,
                                 Dateofstart: new Date(),
-                                verb: "startcultivation",
-                                status: "cultivate"
+                                RegistrationNo: req.body.RegistrationNo
+
+                            });
+
+                            savepayload
+                                .save()
+                                .then(function(doc) {
+                                    console.log(doc);
+                                    res.status(200).json({ status: respo })
+                                })
+                                .catch(error => {
+                                    console.log("error", error);
+                                });
+                        });
+                    }
+                }
+
+            }
+
+        }).catch(err => {
+            if (err.kind === 'ObjectId') {
+                return res.status(404).send({
+                    message: "Land not found with id " + req.body.RegistrationNo
+                });
+            }
+            return res.status(500).send({
+                message: "Error updating status with id " + req.body.RegistrationNo
+            });
+        })
+});
+
+
+
+router.post("/performharvest", function(req, res, next) {
+    var payload = {
+        CropVariety: req.body.CropVariety,
+        Temperature: req.body.Temperature,
+        Humidity: req.body.Humidity,
+        Dateofharvest: new Date(),
+        quantity: req.body.quantity,
+        verb: "performharvest"
+    };
+
+    let updateStatus = { status: "yield" }
+    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+        .then(updatedResponse => {
+            if (!updatedResponse) {
+                return res.status(404).send({
+                    message: "error"
+                });
+            } else {
+                console.log("updated")
+                if (keyManager.doesKeyExist(req.body.FarmerName)) {
+                    if ((batchlistBytes = prepareTransactions(payload, req.body.FarmerName))) {
+                        SubmitToServer(batchlistBytes).then(respo => {
+                            console.log("respo", respo);
+                            var savepayload = new Harvest({
+                                CropVariety: req.body.CropVariety,
+                                Temperature: req.body.Temperature,
+                                Humidity: req.body.Humidity,
+                                Dateofharvest: new Date(),
+                                quantity: req.body.quantity,
+                                RegistrationNo: req.body.RegistrationNo
+
                             });
 
                             savepayload
