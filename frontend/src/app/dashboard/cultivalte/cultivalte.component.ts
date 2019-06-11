@@ -28,6 +28,7 @@ onSubmit(){
   console.log(this.cultivate.value);
   this.service.cultivate(this.cultivate.value).subscribe((res:any)=>{
     console.log(res);
+    this.route.navigate(['dashboard']);
   })
 
 }

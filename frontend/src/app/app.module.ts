@@ -60,6 +60,7 @@ import { CultivalteComponent } from './dashboard/cultivalte/cultivalte.component
 import { CultivateDetailsComponent } from './dashboard/cultivate-details/cultivate-details.component';
 import { HarvestComponent } from './dashboard/harvest/harvest.component';
 import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-details.component';
+import { InspectorDashboardComponent } from './inspector-dashboard/inspector-dashboard.component';
 
 
 @NgModule({
@@ -76,7 +77,8 @@ import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-det
     CultivalteComponent,
     CultivateDetailsComponent,
     HarvestComponent,
-    HarvestDetailsComponent
+    HarvestDetailsComponent,
+    InspectorDashboardComponent
   ],
   imports: [
     BrowserModule,
