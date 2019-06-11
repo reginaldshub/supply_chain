@@ -61,4 +61,21 @@ start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Hu
     })
 }
 
-module.exports = { land_registration, start_cultivation }
+inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, InspectorName, FarmerName, signer_public_keys) => {
+    let address = get_inspection_address(RegistrationNo, FarmerName)
+    console.log("address", address);
+    let inspection_data = {
+        InspectionReport: InspectionReport,
+        DateofInspection: DateofInspection,
+        InspectorName: InspectorName
+    }
+    let public_key = signer_public_keys;
+    return state.setState({
+        [address]: encode({ inspection_data, public_key })
+    }).then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+module.exports = { land_registration, start_cultivation, inspect_land }

@@ -26,11 +26,21 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
    console.log(this.loginForm.value);
-  
+    // this.router.navigate(['dashboard']);
     this.service.login(this.loginForm.value).subscribe((res:any)=>{
+
       console.log(res);
+
+    if(res.role === "Farmer") {
       this.router.navigate(['dashboard']);
-      
+      localStorage.setItem("FarmerName",res.name);
+      localStorage.setItem("Role",res.role)
+    }
+    else if(res.role === "Inspector") {
+      this.router.navigate(['inspectorDashboard']);
+      localStorage.setItem("InspectorName",res.name)
+      localStorage.setItem("Role",res.role)
+    }
     },
     error=>{
       console.log(error);

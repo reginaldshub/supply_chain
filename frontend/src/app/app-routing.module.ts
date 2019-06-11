@@ -10,6 +10,8 @@ import { CultivalteComponent } from './dashboard/cultivalte/cultivalte.component
 import { CultivateDetailsComponent } from './dashboard/cultivate-details/cultivate-details.component';
 import { HarvestComponent } from './dashboard/harvest/harvest.component';
 import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-details.component';
+import { InspectorDashboardComponent } from './inspector-dashboard/inspector-dashboard.component';
+import { InspectorViewComponent } from './inspector-dashboard/inspector-view/inspector-view.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -22,7 +24,9 @@ const routes: Routes = [
   {path:'cultivate',component:CultivalteComponent},
   {path:'cultivateDetails/:id',component:CultivateDetailsComponent},
   {path:'landRegister',component:LandRegisterComponent},
-  {path:'landDetails',component:LandDetailsComponent}
+  {path:'landDetails',component:LandDetailsComponent},
+  {path:'inspectorDashboard',component:InspectorDashboardComponent},
+  { path: 'inspectorView', component: InspectorViewComponent}
 ];
 
 @NgModule({
