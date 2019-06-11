@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 var Farmer = require("../models/farmer");
-var Cultivation = require("../models/Cultivation")
+var Cultivation = require("../models/Cultivation");
 var landRegistration = require("./../models/landRegistration");
-var Harvest = require("./../models/Harvest")
+var Harvest = require("./../models/Harvest");
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -149,7 +149,7 @@ router.post("/landregistration", function(req, res, next) {
                     .save()
                     .then(function(doc) {
                         console.log(doc);
-                        res.status(200).json({ status: respo })
+                        res.status(200).json({ status: respo });
                     })
                     .catch(error => {
                         console.log("error", error);
@@ -161,19 +161,20 @@ router.post("/landregistration", function(req, res, next) {
 
 router.get("/allLands", function(req, res, next) {
     landRegistration.find({}, (error, lands) => {
-        res.status(200).json({ allLands: lands })
-    })
-})
-
+        res.status(200).json({ allLands: lands });
+    });
+});
 
 router.get("/getLandById/:RegistrationNo", function(req, res, next) {
-    landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, lands) => {
-        res.status(200).json({ land: lands })
-    })
-})
+    landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
+        (error, lands) => {
+            res.status(200).json({ land: lands });
+        }
+    );
+});
 
 router.post("/startcultivation", function(req, res, next) {
-    console.log(req.body)
+    console.log(req.body);
     var payload = {
         FarmerName: req.body.FarmerName,
         RegistrationNo: req.body.RegistrationNo,
@@ -182,31 +183,33 @@ router.post("/startcultivation", function(req, res, next) {
         verb: "startcultivation"
     };
 
-    let updateStatus = { status: "harvest" }
-    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+    let updateStatus = { status: "harvest" };
+    landRegistration
+        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
             if (!updatedResponse) {
                 return res.status(404).send({
                     message: "error"
                 });
             } else {
-                console.log("updated")
+                console.log("updated");
                 if (keyManager.doesKeyExist(req.body.FarmerName)) {
-                    if ((batchlistBytes = prepareTransactions(payload, req.body.FarmerName))) {
+                    if (
+                        (batchlistBytes = prepareTransactions(payload, req.body.FarmerName))
+                    ) {
                         SubmitToServer(batchlistBytes).then(respo => {
                             console.log("respo", respo);
                             var savepayload = new Cultivation({
                                 CropVariety: req.body.CropVariety,
                                 Dateofstart: new Date(),
                                 RegistrationNo: req.body.RegistrationNo
-
                             });
 
                             savepayload
                                 .save()
                                 .then(function(doc) {
                                     console.log(doc);
-                                    res.status(200).json({ status: respo })
+                                    res.status(200).json({ status: respo });
                                 })
                                 .catch(error => {
                                     console.log("error", error);
@@ -214,11 +217,10 @@ router.post("/startcultivation", function(req, res, next) {
                         });
                     }
                 }
-
             }
-
-        }).catch(err => {
-            if (err.kind === 'ObjectId') {
+        })
+        .catch(err => {
+            if (err.kind === "ObjectId") {
                 return res.status(404).send({
                     message: "Land not found with id " + req.body.RegistrationNo
                 });
@@ -226,35 +228,65 @@ router.post("/startcultivation", function(req, res, next) {
             return res.status(500).send({
                 message: "Error updating status with id " + req.body.RegistrationNo
             });
-        })
+        });
 });
 
-
 router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
-    Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, cultivationDetails) => {
-        if (error) res.status(404).json({ message: "No Cultivation record Found" })
-        res.status(200).json({ cultivationDetails: cultivationDetails })
-    })
-})
+    Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo },
+        (error, cultivationDetails) => {
+            if (error)
+                res.status(404).json({ message: "No Cultivation record Found" });
+            // res.status(200).json({ cultivationDetails: cultivationDetails })
+            landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
+                (error, lands) => {
+                    res
+                        .status(200)
+                        .json({ land: lands, cultivationDetails: cultivationDetails });
+                }
+            );
+        }
+    );
+});
 
 router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
-    Harvest.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, harvestDetails) => {
-        if (error) res.status(404).json({ message: "No Harvest record Found" })
-        res.status(200).json({ harvestDetails: harvestDetails })
-    })
-})
+    Harvest.findOne({ RegistrationNo: req.params.RegistrationNo },
+        (error, harvestDetails) => {
+            if (error) res.status(404).json({ message: "No Harvest record Found" });
+            // res.status(200).json({ harvestDetails: harvestDetails })
+
+            Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo },
+                (error, cultivationDetails) => {
+                    if (error)
+                        res.status(404).json({ message: "No Cultivation record Found" });
+                    // res.status(200).json({ cultivationDetails: cultivationDetails, harvestDetails: harvestDetails })
+                    landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
+                        (error, lands) => {
+                            if (error)
+                                res.status(404).json({ message: "No lAND record Found" });
+                            res.status(200).json({
+                                land: lands,
+                                cultivationDetails: cultivationDetails,
+                                harvestDetails: harvestDetails
+                            });
+                        }
+                    );
+                }
+            );
+        }
+    );
+});
 
 router.get("/getFarmerProfile/:email", function(req, res, next) {
     Farmer.findOne({ email: req.params.email }, (error, profile) => {
-        if (error) res.status(404).json({ message: "No Farmer record Found" })
-        res.status(200).json({ profile: profile })
-    })
-})
+        if (error) res.status(404).json({ message: "No Farmer record Found" });
+        res.status(200).json({ profile: profile });
+    });
+});
 
 router.post("/performharvest", function(req, res, next) {
     var payload = {
         FarmerName: req.body.FarmerName,
-        RegistrationNo:req.body.RegistrationNo,
+        RegistrationNo: req.body.RegistrationNo,
         CropVariety: req.body.CropVariety,
         Temperature: req.body.Temperature,
         Humidity: req.body.Humidity,
@@ -262,18 +294,21 @@ router.post("/performharvest", function(req, res, next) {
         Quantity: req.body.Quantity,
         verb: "performharvest"
     };
-console.log("payload",payload)
-    let updateStatus = { status: "yield" }
-    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+    console.log("payload", payload);
+    let updateStatus = { status: "yield" };
+    landRegistration
+        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
             if (!updatedResponse) {
                 return res.status(404).send({
                     message: "error"
                 });
             } else {
-                console.log("updated")
+                console.log("updated");
                 if (keyManager.doesKeyExist(req.body.FarmerName)) {
-                    if ((batchlistBytes = prepareTransactions(payload, req.body.FarmerName))) {
+                    if (
+                        (batchlistBytes = prepareTransactions(payload, req.body.FarmerName))
+                    ) {
                         SubmitToServer(batchlistBytes).then(respo => {
                             console.log("respo", respo);
                             var savepayload = new Harvest({
@@ -283,14 +318,13 @@ console.log("payload",payload)
                                 Dateofharvest: new Date(),
                                 Quantity: req.body.Quantity,
                                 RegistrationNo: req.body.RegistrationNo
-
                             });
 
                             savepayload
                                 .save()
                                 .then(function(doc) {
                                     console.log(doc);
-                                    res.status(200).json({ status: respo })
+                                    res.status(200).json({ status: respo });
                                 })
                                 .catch(error => {
                                     console.log("error", error);
@@ -298,11 +332,10 @@ console.log("payload",payload)
                         });
                     }
                 }
-
             }
-
-        }).catch(err => {
-            if (err.kind === 'ObjectId') {
+        })
+        .catch(err => {
+            if (err.kind === "ObjectId") {
                 return res.status(404).send({
                     message: "Land not found with id " + req.body.RegistrationNo
                 });
@@ -310,8 +343,17 @@ console.log("payload",payload)
             return res.status(500).send({
                 message: "Error updating status with id " + req.body.RegistrationNo
             });
-        })
+        });
 });
+
+router.get("/getLandsForInspection", permit('inspector'), function(req, res, next) {
+    landRegistration.findOne({ status: "harvest" }, (error, lands) => {
+        if (error)
+            res.status(404).json({ message: "No lAND record Found" });
+        res.status(200).json({ land: lands });
+    });
+})
+
 
 
 // router.post("/startharvest", function(req, res, next) {
