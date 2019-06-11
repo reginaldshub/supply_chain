@@ -9,21 +9,30 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CultivateDetailsComponent implements OnInit {
 
-  constructor(private service:ServiceService,private route: ActivatedRoute) { }
+  constructor(private service: ServiceService, private route: ActivatedRoute) {
+    
+   }
 
   id: number;
   private sub: any;
+  details;
+  bool: Boolean = false;
   ngOnInit() {
-
-    
     this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       console.log(this.id)
-      this.service.cutivateDetails(this.id).subscribe((res:any)=>{
-        console.log(res);
+      this.service.cutivateDetails(this.id).subscribe((res: any) => {
+        this.bool = true;
+        this.details = res.cultivationDetails;
+        console.log(this.details);
       })
-   });
-   
+    });
+
   }
 
+}
+
+export interface cultivateDetails {
+  CropVariety: string,
+  Dateofstart: string
 }

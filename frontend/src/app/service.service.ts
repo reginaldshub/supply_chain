@@ -45,11 +45,14 @@ export class ServiceService {
   }
 
   cutivateDetails(id){
-    return this.http.get("http://localhost:3000/startcultivation"+id);
+    return this.http.get("http://localhost:3000/getCultivationDetails/"+id);
   }
 
   harvest(data){
-    return this.http.post("http://localhost:3000/harvest",data)
+    return this.http.post("http://localhost:3000/performharvest",data)
+  }
+  harvestDetails(id){
+    return this.http.get("http://localhost:3000/harvest/"+id)
   }
 
 }

@@ -25,7 +25,7 @@ onSubmit(){
 
   this.cultivate.value['RegistrationNo']=localStorage.getItem("id");
   this.cultivate.value['FarmerName']=localStorage.getItem("name");
- console.log(this.cultivate.value);
+  console.log(this.cultivate.value);
   this.service.cultivate(this.cultivate.value).subscribe((res:any)=>{
     console.log(res);
   })
