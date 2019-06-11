@@ -14,6 +14,14 @@ export class ServiceService {
     return this.http.get("http://localhost:3000/allLands");
   }
 
+  getLandsForInspection(){
+    return this.http.get("http://localhost:3000/getLandsForInspection");
+  }
+
+  InspectionReport(data){
+    return this.http.post("http://localhost:3000/inspectionReport",data);
+  }
+
   getlandbyId(data){
     return this.http.get("http://localhost:3000/getLandById/"+data)
     .pipe(

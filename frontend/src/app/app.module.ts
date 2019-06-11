@@ -61,6 +61,7 @@ import { CultivateDetailsComponent } from './dashboard/cultivate-details/cultiva
 import { HarvestComponent } from './dashboard/harvest/harvest.component';
 import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-details.component';
 import { InspectorDashboardComponent } from './inspector-dashboard/inspector-dashboard.component';
+import { InspectorViewComponent } from './inspector-dashboard/inspector-view/inspector-view.component';
 
 
 @NgModule({
@@ -78,7 +79,8 @@ import { InspectorDashboardComponent } from './inspector-dashboard/inspector-das
     CultivateDetailsComponent,
     HarvestComponent,
     HarvestDetailsComponent,
-    InspectorDashboardComponent
+    InspectorDashboardComponent,
+    InspectorViewComponent
   ],
   imports: [
     BrowserModule,

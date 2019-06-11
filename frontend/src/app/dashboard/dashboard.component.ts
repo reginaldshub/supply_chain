@@ -64,7 +64,6 @@ getland(id:any){
 
   this.service.getlandbyId(id).subscribe((res:any)=>{
     this.router.navigate(['landDetails'])
-    
   })
 
 }

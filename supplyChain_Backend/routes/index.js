@@ -347,15 +347,17 @@ router.post("/performharvest", function(req, res, next) {
         });
 });
 
-router.get("/getLandsForInspection", permit('inspector'), function(req, res, next) {
-    landRegistration.findOne({ status: "harvest" }, (error, lands) => {
+router.get("/getLandsForInspection", function(req, res, next) {
+    landRegistration.find({ status: "harvest" }, (error, lands) => {
         if (error)
             res.status(404).json({ message: "No lAND record Found" });
         res.status(200).json({ land: lands });
     });
 })
 
-router.post("/inspectionReport", permit('inspector'), function(req, res, next) {
+// permit('inspector'),
+
+router.post("/inspectionReport", function(req, res, next) {
     var payload = {
         InspectionReport: req.body.InspectionReport,
         DateofInspection: new Date(),
