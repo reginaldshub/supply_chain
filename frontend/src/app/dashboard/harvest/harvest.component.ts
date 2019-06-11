@@ -30,6 +30,7 @@ export class HarvestComponent implements OnInit {
     console.log(this.harvest.value);
     this.service.harvest(this.harvest.value).subscribe((res:any)=>{
       console.log(res);
+      this.route.navigate(['dashboard']);
     })
   }
 
