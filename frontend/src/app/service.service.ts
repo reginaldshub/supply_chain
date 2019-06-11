@@ -40,11 +40,15 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/registration",data)
   }
 
-  cultivate(data?:any){
+  cultivate(data){
     return this.http.post("http://localhost:3000/startcultivation",data);
   }
 
-  harvest(data?:any){
+  cutivateDetails(){
+    return this.http.get("http://localhost:3000/startcultivation");
+  }
+
+  harvest(data){
     return this.http.post("http://localhost:3000/harvest",data)
   }
 

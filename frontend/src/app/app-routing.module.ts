@@ -7,6 +7,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LandRegisterComponent } from './dashboard/land-register/land-register.component';
 import { LandDetailsComponent } from './dashboard/land-details/land-details.component';
 import { CultivalteComponent } from './dashboard/cultivalte/cultivalte.component';
+import { CultivateDetailsComponent } from './dashboard/cultivate-details/cultivate-details.component';
+import { HarvestComponent } from './dashboard/harvest/harvest.component';
+import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-details.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -14,7 +17,10 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'navbar',component:NavbarComponent},
   {path:'dashboard',component:DashboardComponent},
+  {path:'harvest',component:HarvestComponent},
+  {path:'harvestDetails',component:HarvestDetailsComponent},
   {path:'cultivate',component:CultivalteComponent},
+  {path:'cultivateDetails',component:CultivateDetailsComponent},
   {path:'landRegister',component:LandRegisterComponent},
   {path:'landDetails',component:LandDetailsComponent}
 ];

@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
 
   // displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'farmAddress', 'State','Country','ExporterName','ImporterName','DateofRegistration'];
 
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
+  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Details','Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,6 +39,7 @@ export class DashboardComponent implements OnInit {
  getAll(){
   this.service.lands().subscribe((res:any)=>{
     console.log(res.allLands);
+
     ELEMENT_DATA= res.allLands as LandData[];
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
@@ -71,8 +72,16 @@ getland(id:any){
 
 }
 
-getcultivate(){
-  
+cultivate(id,name){
+  localStorage.setItem("id",id);
+  localStorage.setItem("name",name);
+  this.router.navigate(['cultivate']);
+}
+
+harvest(id,name){
+  localStorage.setItem("id",id);
+  localStorage.setItem("name",name);
+  this.router.navigate(['harvest'])
 }
 
 }

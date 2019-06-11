@@ -1,19 +1,16 @@
-app-navbar{
-    position:fixed;
-    left:0;
-    top:0;
-    right:0;
-    z-index: 2;
-    
-}
 
 .filter{
     display:grid;
     grid-template-columns: 8fr 2fr;
 }
+
+
+
 a{
     color: goldenrod;
 }
+
+
 #addland{
 justify-self: end;
 align-self: center;

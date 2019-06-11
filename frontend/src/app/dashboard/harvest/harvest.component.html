@@ -1,3 +1,42 @@
-<p>
-  harvest works!
-</p>
+<app-header></app-header>
+<div class="grid">
+  <mat-card>
+  <div class="outer">
+   <h2>Harvest</h2>
+  </div>
+<form [formGroup]="harvest" (submit)="onSubmit()">
+          <mat-form-field>
+            <input formControlName="CropVariety" matInput placeholder="Crop Variety">
+            <mat-error>Crop Variety is required.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+              <input formControlName="Temperature" matInput placeholder="Temperature">
+              <mat-error>Temperature is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="Humidity" matInput placeholder="Humidity">
+                <mat-error>Humidity is required.</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                  <input formControlName="Quantity" matInput placeholder="Quantity">
+                  <mat-error>Quantity is required.</mat-error>
+                </mat-form-field>
+
+          <mat-form-field>
+              <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Date of harvest">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          <div class="end">
+          <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
+                  arrow_back
+                  </i></button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="harvest.invalid">Register</button> 
+          
+        </div>
+  </form>
+</mat-card>
+</div>

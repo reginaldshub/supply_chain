@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceService } from 'src/app/service.service';
 
 @Component({
   selector: 'app-cultivate-details',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CultivateDetailsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service:ServiceService) { }
 
   ngOnInit() {
+    this.service.cutivateDetails().subscribe((res:any)=>{
+      console.log(res);
+    })
   }
 
 }

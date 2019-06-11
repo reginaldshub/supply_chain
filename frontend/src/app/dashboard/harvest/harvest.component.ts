@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
-import { MatDialogRef} from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-harvest',
@@ -9,15 +10,28 @@ import { MatDialogRef} from '@angular/material';
 })
 export class HarvestComponent implements OnInit {
 
-  constructor(private service:ServiceService,private dialogRef:MatDialogRef<HarvestComponent>) { }
+  harvest:FormGroup;
+
+  constructor(private service:ServiceService,private formBuilder: FormBuilder,private route:Router) { }
 
   ngOnInit() {
+    this.harvest=this.formBuilder.group({
+      CropVariety:['',Validators.required],
+      Dateofstart:['',Validators.required],
+      Temperature:['',Validators.required],
+      Humidity:['',Validators.required],
+      Quantity:['',Validators.required]
+    })
   }
 
   onSubmit(){
-    this.service.harvest().subscribe((res:any)=>{
+    this.service.harvest(this.harvest.value).subscribe((res:any)=>{
       console.log(res);
     })
+  }
+
+  backtodash(){
+    this.route.navigate(['dashboard'])
   }
 
 }
