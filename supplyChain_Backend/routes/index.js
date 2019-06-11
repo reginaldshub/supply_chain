@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
-var User = require("../models/user");
+var Farmer = require("../models/farmer");
 var Cultivation = require("../models/Cultivation")
 var landRegistration = require("./../models/landRegistration");
 var Harvest = require("./../models/Harvest")
@@ -16,40 +16,40 @@ var keyManager = new KeyManager();
 
 router.post("/registration", function(req, res, next) {
     console.log(req.body);
-    User.findOne({ email: req.body.email }, (err, userExists) => {
+    Farmer.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
             if (keyManager.doesKeyExist(req.body.email)) {
                 console.log("keys are already created for" + req.body.email);
-                return res.status(409).json({ message: "User Already Registered." });
+                return res.status(409).json({ message: "Farmer Already Registered." });
             }
         } else if (err) throw err;
         else {
             var output = keyManager.createkeys(req.body.email);
             keyManager.savekeys(req.body.email, output);
-            var user = new User({
+            var farmer = new Farmer({
                 name: req.body.name,
                 email: req.body.email,
                 id: req.body.id,
                 role: req.body.role,
-                password: User.hashPassword(req.body.password)
+                password: Farmer.hashPassword(req.body.password)
             });
 
-            user
+            farmer
                 .save()
                 .then(function(doc) {
-                    // function(token, user, done) {
+                    // function(token, farmer, done) {
                     let transporter = nodeMailer.createTransport({
                         host: "smtp.gmail.com",
                         port: 465,
                         secure: true,
                         auth: {
-                            user: "anthony7jmj@gmail.com",
+                            farmer: "anthony7jmj@gmail.com",
                             pass: "qnoodlnbgotuwodp"
                         }
                     });
                     let mailOptions = {
                         from: '"Reginald Anthony" <anthony7jmj@gmail.com>', // sender address
-                        to: user.email, // list of receivers
+                        to: farmer.email, // list of receivers
                         subject: "Registered Successfully", // Subject line
                         text: "" // plain text body
                     };
@@ -66,7 +66,7 @@ router.post("/registration", function(req, res, next) {
                     return res.status(201).json({ message: "registered sucessfully" });
                 })
                 .catch(function(err) {
-                    return res.status(501).json({ message: "Error registering user." });
+                    return res.status(501).json({ message: "Error registering Farmer." });
                 });
         }
     });
@@ -74,7 +74,7 @@ router.post("/registration", function(req, res, next) {
 
 router.post("/login", function(req, res, next) {
     console.log(req.body);
-    User.findOne({ email: req.body.email })
+    Farmer.findOne({ email: req.body.email })
         .exec()
         .then(function(doc) {
             if (doc) {
@@ -87,7 +87,7 @@ router.post("/login", function(req, res, next) {
 
                     return res.status(200).send({
                         success: true,
-                        message: "Succesfully fetched user details",
+                        message: "Succesfully fetched Farmer details",
                         name: doc.name,
                         id: doc.id,
                         email: doc.email,
@@ -98,7 +98,7 @@ router.post("/login", function(req, res, next) {
                     return res.status(401).json({ message: " Invalid Credentials" });
                 }
             } else {
-                return res.status(404).json({ message: "User is not registered." });
+                return res.status(404).json({ message: "Farmer is not registered." });
             }
         })
         .catch(function(err) {
@@ -245,7 +245,7 @@ router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
 })
 
 router.get("/getFarmerProfile/:email", function(req, res, next) {
-    user.findOne({ email: req.params.email }, (error, profile) => {
+    Farmer.findOne({ email: req.params.email }, (error, profile) => {
         if (error) res.status(404).json({ message: "No Farmer record Found" })
         res.status(200).json({ profile: profile })
     })
