@@ -6,7 +6,7 @@ var schema = new Schema({
     Temperature: { type: String, require: true },
     Humidity: { type: String, require: true },
     Dateofharvest: { type: String, require: true },
-    quantity: { type: String, require: true },
+    Quantity: { type: String, require: true },
     RegistrationNo: { type: String, required: true }
 });
 

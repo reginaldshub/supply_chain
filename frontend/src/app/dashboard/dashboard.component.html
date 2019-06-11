@@ -51,7 +51,10 @@
                 <td mat-cell *matCellDef="let row" >
                     <a style="color:green" mat-button *ngIf="'cultivate'===row.status" (click)="cultivate(row.RegistrationNo, row.FarmerName)" >{{row.status}}</a> 
                     <a style="color:green" mat-button *ngIf="'harvest'===row.status" (click)="harvest(row.RegistrationNo, row.FarmerName)" >{{row.status}}</a><br/>
-                    <a *ngIf="'harvest'===row.status || 'yield'=== row.status" routerLink="/cultivateDetails" routerLinkActive="active">cultivateDetails</a> 
+                    <a *ngIf="'harvest'===row.status || 'yield'=== row.status" [routerLink]="['/harvestDetails', row.RegistrationNo]" routerLinkActive="active">HarvestDetails</a> <br/>
+                    <br/>
+                    <a *ngIf="'harvest'===row.status || 'yield'=== row.status" [routerLink]="['/cultivateDetails', row.RegistrationNo]" routerLinkActive="active">CultivateDetails</a> 
+                    <br/>
                 </td>
 
               </ng-container>

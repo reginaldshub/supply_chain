@@ -253,14 +253,16 @@ router.get("/getFarmerProfile/:email", function(req, res, next) {
 
 router.post("/performharvest", function(req, res, next) {
     var payload = {
+        FarmerName: req.body.FarmerName,
+        RegistrationNo:req.body.RegistrationNo,
         CropVariety: req.body.CropVariety,
         Temperature: req.body.Temperature,
         Humidity: req.body.Humidity,
         Dateofharvest: new Date(),
-        quantity: req.body.quantity,
+        Quantity: req.body.Quantity,
         verb: "performharvest"
     };
-
+console.log("payload",payload)
     let updateStatus = { status: "yield" }
     landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
@@ -279,7 +281,7 @@ router.post("/performharvest", function(req, res, next) {
                                 Temperature: req.body.Temperature,
                                 Humidity: req.body.Humidity,
                                 Dateofharvest: new Date(),
-                                quantity: req.body.quantity,
+                                Quantity: req.body.Quantity,
                                 RegistrationNo: req.body.RegistrationNo
 
                             });

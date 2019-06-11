@@ -1,2 +1,12 @@
 <app-header></app-header>
-<h1>hi</h1>
+<div class="display">
+        <div class="inner">
+    <div class="outer">
+        <h2>Cultivation Details</h2>
+    </div>
+<ul class="grid" *ngIf="bool">
+    <li> Crop Variety : {{details.CropVariety}}</li>
+    <li> Start of Date: {{details.Dateofstart}} </li>
+</ul>
+</div>
+</div>
