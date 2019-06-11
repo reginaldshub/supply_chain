@@ -2,6 +2,36 @@
 <div class="display">
     <div class="inner">
 <div class="outer">
+    <h2>Land Registration Details</h2>
+</div>
+<ul class = "grid" *ngIf="bool">
+    <li>RegistrationNo :  {{data.RegistrationNo}}</li>
+    <li>FarmerName     :  {{data.FarmerName}}</li>  
+    <li>FarmAddress    :  {{data.FarmAddress}}</li>  
+    <li>State          :  {{data.State}}</li>
+    <li>Country        :  {{data.Country}}</li>
+    <li>ExporterName   :  {{data.ExporterName}}</li> 
+    <li>ImporterName   :  {{data.ImporterName}}</li>
+    <li>DateOfRegistration: {{data.DateOfRegistration}}</li>
+</ul>
+</div>
+</div>
+
+<div class="display">
+    <div class="inner">
+<div class="outer">
+    <h2>Cultivation Details</h2>
+</div>
+<ul class="grid" *ngIf="bool">
+<li> Crop Variety : {{crop.CropVariety}}</li>
+<li> Start of Date: {{crop.Dateofstart}} </li>
+</ul>
+</div>
+</div>
+
+<div class="display">
+    <div class="inner">
+<div class="outer">
     <h2>Harvesting Details</h2>
 </div>
 <ul class = "grid" *ngIf="bool">

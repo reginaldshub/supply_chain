@@ -13,7 +13,8 @@ export class HarvestDetailsComponent implements OnInit {
 id;
 details;
 bool=false;
-
+data;
+crop;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -22,7 +23,9 @@ bool=false;
   
       this.service.harvestDetails(this.id).subscribe((res: any) => {
         this.bool=true;
-        console.log(this.details=res.harvestDetails);
+         this.data = res.land;
+         this.crop = res.cultivationDetails;
+        this.details=res.harvestDetails;
       })
     });
   }
