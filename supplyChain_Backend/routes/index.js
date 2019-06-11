@@ -5,6 +5,7 @@ var Farmer = require("../models/farmer");
 var Cultivation = require("../models/Cultivation");
 var landRegistration = require("./../models/landRegistration");
 var Harvest = require("./../models/Harvest");
+var Inspection = require("./../models/Inspection")
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -18,13 +19,13 @@ router.post("/registration", function(req, res, next) {
     console.log(req.body);
     Farmer.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
-            if (keyManager.doesKeyExist(req.body.email)) {
+            if (keyManager.doesKeyExist(req.body.name)) {
                 console.log("keys are already created for" + req.body.email);
                 return res.status(409).json({ message: "Farmer Already Registered." });
             }
         } else if (err) throw err;
         else {
-            var output = keyManager.createkeys(req.body.email);
+            var output = keyManager.createkeys(req.body.name);
             keyManager.savekeys(req.body.email, output);
             var farmer = new Farmer({
                 name: req.body.name,
@@ -354,6 +355,64 @@ router.get("/getLandsForInspection", permit('inspector'), function(req, res, nex
     });
 })
 
+router.post("/inspectionReport", permit('inspector'), function(req, res, next) {
+    var payload = {
+        InspectionReport: req.body.InspectionReport,
+        DateofInspection: new Date(),
+        RegistrationNo: req.body.RegistrationNo,
+        InspectorName: req.body.InspectorName,
+        FarmerName: req.body.FarmerName,
+        verb: "landInspection"
+    };
+    console.log("payload", payload);
+    let updateStatus = { status: "inspected" };
+    landRegistration
+        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+        .then(updatedResponse => {
+            if (!updatedResponse) {
+                return res.status(404).send({
+                    message: "error"
+                });
+            } else {
+                console.log("updated");
+                if (keyManager.doesKeyExist(req.body.InspectorName)) {
+                    if (
+                        (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
+                    ) {
+                        SubmitToServer(batchlistBytes).then(respo => {
+                            console.log("respo", respo);
+                            var savepayload = new Inspection({
+                                InspectionReport: req.body.InspectionReport,
+                                DateofInspection: new Date(),
+                                InspectorName: req.body.InspectorName,
+                                RegistrationNo: req.body.RegistrationNo,
+                            });
+
+                            savepayload
+                                .save()
+                                .then(function(doc) {
+                                    console.log(doc);
+                                    res.status(200).json({ status: respo });
+                                })
+                                .catch(error => {
+                                    console.log("error", error);
+                                });
+                        });
+                    }
+                }
+            }
+        })
+        .catch(err => {
+            if (err.kind === "ObjectId") {
+                return res.status(404).send({
+                    message: "Land not found with id " + req.body.RegistrationNo
+                });
+            }
+            return res.status(500).send({
+                message: "Error updating status with id " + req.body.RegistrationNo
+            });
+        });
+})
 
 
 // router.post("/startharvest", function(req, res, next) {

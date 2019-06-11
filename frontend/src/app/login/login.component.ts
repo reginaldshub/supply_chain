@@ -26,15 +26,17 @@ export class LoginComponent implements OnInit {
   }
   onSubmit(){
    console.log(this.loginForm.value);
-    this.router.navigate(['dashboard']);
-//     this.service.login(this.loginForm.value).subscribe((res:any)=>{
-//       console.log(res);
+    // this.router.navigate(['dashboard']);
+    this.service.login(this.loginForm.value).subscribe((res:any)=>{
       
-//     },
-//     error=>{
-//       console.log(error);
-//     }
-// )
+      console.log(res);
+
+    // if(res.role) this.router.navigate(['dashboard']);
+    },
+    error=>{
+      console.log(error);
+    }
+)
 }
 
 }
