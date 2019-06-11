@@ -230,6 +230,26 @@ router.post("/startcultivation", function(req, res, next) {
 });
 
 
+router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
+    Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, cultivationDetails) => {
+        if (error) res.status(404).json({ message: "No Cultivation record Found" })
+        res.status(200).json({ cultivationDetails: cultivationDetails })
+    })
+})
+
+router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
+    Harvest.findOne({ RegistrationNo: req.params.RegistrationNo }, (error, harvestDetails) => {
+        if (error) res.status(404).json({ message: "No Harvest record Found" })
+        res.status(200).json({ harvestDetails: harvestDetails })
+    })
+})
+
+router.get("/getFarmerProfile/:email", function(req, res, next) {
+    user.findOne({ email: req.params.email }, (error, profile) => {
+        if (error) res.status(404).json({ message: "No Farmer record Found" })
+        res.status(200).json({ profile: profile })
+    })
+})
 
 router.post("/performharvest", function(req, res, next) {
     var payload = {
