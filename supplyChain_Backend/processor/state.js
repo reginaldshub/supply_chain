@@ -41,7 +41,7 @@ start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName
     })
 }
 
-start_harvest = (state, CropVariety, Temperature, Humidity, Dateofharvest, quantity, signer_public_keys) => {
+start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Humidity, Dateofharvest, Quantity, signer_public_keys) => {
     let address = get_harvest_address(RegistrationNo, FarmerName)
     console.log("address", address);
     let harvest_data = {
@@ -49,7 +49,7 @@ start_harvest = (state, CropVariety, Temperature, Humidity, Dateofharvest, quant
         Temperature: Temperature,
         Humidity: Humidity,
         Dateofharvest: Dateofharvest,
-        quantity: quantity
+        Quantity: Quantity
     }
     let public_key = signer_public_keys;
     return state.setState({

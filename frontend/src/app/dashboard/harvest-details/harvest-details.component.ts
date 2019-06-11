@@ -12,16 +12,17 @@ export class HarvestDetailsComponent implements OnInit {
   constructor( private route: ActivatedRoute,private service:ServiceService) { }
 id;
 details;
-bool;
+bool=false;
+
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       console.log(this.id)
+  
       this.service.harvestDetails(this.id).subscribe((res: any) => {
-        this.bool = true;
-        this.details = res.cultivationDetails;
-        console.log(this.details);
+        this.bool=true;
+        console.log(this.details=res.harvestDetails);
       })
     });
   }

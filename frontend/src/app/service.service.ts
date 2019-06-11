@@ -52,7 +52,7 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/performharvest",data)
   }
   harvestDetails(id){
-    return this.http.get("http://localhost:3000/harvest/"+id)
+    return this.http.get("http://localhost:3000/getHarvestDetails/"+id)
   }
 
 }
