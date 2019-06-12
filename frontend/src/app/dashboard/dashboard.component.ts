@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   // displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'farmAddress', 'State','Country','ExporterName','ImporterName','DateofRegistration'];
 
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Details','Action'];
+  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -62,22 +62,20 @@ addLand(){
 
 getland(id:any){
 
-  this.service.getlandbyId(id).subscribe((res:any)=>{
-    this.router.navigate(['landDetails'])
-  })
+ 
 
 }
 
 cultivate(id,name){
   localStorage.setItem("id",id);
   localStorage.setItem("name",name);
-  this.router.navigate(['cultivate']);
+  this.router.navigate(['/cultivate',id]);
 }
 
 harvest(id,name){
   localStorage.setItem("id",id);
   localStorage.setItem("name",name);
-  this.router.navigate(['harvest'])
+  this.router.navigate(['/harvest',id])
 }
 
 }

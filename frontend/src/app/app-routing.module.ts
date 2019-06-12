@@ -19,14 +19,14 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'navbar',component:NavbarComponent},
   {path:'dashboard',component:DashboardComponent},
-  {path:'harvest',component:HarvestComponent},
+  {path:'harvest/:id',component:HarvestComponent},
   {path:'harvestDetails/:id',component:HarvestDetailsComponent},
-  {path:'cultivate',component:CultivalteComponent},
+  {path:'cultivate/:id',component:CultivalteComponent},
   {path:'cultivateDetails/:id',component:CultivateDetailsComponent},
   {path:'landRegister',component:LandRegisterComponent},
-  {path:'landDetails',component:LandDetailsComponent},
+  {path:'landDetails/:id',component:LandDetailsComponent},
   {path:'inspectorDashboard',component:InspectorDashboardComponent},
-  { path: 'inspectorView', component: InspectorViewComponent}
+  { path:'inspectorView', component: InspectorViewComponent}
 ];
 
 @NgModule({

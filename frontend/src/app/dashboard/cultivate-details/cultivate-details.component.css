@@ -11,19 +11,50 @@
   .outer{
       display:grid;
       grid-template-columns: 12fr 2fr;
-      justify-items: center;
-      align-items: center;
-  
   }
   
   .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      grid-gap:10%;
   }
   
-  ol li {
+   ul li {
+
   font-size: medium;
   font-family:sans-serif;
   }
 
+
+  .custom-list {
+    list-style-type: none;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.custom-list li {
+    list-style-type: none;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    float:left;
+    font-weight: bold;
+}
+
+.custom-list li.heading-text{
+    width: 175px;
+    font-family: sans-serif
+}
+
+.custom-list li.seperator{
+    width: 25px;
+}
+
+.custom-list li.details-text{
+    width: 200px;
+    font-weight: normal;
+}
+
+.custom-list li.clear-float{
+    clear: both;
+}

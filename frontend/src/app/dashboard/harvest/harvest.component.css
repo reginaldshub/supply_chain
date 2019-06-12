@@ -3,11 +3,11 @@
 .grid{
    margin-top:5%;
    display:grid;
-   grid-template-columns: 3fr 2fr 3fr;
+   grid-template-columns: 3fr 1fr 1fr 
 }
 
 mat-card{
-    grid-column: 2/3;
+    grid-column: 2/3; 
     display: grid;
 }
 form{
@@ -32,3 +32,52 @@ mat-form-field{
     grid-template-columns: 1fr  1fr;
 }
  
+
+
+.custom-list {
+    list-style-type: none;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.custom-list li {
+    list-style-type: none;
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    float:left;
+    font-weight: bold;
+}
+
+.custom-list li.heading-text{
+    width: 175px;
+    font-family: sans-serif
+}
+
+.custom-list li.seperator{
+    width: 25px;
+}
+
+.custom-list li.details-text{
+    width: 175px;
+    font-weight: normal;
+}
+
+.custom-list li.clear-float{
+    clear: both;
+}
+
+.grid1{
+    justify-items: center;
+    display:grid;
+}
+.grid3{
+    display: grid;
+    grid-template-columns: 4fr 4fr 1fr;
+}
+.grid5{
+    display: grid;
+    grid-template-columns: 4fr 4fr 1fr;
+}
+
