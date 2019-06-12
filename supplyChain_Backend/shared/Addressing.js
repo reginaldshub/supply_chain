@@ -40,9 +40,9 @@ get_harvest_address = (RegistrationNo, FarmerName) => {
     return TP_NAMESPACE + prefix.harvest + _hash(FarmerName) + _hash(RegistrationNo)
 }
 
-get_inspection_address = (RegistrationNo, FarmerName) => {
+get_inspection_address = (RegistrationNo, FarmerName, InspectorName) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    return TP_NAMESPACE + prefix.inspection + _hash(FarmerName) + _hash(RegistrationNo)
+    return TP_NAMESPACE + prefix.inspection + _hash(FarmerName).substring(0, 20) + _hash(RegistrationNo).substring(0, 20) + _hash(InspectorName).substring(0, 22)
 }
 
 // get_farmer_registry_address = (registration_no, farm_address, farmer_name, land_size) => {

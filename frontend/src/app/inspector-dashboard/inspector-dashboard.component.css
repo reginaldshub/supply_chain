@@ -4,7 +4,9 @@
 }
 
 a {
-    color: goldenrod;
+    color: blue;
+    cursor: pointer;
+    /* text-decoration: underline; */
 }
 
 #addland {
