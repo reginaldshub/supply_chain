@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/service.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,24 +10,29 @@ import { ServiceService } from 'src/app/service.service';
 })
 export class InspectorViewComponent implements OnInit {
   data;
-  constructor(private service:ServiceService) { }
+  InspectionDetails: any;
+  constructor(private router:Router,private service:ServiceService) { }
 
   ngOnInit() {
    this.data = this.service.getlandDetails();
+   this.InspectionDetails = this.data.inspectionDetails[0].InspectionData;
+   console.log(this.InspectionDetails)
    console.log(this.data as LandDetails)
    console.log(this.data.land.RegistrationNo)
    
   }
 
 
-  InspectionReport(report){
+  SubmitInspectionReport(){
     let inspectionData = {
-      InspectionReport: report,
+      InspectionReport: "inspected",
         RegistrationNo: this.data.land.RegistrationNo,
-        InspectorName: localStorage.getItem(name),
+        InspectorName: localStorage.getItem("InspectorName"),
         FarmerName: this.data.land.FarmerName,
     }
     this.service.InspectionReport(inspectionData).subscribe((res:any)=>{
+      if(res.status == "COMMITTED") this.router.navigate(['inspectorDashboard']);
+
      console.log(res)
       
     })

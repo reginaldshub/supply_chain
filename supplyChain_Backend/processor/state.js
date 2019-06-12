@@ -62,7 +62,7 @@ start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Hu
 }
 
 inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, InspectorName, FarmerName, signer_public_keys) => {
-    let address = get_inspection_address(RegistrationNo, FarmerName)
+    let address = get_inspection_address(RegistrationNo, FarmerName, InspectorName)
     console.log("address", address);
     let inspection_data = {
         InspectionReport: InspectionReport,

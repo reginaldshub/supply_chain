@@ -17,7 +17,37 @@
     </div>
 </div>
 
+<div class="display">
+    <div class="inner">
+        <div class="outer">
+            <h2>Inspection Details</h2>
+        </div>
+        <ul *ngFor="let det of InspectionDetails" class="grid">
+            <li>DateofInspection : {{det.DateofInspection}}</li>
+            <li>InspectionReport : {{det.InspectionReport}}</li>
+            <li>InspectorName : {{det.InspectorName}}</li>
+        </ul>
+    </div>
+</div>
+
+<br /><br />
+<div style="text-align: center">
+    <mat-checkbox [(ngModel)]="disabled">All the fields provided are true </mat-checkbox>
+    <br /><button mat-raised-button color="primary" [disabled]="!disabled" (click)="SubmitInspectionReport()">
+Submit
+</button>
+</div>
 
 
+
+
+
+
+
+
+
+
+<!-- 
 <button mat-raised-button color="primary" (click)="InspectionReport('approve')">Approve</button><br /><br />
 <button mat-raised-button color="warn" (click)="InspectionReport('reject')">Reject</button>
+ -->
