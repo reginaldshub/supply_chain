@@ -1,5 +1,5 @@
 <mat-toolbar> 
-  <h2> </h2>
+    <button mat-mini-fab color="primary" matTooltip="back" [routerLink]="['/dashboard']" routerLinkActive="active">Dashboard</button>
   <div class="menu">
     <button mat-button [matMenuTriggerFor]="menu">
         <i class="material-icons">
@@ -7,7 +7,7 @@
             </i>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>Profile</button>
+      <a   [routerLink]="['/profile']" routerLinkActive="active"  mat-menu-item>Profile</a>
       <a [routerLink]="['/login']"  mat-menu-item>Signout</a>
     </mat-menu>
   </div>

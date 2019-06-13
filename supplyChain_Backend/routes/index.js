@@ -542,7 +542,7 @@ if (keyManager.doesKeyExist(req.body.InspectorName)) {
 //         if (err) throw err;
 //         console.log(user)
 //     })
-})
+// })
 
 
 module.exports = router;

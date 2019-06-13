@@ -1,32 +1,113 @@
 <app-header></app-header>
-<div class="display">
-    <div class="inner">
-        <div class="outer">
-            <h2>Land Registration Details</h2>
+<div *ngIf="bool">
+    <div class="display">
+        <div class="inner">
+            <div class="outer">
+                <h2>Land Registration Details</h2>
+            </div>
+            <div class="grid">
+                <ul class="custom-list">
+                    <li class="heading-text">Registration No</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.RegistrationNo}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Farmer Name</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.FarmerName}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Farm Address</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.FarmAddress}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">State</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.State}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+
+                <ul class="custom-list">
+                    <li class="heading-text">Country</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.Country}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Exporter Name</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.ExporterName}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Importer Name</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.ImporterName}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Date Of Registration</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.DateOfRegistration}}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+            </div>
         </div>
-        <ul class="grid">
-            <li>RegistrationNo : {{data.land.RegistrationNo}}</li>
-            <li>FarmerName : {{data.land.FarmerName}}</li>
-            <li>FarmAddress : {{data.land.FarmAddress}}</li>
-            <li>State : {{data.land.State}}</li>
-            <li>Country : {{data.land.Country}}</li>
-            <li>ExporterName : {{data.land.ExporterName}}</li>
-            <li>ImporterName : {{data.land.ImporterName}}</li>
-            <li>DateOfRegistration: {{data.land.DateOfRegistration}}</li>
-        </ul>
     </div>
+
+
+    <div class="display">
+        <div class="inner">
+            <div class="outer">
+                <h2>Cultivation Details</h2>
+            </div>
+
+            <div class="grid">
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Variety</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+                <ul class="custom-list">
+                    <li class="heading-text">Start of Date</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </div>
+
 
 <div class="display">
     <div class="inner">
         <div class="outer">
             <h2>Inspection Details</h2>
         </div>
-        <ul *ngFor="let det of InspectionDetails" class="grid">
-            <li>DateofInspection : {{det.DateofInspection}}</li>
-            <li>InspectionReport : {{det.InspectionReport}}</li>
-            <li>InspectorName : {{det.InspectorName}}</li>
-        </ul>
+        <div *ngFor="let det of InspectionDetails" class="grid">
+            <ul class="custom-list">
+                <li class="heading-text">Date of Inspection</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.DateofInspection}}</li>
+                <li class="clear-float"></li>
+
+                <li class="heading-text">InspectorName</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.InspectorName}}</li>
+                <li class="clear-float"></li>
+            </ul>
+
+
+            <ul class="custom-list">
+                <li class="heading-text">InspectionReport</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.InspectionReport}}</li>
+                <li class="clear-float"></li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -34,8 +115,8 @@
 <div style="text-align: center">
     <mat-checkbox [(ngModel)]="disabled">All the fields provided are true </mat-checkbox>
     <br /><button mat-raised-button color="primary" [disabled]="!disabled" (click)="SubmitInspectionReport()">
-Submit
-</button>
+        Submit
+    </button>
 </div>
 
 

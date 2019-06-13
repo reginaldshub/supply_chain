@@ -39,7 +39,10 @@ export class ServiceService {
     console.log(data);
     return this.http.post("http://localhost:3000/landregistration",data)
   }
-
+  getUserProfile(data){
+    return this.http.get("http://localhost:3000/getUserProfile/"+data); 
+  }
+  
   login(data:any){
     return this.http.post("http://localhost:3000/login",data)
   }

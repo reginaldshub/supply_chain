@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Login } from '../interfaces/login';
 import { ServiceService } from '../service.service';
 import { Router } from '@angular/router';
@@ -12,41 +12,40 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder,private router:Router,private service:ServiceService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private service: ServiceService) { }
 
   loginForm: FormGroup;
 
   ngOnInit() {
 
-    this.loginForm  =  this.formBuilder.group({
+    this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
 
   }
-  onSubmit(){
-   console.log(this.loginForm.value);
-    // this.router.navigate(['dashboard']);
-    this.service.login(this.loginForm.value).subscribe((res:any)=>{
-
+  onSubmit() {
+    console.log(this.loginForm.value);
+    localStorage.setItem('email', this.loginForm.value.email);
+    this.service.login(this.loginForm.value).subscribe((res: any) => {
       console.log(res);
 
-    if(res.role === "Farmer") {
-      this.router.navigate(['dashboard']);
-      localStorage.setItem("FarmerName",res.name);
-      localStorage.setItem("Role",res.role)
-    }
-    else if(res.role === "Inspector") {
-      this.router.navigate(['inspectorDashboard']);
-      localStorage.setItem("InspectorName",res.name)
-      localStorage.setItem("Role",res.role)
-    }
+      if (res.role === "Farmer") {
+        this.router.navigate(['dashboard']);
+        localStorage.setItem("FarmerName", res.name);
+        localStorage.setItem("Role", res.role)
+      }
+      else if (res.role === "Inspector") {
+        this.router.navigate(['inspectorDashboard']);
+        localStorage.setItem("InspectorName", res.name)
+        localStorage.setItem("Role", res.role)
+      }
     },
-    error=>{
-      console.log(error);
-    }
-)
-}
+      error => {
+        console.log(error);
+      }
+    )
+  }
 
 }
 

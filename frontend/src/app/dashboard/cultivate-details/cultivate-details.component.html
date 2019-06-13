@@ -1,6 +1,7 @@
 <app-header></app-header>
 
 <div *ngIf="bool">
+
 <div class="display">
     <div class="inner">
         <div class="outer">
@@ -76,8 +77,14 @@
                 <li class="details-text">{{details.Dateofstart}}</li>
                 <li class="clear-float"></li>
             </ul>
+            <button mat-mini-fab color="primary" matTooltip="back" [routerLink]="['/dashboard']" routerLinkActive="active"><i class="material-icons">
+                    arrow_back
+            </i></button>
         </div>
+        
     </div>
+    
 </div>
+
 
 </div>

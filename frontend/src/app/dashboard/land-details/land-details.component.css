@@ -45,6 +45,7 @@ tr{
     list-style: none;
     padding: 0px;
     margin: 0px;
+    line-height:1.5
 }
 
 .custom-list li {
