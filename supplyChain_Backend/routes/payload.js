@@ -1,60 +1,99 @@
 var protobuf = require("protobufjs");
-var protos = require("./../shared/")
+var protos = require("./../shared/supplyChain")
 
-function protobuf1(payload) {
+function protobuff(payload) {
     // return new Promise((resolve, reject) => {
     console.log("payload", payload.verb)
-    if (payload.verb == 'create_account') {
-        var createAccountMessage = protos.structuredBankPackage.CreateAccountParams.create()
-        createAccountMessage.customerId = payload.customerId
-        createAccountMessage.customerName = payload.customerName
-        createAccountMessage.savingsBalance = payload.savingsBalance
-        createAccountMessage.checkingBalance = payload.checkingBalance
+    if (payload.verb == 'landregistration') {
 
-        var payload1 = protos.structuredBankPackage.PayLoad.create()
-        payload1.action = protos.structuredBankPackage.PayLoad.Action.CREATE_ACCOUNT;
-        payload1.createAccount = createAccountMessage;
-        console.log("protoPayload", payload1)
-        return payload1;
-    } else if (payload.verb == 'deposit_money') {
-        var depositMoneyMessage = protos.structuredBankPackage.DepositMoneyParams.create()
-        depositMoneyMessage.customerId = payload.customerId
-        depositMoneyMessage.amount = payload.amount
+        var landRegistrationMessage = protos.supplyChainPackage.LandRegistrationParams.create()
+        landRegistrationMessage.RegistrationNo = payload.RegistrationNo
+        landRegistrationMessage.FarmerName = payload.FarmerName
+        landRegistrationMessage.FarmAddress = payload.FarmAddress
+        landRegistrationMessage.State = payload.State
+        landRegistrationMessage.Country = payload.Country
+        landRegistrationMessage.ExporterName = payload.ExporterName
+        landRegistrationMessage.ImporterName = payload.ImporterName
+        landRegistrationMessage.DateofRegistration = payload.DateOfRegistration
 
-        var payload2 = protos.structuredBankPackage.PayLoad.create()
-        payload2.action = protos.structuredBankPackage.PayLoad.Action.DEPOSIT_MONEY;
-        payload2.depositMoney = depositMoneyMessage;
-        console.log("deposit_money", payload2)
-        return payload2;
-    } else if (payload.verb == 'withdraw_money') {
-        var WithDrawMoneyMessage = protos.structuredBankPackage.WithDrawMoneyParams.create()
-        WithDrawMoneyMessage.customerId = payload.customerId
-        WithDrawMoneyMessage.amount = payload.amount
 
-        var payload3 = protos.structuredBankPackage.PayLoad.create()
-        payload3.action = protos.structuredBankPackage.PayLoad.Action.WITHDRAW_MONEY;
-        payload3.withdrawMoney = WithDrawMoneyMessage;
-        console.log("withdraw_money", payload3)
-        return payload3;
-    } else if (payload.verb == 'transfer_money') {
+        let payloadInstance = protos.supplyChainPackage.PayLoad.create()
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION;
+        payloadInstance.landRegistration = landRegistrationMessage;
+        console.log("landRegistration", payloadInstance)
+        return payloadInstance;
 
-        var TransferMoneyMessage = protos.structuredBankPackage.TransferMoneyParams.create();
-        TransferMoneyMessage.sourceCustomerId = payload.sourceCustomerId
-        TransferMoneyMessage.destCustomerId = payload.destCustomerId
-        TransferMoneyMessage.amount = payload.amount
+    } else if (payload.verb == 'startcultivation') {
+        var startCultivationMessage = protos.supplyChainPackage.StartCultivationParams.create()
+        startCultivationMessage.CropVariety = payload.CropVariety
+        startCultivationMessage.Dateofstart = payload.Dateofstart
 
-        var payload4 = protos.structuredBankPackage.PayLoad.create();
-        payload4.action = protos.structuredBankPackage.PayLoad.Action.TRANSFER_MONEY;
-        payload4.transferMoney = TransferMoneyMessage;
-        console.log("transfer_money", payload4)
-        return payload4;
+        let payloadInstance = protos.supplyChainPackage.PayLoad.create()
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION;
+        payloadInstance.startCultivation = startCultivationMessage;
+        console.log("startCultivation", payloadInstance)
+        return payloadInstance;
+    } else if (payload.verb == 'performharvest') {
+        var performHarvestMessage = protos.supplyChainPackage.PerformHarvestParams.create()
+        performHarvestMessage.CropVariety = payload.CropVariety
+        performHarvestMessage.Temperature = payload.Temperature
+        performHarvestMessage.Humidity = payload.Humidity
+        performHarvestMessage.Dateofharvest = payload.Dateofharvest
+        performHarvestMessage.Quantity = payload.Quantity
+
+        var payloadInstance = protos.supplyChainPackage.PayLoad.create()
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST;
+        payloadInstance.performHarvest = performHarvestMessage;
+        console.log("performHarvest", payloadInstance)
+        return payloadInstance;
+
+    } else if (payload.verb == 'landInspection') {
+
+        var InspectMessage = protos.supplyChainPackage.InspectParams.create();
+        InspectMessage.InspectionReport = payload.InspectionReport
+        InspectMessage.DateofInspection = payload.DateofInspection
+        InspectMessage.InspectorName = payload.InspectorName
+
+        var payloadInstance = protos.supplyChainPackage.PayLoad.create();
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.INSPECTION;
+        payloadInstance.inspection = InspectMessage;
+        console.log("landInspection", payloadInstance)
+        return payloadInstance;
+
+    } else if (payload.verb == 'processharvest') {
+
+        // Quantity Rosting_duration Package_date_time Temperature Internal_batch_no Processor_name Processor_address var ProcessHarvestMessage = protos.supplyChainPackage.ProcessHarvestParams.create();
+        var ProcessHarvestMessage = protos.supplyChainPackage.ProcessHarvestParams.create();
+        ProcessHarvestMessage.Quantity = payload.Quantity
+        ProcessHarvestMessage.RostingDuration = payload.RostingDuration
+        ProcessHarvestMessage.PackageDateTime = payload.PackageDateTime
+        ProcessHarvestMessage.Temperature = payload.Temperature
+        ProcessHarvestMessage.InternalBatchNo = payload.InternalBatchNo
+        ProcessHarvestMessage.ProcessorName = payload.ProcessorName
+        ProcessHarvestMessage.ProcessorName = payload.ProcessorAddress
+
+        var payloadInstance = protos.supplyChainPackage.PayLoad.create();
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST;
+        payloadInstance.processHarvest = ProcessHarvestMessage;
+        console.log("processHarvest", payloadInstance)
+        return payloadInstance;
+
+    } else if (payload.verb == 'purchasegrains') {
+        var PurchaseGrainsMessage = protos.supplyChainPackage.PurchaseGrainsParams.create();
+        PurchaseGrainsMessage.Quantity = payload.Quantity
+        PurchaseGrainsMessage.RostingDuration = payload.RostingDuration
+        PurchaseGrainsMessage.PackageDateTime = payload.PackageDateTime
+        PurchaseGrainsMessage.Temperature = payload.Temperature
+        PurchaseGrainsMessage.InternalBatchNo = payload.InternalBatchNo
+        PurchaseGrainsMessage.ProcessorName = payload.ProcessorName
+        PurchaseGrainsMessage.ProcessorName = payload.ProcessorAddress
+
+        var payloadInstance = protos.supplyChainPackage.PayLoad.create();
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PURCHASE_GRAINS;
+        payloadInstance.processHarvest = PurchaseGrainsMessage;
+        console.log("purchasegrains", payloadInstance)
+        return payloadInstance;
     }
-    // })
 }
 
-// async function protobuf1(payload) {
-//     const buffer = await load(payload);
-//     return buffer;
-// }
-
-module.exports = { protobuf1 };
+module.exports = { protobuff };

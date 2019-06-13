@@ -3,6 +3,7 @@ const { InvalidTransaction, InternalError } = require('sawtooth-sdk/processor/ex
 const cbor = require('cbor')
 const env = require('../shared/env');
 const { land_registration, start_cultivation, inspect_land } = require('./state')
+var protos = require("./../shared/supplyChain")
 
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
@@ -19,8 +20,10 @@ class SupplyChainHandler extends TransactionHandler {
         this.signer_public_keys = header.signerPublicKey;
         let payload = cbor.decode(transactionProcessRequest.payload);
         console.log(payload);
-        if (payload.verb === 'landregistration') {
-            return land_registration(state, payload.RegistrationNo, payload.FarmerName, payload.FarmAddress, payload.State, payload.Country, payload.ExporterName, payload.ImporterName, payload.DateOfRegistration, this.signer_public_keys)
+        if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
+            var newPayload = payload.landRegistration;
+            console.log("newPayload", newPayload)
+            return land_registration(state, newPayload.RegistrationNo, newPayload.FarmerName, newPayload.FarmAddress, newPayload.State, newPayload.Country, newPayload.ExporterName, newPayload.ImporterName, newPayload.DateOfRegistration, this.signer_public_keys)
         } else if (payload.verb === 'startcultivation') {
             return start_cultivation(state, payload.RegistrationNo, payload.CropVariety, payload.Dateofstart, payload.FarmerName, this.signer_public_keys)
         } else if (payload.verb === 'performharvest') {
