@@ -63,6 +63,8 @@ import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-det
 import { InspectorDashboardComponent } from './inspector-dashboard/inspector-dashboard.component';
 import { InspectorViewComponent } from './inspector-dashboard/inspector-view/inspector-view.component';
 import { InspectionDetailsComponent } from './dashboard/inspection-details/inspection-details.component';
+import { ProcessAgentDashboardComponent } from './process-agent-dashboard/process-agent-dashboard.component';
+import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-agent-dashboard.component';
 
 
 @NgModule({
@@ -82,7 +84,9 @@ import { InspectionDetailsComponent } from './dashboard/inspection-details/inspe
     HarvestDetailsComponent,
     InspectorDashboardComponent,
     InspectorViewComponent,
-    InspectionDetailsComponent
+    InspectionDetailsComponent,
+    ProcessAgentDashboardComponent,
+    RetailAgentDashboardComponent
   ],
   imports: [
     BrowserModule,
