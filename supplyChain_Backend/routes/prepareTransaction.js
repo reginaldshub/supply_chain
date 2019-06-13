@@ -3,6 +3,7 @@ var { _hashforpayload } = require("../shared/Addressing");
 const cbor = require('cbor')
 const { protobuf } = require('sawtooth-sdk')
 const KeyManager = require('./keymanager');
+const { protobuf1 } = require('./payload');
 
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);

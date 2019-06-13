@@ -26,7 +26,7 @@ router.post("/registration", function(req, res, next) {
         } else if (err) throw err;
         else {
             var output = keyManager.createkeys(req.body.name);
-            keyManager.savekeys(req.body.email, output);
+            keyManager.savekeys(req.body.name, output);
             var user = new User({
                 name: req.body.name,
                 email: req.body.email,
@@ -430,6 +430,7 @@ router.post("/inspectionReport", function(req, res, next) {
                                     newInspection.save(function(err) {
                                         if (err) throw err;
                                         console.log('Inspection Data created!');
+                                        res.status(200)
                                     });
                                 }
                             })
