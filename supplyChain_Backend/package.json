@@ -23,6 +23,7 @@
         "mongoose": "^5.5.8",
         "morgan": "~1.9.1",
         "nodemailer": "^6.2.1",
+        "protobufjs": "^6.8.8",
         "pug": "2.0.0-beta11",
         "request": "^2.88.0",
         "sawtooth-sdk": "^1.0.5"

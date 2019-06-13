@@ -31,23 +31,21 @@ message LandRegistrationParams {
 }
 
 message StartCultivationParams {
-	string CropVariety = 1;
+	string Crop_variety = 1;
 	string Dateofstart = 2;
 }
 
 message InspectParams {
-	string CropVariety = 1;
-	string Temperature = 2;
-	string Humidity = 3;
-	string Dateofharvest = 4;
-	int32 quantity = 5;
+	string Inspection_report = 1;
+	string Dateof_inspection = 2;
+	string Inspector_name = 3;
 }
 
 message PerformHarvestParams {
 	string Crop_variety = 1;
 	string Temperature = 2;
 	string Humidity = 3;
-	string Dateof_harvest = 4;
+	string Dateofharvest = 4;
 	string Quantity = 5;
 }
 
