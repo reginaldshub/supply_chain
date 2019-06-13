@@ -118,7 +118,8 @@ router.post("/landregistration", function(req, res, next) {
         ImporterName: req.body.ImporterName,
         DateOfRegistration: new Date(),
         verb: "landregistration",
-        status: "cultivate"
+        status: "cultivate",
+        inspectionStatus: false
     };
     // payload.verb = "landregistration";
     console.log(payload);
@@ -372,58 +373,71 @@ router.get("/getLandsForInspection", function(req, res, next) {
 // permit('inspector'),
 
 router.post("/inspectionReport", function(req, res, next) {
-var payload = {
-    InspectionReport: req.body.InspectionReport,
-    DateofInspection: new Date(),
-    RegistrationNo: req.body.RegistrationNo,
-    InspectorName: req.body.InspectorName,
-    FarmerName: req.body.FarmerName,
-    verb: "landInspection"
-};
-console.log("payload", payload);
-if (keyManager.doesKeyExist(req.body.InspectorName)) {
-    if (
-        (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
-    ) {
-        SubmitToServer(batchlistBytes).then(respo => {
-            console.log("respo", respo);
+    var payload = {
+        InspectionReport: req.body.InspectionReport,
+        DateofInspection: new Date(),
+        RegistrationNo: req.body.RegistrationNo,
+        InspectorName: req.body.InspectorName,
+        FarmerName: req.body.FarmerName,
+        verb: "landInspection"
+    };
+    console.log("payload", payload);
 
-            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo }, function(err, allInspectionData) {
-                if (err) throw err;
-                if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
-                    console.log("Not empty")
-                    Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
-                            "$push": {
-                                "InspectionData": {
-                                    InspectorName: req.body.InspectorName,
-                                    InspectionReport: req.body.InspectionReport,
-                                    DateofInspection: new Date()
+    let updateStatus = { inspectionStatus: true };
+    landRegistration
+        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+        .then(updatedResponse => {
+            if (!updatedResponse) {
+                return res.status(404).send({
+                    message: "error"
+                });
+            } else {
+
+                if (keyManager.doesKeyExist(req.body.InspectorName)) {
+                    if (
+                        (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
+                    ) {
+                        SubmitToServer(batchlistBytes).then(respo => {
+                            console.log("respo", respo);
+
+                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo }, function(err, allInspectionData) {
+                                if (err) throw err;
+                                if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
+                                    console.log("Not empty")
+                                    Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
+                                            "$push": {
+                                                "InspectionData": {
+                                                    InspectorName: req.body.InspectorName,
+                                                    InspectionReport: req.body.InspectionReport,
+                                                    DateofInspection: new Date()
+                                                }
+                                            }
+                                        },
+                                        function(err, updatedres) {
+                                            if (err) throw err;
+                                            console.log(updatedres)
+                                        })
+                                } else {
+                                    console.log("empty")
+                                    var newInspection = Inspection({
+                                        RegistrationNo: req.body.RegistrationNo,
+                                        InspectionData: [{
+                                            InspectorName: req.body.InspectorName,
+                                            InspectionReport: req.body.InspectionReport,
+                                            DateofInspection: new Date(),
+                                        }]
+                                    });
+                                    newInspection.save(function(err) {
+                                        if (err) throw err;
+                                        console.log('Inspection Data created!');
+                                    });
                                 }
-                            }
-                        },
-                        function(err, updatedres) {
-                            if (err) throw err;
-                            console.log(updatedres)
-                        })
-                } else {
-                    console.log("empty")
-                    var newInspection = Inspection({
-                        RegistrationNo: req.body.RegistrationNo,
-                        InspectionData: [{
-                            InspectorName: req.body.InspectorName,
-                            InspectionReport: req.body.InspectionReport,
-                            DateofInspection: new Date(),
-                        }]
-                    });
-                    newInspection.save(function(err) {
-                        if (err) throw err;
-                        console.log('Inspection Data created!');
-                    });
+                            })
+                        });
+                    }
                 }
-            })
-        });
-    }
-}
+            }
+        })
 })
 
 // router.post("/inspectionReport", function(req, res, next) {
@@ -542,7 +556,7 @@ if (keyManager.doesKeyExist(req.body.InspectorName)) {
 //         if (err) throw err;
 //         console.log(user)
 //     })
-})
+// })
 
 
 module.exports = router;

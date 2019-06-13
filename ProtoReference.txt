@@ -1,0 +1,39 @@
+ACTIONS:-
+1) LandRegistration
+2) StartCultivation
+3) Inspect
+4) PerformHarvest
+5) ProcessHarvest
+6) PurchaseGrains
+
+
+_________________________________________________________________________________________________________________________________
+1) 
+RegistrationNo	String 
+FarmerName	String 
+farmAddress	String 
+State	String 
+Country	String 
+ExporterName	String 
+ImporterName	String 
+Date of Registration	Datetime
+
+2) 
+CropVariety
+Dateofstart
+
+3)
+CropVariety
+Temperature
+Humidity
+Dateofharvest
+quantity
+
+5, 6) 
+quantity	int
+rostingDuration	Stting
+packageDateTime	DateTime
+temperature	String
+internalBatchNo	String
+processorName	String
+processorAddress	String
