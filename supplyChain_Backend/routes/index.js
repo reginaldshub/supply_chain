@@ -383,7 +383,7 @@ router.post("/inspectionReport", function(req, res, next) {
     };
     console.log("payload", payload);
 
-    let updateStatus = { inspectionStatus: true };
+    let updateStatus = { inspectionStatus: 'true' };
     landRegistration
         .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
@@ -392,7 +392,7 @@ router.post("/inspectionReport", function(req, res, next) {
                     message: "error"
                 });
             } else {
-
+                console.log("updated")
                 if (keyManager.doesKeyExist(req.body.InspectorName)) {
                     if (
                         (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
@@ -416,6 +416,10 @@ router.post("/inspectionReport", function(req, res, next) {
                                         function(err, updatedres) {
                                             if (err) throw err;
                                             console.log(updatedres)
+                                            res.status(200).send({
+                                                message: "updated inspection details",
+                                                status: "COMMITTED"
+                                            });
                                         })
                                 } else {
                                     console.log("empty")
@@ -429,8 +433,12 @@ router.post("/inspectionReport", function(req, res, next) {
                                     });
                                     newInspection.save(function(err) {
                                         if (err) throw err;
+
                                         console.log('Inspection Data created!');
-                                        res.status(200)
+                                        res.status(200).send({
+                                            message: "updated inspection details",
+                                            status: "COMMITTED"
+                                        });
                                     });
                                 }
                             })

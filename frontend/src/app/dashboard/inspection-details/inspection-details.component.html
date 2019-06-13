@@ -106,30 +106,9 @@
                 <li class="seperator">:</li>
                 <li class="details-text">{{det.InspectionReport}}</li>
                 <li class="clear-float"></li>
-            
             </ul>
+            <br/>
+            <br />
         </div>
     </div>
 </div>
-
-<br /><br />
-<div style="text-align: center">
-    <mat-checkbox [(ngModel)]="disabled">All the fields provided are true </mat-checkbox>
-    <br /><button mat-raised-button color="primary" [disabled]="!disabled" (click)="SubmitInspectionReport()">
-        Submit
-    </button>
-</div>
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<button mat-raised-button color="primary" (click)="InspectionReport('approve')">Approve</button><br /><br />
-<button mat-raised-button color="warn" (click)="InspectionReport('reject')">Reject</button>
- -->
