@@ -62,6 +62,7 @@ import { HarvestComponent } from './dashboard/harvest/harvest.component';
 import { HarvestDetailsComponent } from './dashboard/harvest-details/harvest-details.component';
 import { InspectorDashboardComponent } from './inspector-dashboard/inspector-dashboard.component';
 import { InspectorViewComponent } from './inspector-dashboard/inspector-view/inspector-view.component';
+import { InspectionDetailsComponent } from './dashboard/inspection-details/inspection-details.component';
 
 
 @NgModule({
@@ -80,7 +81,8 @@ import { InspectorViewComponent } from './inspector-dashboard/inspector-view/ins
     HarvestComponent,
     HarvestDetailsComponent,
     InspectorDashboardComponent,
-    InspectorViewComponent
+    InspectorViewComponent,
+    InspectionDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,7 @@ nodeMailer = require("nodemailer");
 var batchlistBytes = null;
 var keyManager = new KeyManager();
 
-router.post("/registration", function(req, res, next) {
+router.post("/registration", function (req, res, next) {
     console.log(req.body);
     User.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
@@ -26,7 +26,7 @@ router.post("/registration", function(req, res, next) {
         } else if (err) throw err;
         else {
             var output = keyManager.createkeys(req.body.name);
-            keyManager.savekeys(req.body.email, output);
+            keyManager.savekeys(req.body.name, output);
             var user = new User({
                 name: req.body.name,
                 email: req.body.email,
@@ -37,7 +37,7 @@ router.post("/registration", function(req, res, next) {
 
             user
                 .save()
-                .then(function(doc) {
+                .then(function (doc) {
                     // function(token, user, done) {
                     let transporter = nodeMailer.createTransport({
                         host: "smtp.gmail.com",
@@ -66,18 +66,18 @@ router.post("/registration", function(req, res, next) {
 
                     return res.status(201).json({ message: "registered sucessfully" });
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     return res.status(501).json({ message: "Error registering User." });
                 });
         }
     });
 });
 
-router.post("/login", function(req, res, next) {
+router.post("/login", function (req, res, next) {
     console.log(req.body);
     User.findOne({ email: req.body.email })
         .exec()
-        .then(function(doc) {
+        .then(function (doc) {
             if (doc) {
                 console.log(doc);
                 if (doc.isValid(req.body.password)) {
@@ -102,12 +102,12 @@ router.post("/login", function(req, res, next) {
                 return res.status(404).json({ message: "User is not registered." });
             }
         })
-        .catch(function(err) {
+        .catch(function (err) {
             return res.status(501).json({ message: "Some internal error" });
         });
 });
 
-router.post("/landregistration", function(req, res, next) {
+router.post("/landregistration", function (req, res, next) {
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
         FarmerName: req.body.FarmerName,
@@ -149,7 +149,7 @@ router.post("/landregistration", function(req, res, next) {
 
                 savepayload
                     .save()
-                    .then(function(doc) {
+                    .then(function (doc) {
                         console.log(doc);
                         res.status(200).json({ status: respo });
                     })
@@ -161,13 +161,13 @@ router.post("/landregistration", function(req, res, next) {
     }
 });
 
-router.get("/allLands", function(req, res, next) {
+router.get("/allLands", function (req, res, next) {
     landRegistration.find({}, (error, lands) => {
         res.status(200).json({ allLands: lands });
     });
 });
 
-router.get("/getLandById/:RegistrationNo", function(req, res, next) {
+router.get("/getLandById/:RegistrationNo", function (req, res, next) {
     landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, lands) => {
             if (error) throw error
@@ -184,7 +184,7 @@ router.get("/getLandById/:RegistrationNo", function(req, res, next) {
         });
 })
 
-router.post("/startcultivation", function(req, res, next) {
+router.post("/startcultivation", function (req, res, next) {
     console.log(req.body);
     var payload = {
         FarmerName: req.body.FarmerName,
@@ -218,7 +218,7 @@ router.post("/startcultivation", function(req, res, next) {
 
                             savepayload
                                 .save()
-                                .then(function(doc) {
+                                .then(function (doc) {
                                     console.log(doc);
                                     res.status(200).json({ status: respo });
                                 })
@@ -242,7 +242,7 @@ router.post("/startcultivation", function(req, res, next) {
         });
 });
 
-router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
+router.get("/getCultivationDetails/:RegistrationNo", function (req, res, next) {
     Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, cultivationDetails) => {
             if (error)
@@ -259,7 +259,7 @@ router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
     );
 });
 
-router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
+router.get("/getHarvestDetails/:RegistrationNo", function (req, res, next) {
     Harvest.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, harvestDetails) => {
             if (error) res.status(404).json({ message: "No Harvest record Found" });
@@ -287,14 +287,14 @@ router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
     );
 });
 
-router.get("/getUserProfile/:email", function(req, res, next) {
+router.get("/getUserProfile/:email", function (req, res, next) {
     User.findOne({ email: req.params.email }, (error, profile) => {
         if (error) res.status(404).json({ message: "No User record Found" });
         res.status(200).json({ profile: profile });
     });
 });
 
-router.post("/performharvest", function(req, res, next) {
+router.post("/performharvest", function (req, res, next) {
     var payload = {
         FarmerName: req.body.FarmerName,
         RegistrationNo: req.body.RegistrationNo,
@@ -333,7 +333,7 @@ router.post("/performharvest", function(req, res, next) {
 
                             savepayload
                                 .save()
-                                .then(function(doc) {
+                                .then(function (doc) {
                                     console.log(doc);
                                     res.status(200).json({ status: respo });
                                 })
@@ -357,7 +357,7 @@ router.post("/performharvest", function(req, res, next) {
         });
 });
 
-router.get("/getLandsForInspection", function(req, res, next) {
+router.get("/getLandsForInspection", function (req, res, next) {
     landRegistration.find({ status: "harvest" }, (error, lands) => {
         if (error)
             res.status(404).json({ message: "No lAND record Found" });
@@ -372,7 +372,7 @@ router.get("/getLandsForInspection", function(req, res, next) {
 
 // permit('inspector'),
 
-router.post("/inspectionReport", function(req, res, next) {
+router.post("/inspectionReport", function (req, res, next) {
     var payload = {
         InspectionReport: req.body.InspectionReport,
         DateofInspection: new Date(),
@@ -383,7 +383,7 @@ router.post("/inspectionReport", function(req, res, next) {
     };
     console.log("payload", payload);
 
-    let updateStatus = { inspectionStatus: true };
+    let updateStatus = { inspectionStatus: 'true' };
     landRegistration
         .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
@@ -392,7 +392,7 @@ router.post("/inspectionReport", function(req, res, next) {
                     message: "error"
                 });
             } else {
-
+                console.log("updated")
                 if (keyManager.doesKeyExist(req.body.InspectorName)) {
                     if (
                         (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
@@ -400,22 +400,25 @@ router.post("/inspectionReport", function(req, res, next) {
                         SubmitToServer(batchlistBytes).then(respo => {
                             console.log("respo", respo);
 
-                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo }, function(err, allInspectionData) {
+                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo }, function (err, allInspectionData) {
                                 if (err) throw err;
                                 if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
                                     console.log("Not empty")
                                     Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
-                                            "$push": {
-                                                "InspectionData": {
-                                                    InspectorName: req.body.InspectorName,
-                                                    InspectionReport: req.body.InspectionReport,
-                                                    DateofInspection: new Date()
-                                                }
+                                        "$push": {
+                                            "InspectionData": {
+                                                InspectorName: req.body.InspectorName,
+                                                InspectionReport: req.body.InspectionReport,
+                                                DateofInspection: new Date()
                                             }
-                                        },
-                                        function(err, updatedres) {
+                                        }
+                                    },
+                                        function (err, updatedres) {
                                             if (err) throw err;
                                             console.log(updatedres)
+                                            res.status(200).send({
+                                                message: "updated inspection details",status:"COMMITTED"
+                                            });
                                         })
                                 } else {
                                     console.log("empty")
@@ -427,9 +430,13 @@ router.post("/inspectionReport", function(req, res, next) {
                                             DateofInspection: new Date(),
                                         }]
                                     });
-                                    newInspection.save(function(err) {
+                                    newInspection.save(function (err) {
                                         if (err) throw err;
+                                        
                                         console.log('Inspection Data created!');
+                                        res.status(200).send({
+                                            message: "updated inspection details",status:"COMMITTED"
+                                        });
                                     });
                                 }
                             })

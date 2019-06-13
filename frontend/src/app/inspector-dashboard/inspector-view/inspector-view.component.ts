@@ -48,7 +48,7 @@ export class InspectorViewComponent implements OnInit {
     this.service.InspectionReport(inspectionData).subscribe((res:any)=>{
       if(res.status == "COMMITTED")
        this.router.navigate(['inspectorDashboard']);
-     console.log(res)
+     console.log("inspector Submit",res)
       
     })
   }
