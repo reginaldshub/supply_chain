@@ -12,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
   registerForm:FormGroup;
   
-  roles=['Farmer','Inspector']
+  roles=['Farmer','Inspector','ProcessAgent','RetailAgent']
   constructor(private formBuilder:FormBuilder,private service:ServiceService,private router:Router) { }
 
   ngOnInit() {

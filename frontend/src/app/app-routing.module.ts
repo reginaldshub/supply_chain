@@ -14,6 +14,9 @@ import { InspectorDashboardComponent } from './inspector-dashboard/inspector-das
 import { InspectorViewComponent } from './inspector-dashboard/inspector-view/inspector-view.component';
 import { ProfileComponent } from './profile/profile.component';
 import { InspectionDetailsComponent } from './dashboard/inspection-details/inspection-details.component';
+import { ProcessAgentDashboardComponent } from './process-agent-dashboard/process-agent-dashboard.component';
+import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-agent-dashboard.component';
+import { InspectionComponent } from './inspector-dashboard/inspection/inspection.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -30,7 +33,10 @@ const routes: Routes = [
   {path:'landDetails/:id',component:LandDetailsComponent},
   {path:'inspectorDashboard',component:InspectorDashboardComponent},
   {path:'inspectorView/:id', component: InspectorViewComponent},
-  {path:'inspectionDetails/:id',component:InspectionDetailsComponent}
+  {path:'inspectionDetails/:id',component:InspectionDetailsComponent},
+  {path:'inspection/:id',component:InspectionComponent},
+  {path:'processAgentDashboard',component:ProcessAgentDashboardComponent},
+  {path:'retailAgentDashboard',component:RetailAgentDashboardComponent}
 ];
 
 @NgModule({

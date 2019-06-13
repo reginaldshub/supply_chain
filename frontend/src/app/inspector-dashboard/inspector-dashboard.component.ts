@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./inspector-dashboard.component.css']
 })
 export class InspectorDashboardComponent implements OnInit {
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State'];
+  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -55,6 +55,7 @@ export class InspectorDashboardComponent implements OnInit {
     console.log(res)
     this.router.navigate(['inspectorView']) 
   })
+  
 }
 
 }

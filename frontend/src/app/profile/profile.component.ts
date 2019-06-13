@@ -10,9 +10,10 @@ export class ProfileComponent implements OnInit {
   Profile:FormGroup;
   constructor(private formBuilder:FormBuilder,private service:ServiceService) { }
 
-  roles=['Farmer','Inspector']
-  ngOnInit() {  
-    this.service.getUserProfile("santt7777@gmail.com").subscribe((res:any)=>{
+  roles=['Farmer','Inspector','ProcessAgent','RetailAgent']
+  
+  ngOnInit(){  
+    this.service.getUserProfile(localStorage.getItem('email')).subscribe((res:any)=>{
      console.log(res);
        this.Profile.patchValue(res.profile);
     })

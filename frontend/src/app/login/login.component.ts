@@ -33,11 +33,23 @@ export class LoginComponent implements OnInit {
       if (res.role === "Farmer") {
         this.router.navigate(['dashboard']);
         localStorage.setItem("FarmerName", res.name);
+        localStorage.setItem("name", res.name);
         localStorage.setItem("Role", res.role)
       }
       else if (res.role === "Inspector") {
         this.router.navigate(['inspectorDashboard']);
         localStorage.setItem("InspectorName", res.name)
+        localStorage.setItem("name", res.name);
+        localStorage.setItem("Role", res.role)
+      }else if(res.role === "ProcessAgent"){
+        this.router.navigate(['processAgentDashboard']);
+        localStorage.setItem("ProcessAgentName", res.name)
+        localStorage.setItem("name", res.name);
+        localStorage.setItem("Role", res.role)
+      }else if(res.role === "RetailAgent"){
+        this.router.navigate(['retailAgentDashboard']);
+        localStorage.setItem("RetailAgentName", res.name)
+        localStorage.setItem("name", res.name);
         localStorage.setItem("Role", res.role)
       }
     },
