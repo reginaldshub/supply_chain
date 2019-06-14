@@ -55,7 +55,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
+  addLand(){
+    this.router.navigate(['landRegister']);
+  }
+ 
+  
 }
 
 export interface LandData {
