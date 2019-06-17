@@ -18,6 +18,7 @@ import { ProcessAgentDashboardComponent } from './process-agent-dashboard/proces
 import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-agent-dashboard.component';
 import { InspectionComponent } from './inspector-dashboard/inspection/inspection.component';
 import { ProcessingComponent } from './process-agent-dashboard/processing/processing.component';
+import { ProcessingDetailsComponent } from './process-agent-dashboard/processing/processing-details/processing-details.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path:'inspection/:id',component:InspectionComponent},
   {path:'processAgentDashboard',component:ProcessAgentDashboardComponent},
   {path:'process/:id',component:ProcessingComponent},
+  {path:'processDetails/:id',component:ProcessingDetailsComponent},
   {path:'retailAgentDashboard',component:RetailAgentDashboardComponent}
 ];
 
