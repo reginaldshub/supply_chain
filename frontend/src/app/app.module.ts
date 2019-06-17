@@ -66,6 +66,7 @@ import { InspectionDetailsComponent } from './dashboard/inspection-details/inspe
 import { ProcessAgentDashboardComponent } from './process-agent-dashboard/process-agent-dashboard.component';
 import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-agent-dashboard.component';
 import { InspectionComponent } from './inspector-dashboard/inspection/inspection.component';
+import { ProcessingComponent } from './process-agent-dashboard/processing/processing.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { InspectionComponent } from './inspector-dashboard/inspection/inspection
     InspectionDetailsComponent,
     ProcessAgentDashboardComponent,
     RetailAgentDashboardComponent,
-    InspectionComponent
+    InspectionComponent,
+    ProcessingComponent
   ],
   imports: [
     BrowserModule,

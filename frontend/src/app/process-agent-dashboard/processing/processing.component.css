@@ -1,0 +1,65 @@
+
+mat-card{
+    width:90%;
+}
+
+ form{
+     display:grid;
+     grid-template-columns: 1fr;
+    
+ }
+ 
+ .outer{
+    font-family: sans-serif  
+ }
+ .outer1{
+     height: 91vh;
+     display:grid;
+     align-items: center;
+     grid-template-columns: 6fr 2fr 1fr;
+ }
+ .inner1{
+     grid-column: 2/3;
+     grid-row: 1/2;
+ }
+ 
+ .custom-list {
+     list-style-type: none;
+     list-style: none;
+     padding: 0px;
+     margin: 0px;
+     line-height: 1.5;
+ }
+ 
+ .custom-list li {
+     list-style-type: none;
+     list-style: none;
+     padding: 0px;
+     margin: 0px;
+     float:left;
+     font-weight: bold;
+ }
+ 
+ .custom-list li.heading-text{
+     width: 200px;
+     font-family: sans-serif
+ }
+ 
+ .custom-list li.seperator{
+     width: 25px;
+ }
+ 
+ .custom-list li.details-text{
+     width: 200px;
+     font-weight: normal;
+ }
+ 
+ .custom-list li.clear-float{
+     clear: both;
+ }
+ 
+ .grid1{
+     display:grid;
+     justify-items: center;
+ }
+ 

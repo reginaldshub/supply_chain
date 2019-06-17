@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class ProcessAgentDashboardComponent implements OnInit {
 
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State'];
+  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -22,7 +22,7 @@ export class ProcessAgentDashboardComponent implements OnInit {
 
   ngOnInit(){
 
-    this.getAll();
+     this.getAll();
   }
  
   getAll(){
@@ -45,6 +45,14 @@ export class ProcessAgentDashboardComponent implements OnInit {
      this.dataSource.paginator.firstPage();
    }
  }
+
+
+ process(id,name){
+  localStorage.setItem("id",id);
+  localStorage.setItem("name",name);
+  this.router.navigate(['/process',id])
+}
+
 }
 
 export interface LandData {

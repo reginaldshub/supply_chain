@@ -47,9 +47,9 @@
                 <td style="width:20%" mat-cell *matCellDef="let row" >
                     <a style="color:green" mat-button *ngIf="'cultivate'===row.status" (click)="cultivate(row.RegistrationNo, row.FarmerName)" >{{row.status}}</a> 
                     <a style="color:green" mat-button *ngIf="'harvest'===row.status" (click)="harvest(row.RegistrationNo, row.FarmerName)" >{{row.status}}</a>
-                    <a *ngIf="'yield'=== row.status" [routerLink]="['/harvestDetails', row.RegistrationNo]" routerLinkActive="active">HarvestDetails</a> 
-                    <a style="margin-left:5px" *ngIf="'harvest'===row.status || 'yield'=== row.status" [routerLink]="['/cultivateDetails', row.RegistrationNo]" routerLinkActive="active">CultivateDetails</a>
-                    <a style="margin-left:5px" *ngIf="row.inspectionStatus" [routerLink]="['/cultivateDetails', row.RegistrationNo]" routerLinkActive="active">InspectedDetails</a> 
+                    <a *ngIf="'yield'=== row.status" [routerLink]="['/harvestDetails', row.RegistrationNo]" routerLinkActive="active">Harvested</a> 
+                    <a style="margin-left:5px" *ngIf="'harvest'===row.status || 'yield'=== row.status" [routerLink]="['/cultivateDetails', row.RegistrationNo]" routerLinkActive="active">Cultivated</a>
+                    <a style="margin-left:5px" *ngIf="row.inspectionStatus" [routerLink]="['/inspectionDetails', row.RegistrationNo]" routerLinkActive="active">Inspected</a> 
                 </td>
               </ng-container>
 

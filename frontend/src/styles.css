@@ -3,3 +3,7 @@
 body{
     margin:0
 }
+
+.custom-list{
+    line-height: 1.5;
+}

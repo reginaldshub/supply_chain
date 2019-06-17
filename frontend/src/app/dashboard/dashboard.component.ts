@@ -30,8 +30,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.getAll();
+     this.getAll();
   }
 
   getAll() {
@@ -48,6 +47,11 @@ export class DashboardComponent implements OnInit {
 
     })
   }
+
+  addLand(){
+   this.router.navigate(['landRegister']);
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     if (this.dataSource.paginator) {
@@ -55,6 +59,17 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  cultivate(id,name){
+    localStorage.setItem("id",id);
+    localStorage.setItem("name",name);
+    this.router.navigate(['/cultivate',id]);
+  }
+  
+  harvest(id,name){
+    localStorage.setItem("id",id);
+    localStorage.setItem("name",name);
+    this.router.navigate(['/harvest',id])
+  }
 
 }
 

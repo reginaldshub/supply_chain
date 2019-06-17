@@ -1,117 +1,111 @@
 <app-header></app-header>
 <div class="grid">
-                <div class= "grid1" *ngIf="bool">
-            <div class = "grid2">
-                <div class="outer">
-                    <h2>Land Registration Details</h2>
-                </div>
-                <div class="grid3">
-                    <ul>
-                        <li class="heading-text">RegistrationNo</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.RegistrationNo}}</li>
-                        <li class="clear-float"></li>
-
-                        <li class="heading-text">Farm Address</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.FarmAddress}}</li>
-                        <li class="clear-float"></li>
-
-                        <li class="heading-text">State</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.State}}</li>
-                        <li class="clear-float"></li>
-                    </ul>
-
-
-                    <ul class="custom-list">
-                        <li class="heading-text">Country</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.Country}}</li>
-                        <li class="clear-float"></li>
-
-                        <li class="heading-text">Exporter Name</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.ExporterName}}</li>
-                        <li class="clear-float"></li>
-
-                        <li class="heading-text">Importer Name</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.ImporterName}}</li>
-                        <li class="clear-float"></li>
-
-                        <li class="heading-text">Date Of Registration</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{data.DateOfRegistration}}}</li>
-                        <li class="clear-float"></li>
-                    </ul>
-                </div>
+    <div class="grid1" *ngIf="bool">
+        <div class="grid2">
+            <div class="outer">
+                <h2>Land Registration Details</h2>
             </div>
-            <div class="grid4">
-                <div class="outer">
-                    <h2>Cultivation Details</h2>
-                </div>
+            <div class="grid3">
+                <ul class="custom-list">
+                    <li class="heading-text">RegistrationNo</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.RegistrationNo}}</li>
+                    <li class="clear-float"></li>
 
-                <div class="grid5">
-                    <ul class="custom-list">
-                        <li class="heading-text">Crop Variety</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{details.CropVariety}}</li>
-                        <li class="clear-float"></li>
-                    </ul>
+                    <li class="heading-text">Farm Address</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.FarmAddress}}</li>
+                    <li class="clear-float"></li>
 
-                    <ul class="custom-list">
-                        <li class="heading-text">Start of Date</li>
-                        <li class="seperator">:</li>
-                        <li class="details-text">{{details.Dateofstart}}</li>
-                        <li class="clear-float"></li>
-                    </ul>
-                </div>
+                    <li class="heading-text">State</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.State}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+
+                <ul class="custom-list">
+                    <li class="heading-text">Country</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.Country}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Exporter Name</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.ExporterName}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Importer Name</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.ImporterName}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Date Of Registration</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{data.DateOfRegistration}}}</li>
+                    <li class="clear-float"></li>
+                </ul>
             </div>
-   </div>
-  <mat-card>
-  <div>
-   <h2>Harvest</h2>
-  </div>
-<form [formGroup]="harvest" (submit)="onSubmit()">
-          <mat-form-field>
-            <input formControlName="CropVariety" matInput placeholder="Crop Variety">
-            <mat-error>Crop Variety is required.</mat-error>
-          </mat-form-field>
+        </div>
+        <div class="grid4">
+            <div class="outer">
+                <h2>Cultivation Details</h2>
+            </div>
 
-          <mat-form-field>
-              <input formControlName="Temperature" matInput placeholder="Temperature">
-              <mat-error>Temperature is required.</mat-error>
+            <div class="grid5">
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Variety</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+                <ul class="custom-list">
+                    <li class="heading-text">Start of Date</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <mat-card>
+        <div>
+            <h2>Harvest</h2>
+        </div>
+        <form [formGroup]="harvest" (submit)="onSubmit()">
+            <mat-form-field>
+                <input formControlName="CropVariety" matInput placeholder="Crop Variety">
+                <mat-error>Crop Variety is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="Temperature" matInput placeholder="Temperature">
+                <mat-error>Temperature is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field>
                 <input formControlName="Humidity" matInput placeholder="Humidity">
                 <mat-error>Humidity is required.</mat-error>
-              </mat-form-field>
-
-              <mat-form-field>
-                  <input formControlName="Quantity" matInput placeholder="Quantity">
-                  <mat-error>Quantity is required.</mat-error>
-                </mat-form-field>
-
-          <mat-form-field>
-              <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Date of harvest">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-          <div class="end">
-          <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
-                  arrow_back
-                  </i></button>
-          <button mat-raised-button color="primary" type="submit" [disabled]="harvest.invalid">Register</button>
 
-        </div>
-  </form>
-</mat-card>
+            <mat-form-field>
+                <input formControlName="Quantity" matInput placeholder="Quantity">
+                <mat-error>Quantity is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Date of harvest">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="end">
+                <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
+                        arrow_back
+                    </i></button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="harvest.invalid">Register</button>
+
+            </div>
+        </form>
+    </mat-card>
 </div>
-
-
-
-
-
-

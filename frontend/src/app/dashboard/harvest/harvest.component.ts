@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HarvestComponent implements OnInit {
 
-  harvest:FormGroup;
+  harvest: FormGroup;
   id: number;
   private sub: any;
   details;
@@ -19,7 +19,7 @@ export class HarvestComponent implements OnInit {
   bool: Boolean = false;
 
 
-  constructor(private router: ActivatedRoute,private service:ServiceService,private formBuilder: FormBuilder,private route:Router) { }
+  constructor(private router: ActivatedRoute, private service: ServiceService, private formBuilder: FormBuilder, private route: Router) { }
 
   ngOnInit() {
     this.router.params.subscribe(params => {
@@ -34,26 +34,26 @@ export class HarvestComponent implements OnInit {
       })
     });
 
-    this.harvest=this.formBuilder.group({
-      CropVariety:['',Validators.required],
-      Dateofstart:['',Validators.required],
-      Temperature:['',Validators.required],
-      Humidity:['',Validators.required],
-      Quantity:['',Validators.required]
+    this.harvest = this.formBuilder.group({
+      CropVariety: ['', Validators.required],
+      Dateofstart: ['', Validators.required],
+      Temperature: ['', Validators.required],
+      Humidity: ['', Validators.required],
+      Quantity: ['', Validators.required]
     })
   }
 
-  onSubmit(){
-    this.harvest.value['RegistrationNo']=localStorage.getItem("id");
-    this.harvest.value['FarmerName']=localStorage.getItem("name");
+  onSubmit() {
+    this.harvest.value['RegistrationNo'] = localStorage.getItem("id");
+    this.harvest.value['FarmerName'] = localStorage.getItem("name");
     console.log(this.harvest.value);
-    this.service.harvest(this.harvest.value).subscribe((res:any)=>{
+    this.service.harvest(this.harvest.value).subscribe((res: any) => {
       console.log(res);
       this.route.navigate(['dashboard']);
     })
   }
 
-  backtodash(){
+  backtodash() {
     this.route.navigate(['dashboard'])
   }
 
