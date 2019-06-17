@@ -1,14 +1,26 @@
 mat-toolbar{
     display:grid;
-    justify-items: stretch;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 7fr 7fr 1fr;
     background-color: #3f51b5;
+    justify-items: center;
     box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
     color:white
 }
 
-.menu{
+.icon{
     grid-row:1/2;
     grid-column:3/4;
-    justify-self: end;
+}
+
+.icon{
+display:grid;
+grid-template-columns: 1fr 1fr;
+grid-gap:5%;
+}
+.mat-toolbar-row, .mat-toolbar-single-row{
+    padding:0;
+}
+.material-icons{
+ line-height: 1;
+ font-size:30px;
 }
