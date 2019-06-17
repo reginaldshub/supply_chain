@@ -19,6 +19,7 @@ router.post("/registration", function(req, res, next) {
     console.log(req.body);
     User.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
+            return res.status(409).json({ message: "User Already Registered." });
             if (keyManager.doesKeyExist(req.body.name)) {
                 console.log("keys are already created for" + req.body.email);
                 return res.status(409).json({ message: "User Already Registered." });
@@ -166,6 +167,14 @@ router.get("/allLands", function(req, res, next) {
         res.status(200).json({ allLands: lands });
     });
 });
+
+router.get("/getLandByFarmerName/:name", function(req, res, next) {
+    landRegistration.find({ FarmerName: req.params.name },
+        (error, lands) => {
+            if (error) throw error
+            else res.status(200).json({ allLands: lands });
+        });
+})
 
 router.get("/getLandById/:RegistrationNo", function(req, res, next) {
     landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
@@ -446,6 +455,49 @@ router.post("/inspectionReport", function(req, res, next) {
                     }
                 }
             }
+        })
+})
+
+router.get("/getLandByProcessAgent/:username", function(req, res, next) {
+    console.log("entered", req.params)
+        // landRegistration.find({ ExporterName: req.params.username }, (err, lands) => {
+        //     console.log(lands)
+        //     res.status(200).send({ allLands: lands })
+        // })
+    landRegistration.find({ ExporterName: req.params.username },
+        (error, lands) => {
+            if (error) throw error
+            Inspection.find({ RegistrationNo: lands.RegistrationNo }, (error, inspectionDetails) => {
+                if (error) throw error
+                Cultivation.find({ RegistrationNo: lands.RegistrationNo }, (error, cultivationtionDetails) => {
+                    if (error) throw error
+                    Harvest.find({ RegistrationNo: lands.RegistrationNo }, (error, harvestDetails) => {
+                        if (error) throw error
+                        else res.status(200).json({ land: lands, inspectionDetails: inspectionDetails, cultivationtionDetails: cultivationtionDetails, harvestDetails: harvestDetails });
+                    })
+                })
+            })
+        })
+})
+
+router.get("/getLandByRetailAgent/:username", function(req, res, next) {
+    // landRegistration.find({ ImporterName: req.params.username }, (err, lands) => {
+    //     console.log(lands)
+    //     res.status(200).send({ allLands: lands })
+    // })
+    landRegistration.find({ ImporterName: req.params.username },
+        (error, lands) => {
+            if (error) throw error
+            Inspection.find({ RegistrationNo: lands.RegistrationNo }, (error, inspectionDetails) => {
+                if (error) throw error
+                Cultivation.find({ RegistrationNo: lands.RegistrationNo }, (error, cultivationtionDetails) => {
+                    if (error) throw error
+                    Harvest.find({ RegistrationNo: lands.RegistrationNo }, (error, harvestDetails) => {
+                        if (error) throw error
+                        else res.status(200).json({ land: lands, inspectionDetails: inspectionDetails, cultivationtionDetails: cultivationtionDetails, harvestDetails: harvestDetails });
+                    })
+                })
+            })
         })
 })
 

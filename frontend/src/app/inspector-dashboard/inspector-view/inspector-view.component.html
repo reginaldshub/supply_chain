@@ -28,7 +28,6 @@
                     <li class="clear-float"></li>
                 </ul>
 
-
                 <ul class="custom-list">
                     <li class="heading-text">Country</li>
                     <li class="seperator">:</li>
@@ -47,7 +46,7 @@
 
                     <li class="heading-text">Date Of Registration</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{data.DateOfRegistration}}}</li>
+                    <li class="details-text">{{data.DateOfRegistration | date}}</li>
                     <li class="clear-float"></li>
                 </ul>
             </div>
@@ -72,7 +71,7 @@
                 <ul class="custom-list">
                     <li class="heading-text">Start of Date</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="details-text">{{details.Dateofstart | date}} </li>
                     <li class="clear-float"></li>
                 </ul>
             </div>
@@ -91,7 +90,7 @@
             <ul class="custom-list">
                 <li class="heading-text">Date of Inspection</li>
                 <li class="seperator">:</li>
-                <li class="details-text">{{det.DateofInspection}}</li>
+                <li class="details-text">{{det.DateofInspection | date}}</li>
                 <li class="clear-float"></li>
 
                 <li class="heading-text">InspectorName</li>
@@ -99,26 +98,14 @@
                 <li class="details-text">{{det.InspectorName}}</li>
                 <li class="clear-float"></li>
             </ul>
-            
+
             <ul class="custom-list">
                 <li class="heading-text">InspectionReport</li>
                 <li class="seperator">:</li>
                 <li class="details-text">{{det.InspectionReport}}</li>
                 <li class="clear-float"></li>
-                
+
             </ul>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-

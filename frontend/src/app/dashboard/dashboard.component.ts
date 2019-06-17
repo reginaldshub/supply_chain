@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAll() {
-    this.service.lands().subscribe((res: any) => {
+    this.service.lands(localStorage.getItem("name")).subscribe((res: any) => {
       if (res.allLands.length == 0) {
         this.display = false;
       } else {
@@ -58,7 +58,17 @@ export class DashboardComponent implements OnInit {
   addLand(){
     this.router.navigate(['landRegister']);
   }
- 
+  cultivate(id,name){	
+    localStorage.setItem("id",id);	
+    localStorage.setItem("name",name);	
+    this.router.navigate(['/cultivate',id]);	
+  }	
+  
+   harvest(id,name){	
+    localStorage.setItem("id",id);	
+    localStorage.setItem("name",name);	
+    this.router.navigate(['/harvest',id])	
+  }
   
 }
 

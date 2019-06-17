@@ -28,18 +28,18 @@ export class RetailAgentDashboardComponent implements OnInit {
   }
  
   getAll(){
-   this.service.lands().subscribe((res:any)=>{
-     if(res.allLands.length==0){
-       this.display=false;
-     }else{
-     this.display=true;
-     ELEMENT_DATA= res.allLands as LandData[];
-     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-     this.dataSource.paginator = this.paginator;
-     this.dataSource.sort = this.sort;
-     }
+  //  this.service.lands().subscribe((res:any)=>{
+  //    if(res.allLands.length==0){
+  //      this.display=false;
+  //    }else{
+  //    this.display=true;
+  //    ELEMENT_DATA= res.allLands as LandData[];
+  //    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+  //    this.dataSource.paginator = this.paginator;
+  //    this.dataSource.sort = this.sort;
+  //    }
      
-     })
+  //    })
   }
   applyFilter(filterValue: string){
     this.dataSource.filter = filterValue.trim().toLowerCase();

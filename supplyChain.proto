@@ -3,6 +3,7 @@ syntax = "proto3";
 
 message PayLoad{
     enum Action {
+
         LAND_REGISTRATION = 0;
         START_CULTIVATION = 1;
         INSPECTION = 2;
@@ -11,62 +12,66 @@ message PayLoad{
         PURCHASE_GRAINS = 5;
     }
     Action action = 1;
-    LandRegistrationParams land_registration = 2;
-    StartCultivationParams start_cultivation = 3;
-    InspectParams inspection = 4;
-    PerformHarvestParams perform_harvest = 5;
-    ProcessHarvestParams process_harvest = 6;
-    PurchaseGrainsParams purchase_grains = 7;
+    LandRegistrationParams create_account = 2;
+    StartCultivationParams deposit_money = 3;
+    InspectParams withdraw_money = 4;
+    PerformHarvestParams transfer_money = 5;
+    ProcessHarvestParams transfer_money = 6;
+    PurchaseGrainsParams transfer_money = 7;
 }
 
 message LandRegistrationParams {
-	string Registration_no = 1;
-	string Farmer_name = 2; 
-	string Farm_address = 3; 
-	string State = 4; 
-	string Country = 5; 
-	string Exporter_name = 6;
-	string Importer_name = 7; 
-	string Dateof_registration = 8;
+    int32 customer_id = 1;
+    string customer_name = 2;
+    float savings_balance = 3;
+    float checking_balance = 4;
+	string Registration_no;
+	string Farmer_name; 
+	string Farm_address; 
+	string State; 
+	string Country; 
+	string Exporter_name; 
+	string Importer_name; 
+	string Dateof_registration;
 }
 
 message StartCultivationParams {
-	string CropVariety = 1;
-	string Dateofstart = 2;
+	string CropVariety;
+	string Dateofstart;
 }
 
 message InspectParams {
-	string CropVariety = 1;
-	string Temperature = 2;
-	string Humidity = 3;
-	string Dateofharvest = 4;
-	int32 quantity = 5;
+	string CropVariety;
+	string Temperature;
+	string Humidity;
+	string Dateofharvest;
+	int32 quantity;
 }
 
 message PerformHarvestParams {
-	string Crop_variety = 1;
-	string Temperature = 2;
-	string Humidity = 3;
-	string Dateof_harvest = 4;
-	string Quantity = 5;
+	string Crop_variety
+	string Temperature
+	string Humidity
+	string Dateof_harvest
+	string Quantity
 }
 
 message ProcessHarvestParams {
-	int32 Quantity = 1;
-	string Rosting_duration = 2;
-	string Package_date_time = 3;
-	string Temperature = 4;
-	string Internal_batch_no = 5;
-	string Processor_name = 6;
-	string Processor_address = 7;
+	int32 Quantity;
+	string Rosting_duration;
+	string Package_date_time;
+	string Temperature;
+	string Internal_batch_no;
+	string Processor_name;
+	string Processor_address;
 }
 
 message PurchaseGrainsParams {
-	int32 Quantity = 1;
-	string Rosting_duration = 2;
-	string Package_date_time = 3;
-	string Temperature = 4;
-	string Internal_batch_no = 5;
-	string Processor_name = 6;
-	string Processor_address = 7;
+	int32 Quantity;
+	string Rosting_duration;
+	string Package_date_time;
+	string Temperature;
+	string Internal_batch_no;
+	string Processor_name;
+	string Processor_address;
 }

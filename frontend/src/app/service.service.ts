@@ -10,8 +10,8 @@ export class ServiceService {
   landDetails:any;
   constructor(private http:HttpClient) { }
 
-   lands(){
-    return this.http.get("http://localhost:3000/allLands");
+   lands(name){
+    return this.http.get("http://localhost:3000/getLandByFarmerName/"+name);
   }
 
   getLandsForInspection(){
@@ -65,5 +65,8 @@ export class ServiceService {
   harvestDetails(id){
     return this.http.get("http://localhost:3000/getHarvestDetails/"+id)
   }
-
+  getLandByProcessAgent(id){
+    console.log(id)
+    return this.http.get("http://localhost:3000/getLandByProcessAgent/"+id)
+  }
 }
