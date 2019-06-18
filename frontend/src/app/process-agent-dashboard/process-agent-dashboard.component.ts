@@ -28,16 +28,16 @@ export class ProcessAgentDashboardComponent implements OnInit {
   getAll(){
    this.service.getLandByProcessAgent(localStorage.getItem("name")).subscribe((res:any)=>{
      console.log(res)
-    // if(res.allLands.length==0){
-    //    this.display=false;
-    //  }else{
-    //    console.log(res)
-    //  this.display=true;
-    //  ELEMENT_DATA= res.allLands as LandData[];
-    //  this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-    //  this.dataSource.paginator = this.paginator;
-    //  this.dataSource.sort = this.sort;
-    //  }
+    if(res.allLands.length==0){
+       this.display=false;
+     }else{
+       console.log(res)
+     this.display=true;
+     ELEMENT_DATA= res.allLands as LandData[];
+     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+     this.dataSource.paginator = this.paginator;
+     this.dataSource.sort = this.sort;
+     }
      
      })
   }

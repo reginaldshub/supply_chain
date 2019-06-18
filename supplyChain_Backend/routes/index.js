@@ -5,7 +5,7 @@ var User = require("../models/user");
 var Cultivation = require("../models/Cultivation");
 var landRegistration = require("./../models/landRegistration");
 var Harvest = require("./../models/Harvest");
-var Inspection = require("./../models/Inspection")
+var Inspection = require("./../models/Inspection");
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -122,8 +122,6 @@ router.post("/landregistration", function(req, res, next) {
         status: "cultivate",
         inspectionStatus: false
     };
-    // payload.verb = "landregistration";
-    console.log(payload);
     let FarmerName = req.body.FarmerName;
     if (keyManager.doesKeyExist(FarmerName)) {
         console.log("keys are already created for" + FarmerName);
@@ -169,29 +167,43 @@ router.get("/allLands", function(req, res, next) {
 });
 
 router.get("/getLandByFarmerName/:name", function(req, res, next) {
-    landRegistration.find({ FarmerName: req.params.name },
-        (error, lands) => {
-            if (error) throw error
-            else res.status(200).json({ allLands: lands });
-        });
-})
+    landRegistration.find({ FarmerName: req.params.name }, (error, lands) => {
+        if (error) throw error;
+        else res.status(200).json({ allLands: lands });
+    });
+});
 
 router.get("/getLandById/:RegistrationNo", function(req, res, next) {
     landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, lands) => {
-            if (error) throw error
-            Inspection.find({ RegistrationNo: req.params.RegistrationNo }, (error, inspectionDetails) => {
-                if (error) throw error
-                Cultivation.find({ RegistrationNo: req.params.RegistrationNo }, (error, cultivationtionDetails) => {
-                    if (error) throw error
-                    Harvest.find({ RegistrationNo: req.params.RegistrationNo }, (error, harvestDetails) => {
-                        if (error) throw error
-                        else res.status(200).json({ land: lands, inspectionDetails: inspectionDetails, cultivationtionDetails: cultivationtionDetails, harvestDetails: harvestDetails });
-                    })
-                })
-            })
-        });
-})
+            if (error) throw error;
+            Inspection.find({ RegistrationNo: req.params.RegistrationNo },
+                (error, inspectionDetails) => {
+                    if (error) throw error;
+                    Cultivation.find({ RegistrationNo: req.params.RegistrationNo },
+                        (error, cultivationtionDetails) => {
+                            if (error) throw error;
+                            Harvest.find({ RegistrationNo: req.params.RegistrationNo },
+                                (error, harvestDetails) => {
+                                    if (error) throw error;
+                                    else
+                                        res
+                                        .status(200)
+                                        .json({
+                                            land: lands,
+                                            inspectionDetails: inspectionDetails,
+                                            cultivationtionDetails: cultivationtionDetails,
+                                            harvestDetails: harvestDetails
+                                        });
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
+});
 
 router.post("/startcultivation", function(req, res, next) {
     console.log(req.body);
@@ -256,7 +268,6 @@ router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
         (error, cultivationDetails) => {
             if (error)
                 res.status(404).json({ message: "No Cultivation record Found" });
-            // res.status(200).json({ cultivationDetails: cultivationDetails })
             landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
                 (error, lands) => {
                     res
@@ -272,13 +283,11 @@ router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
     Harvest.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, harvestDetails) => {
             if (error) res.status(404).json({ message: "No Harvest record Found" });
-            // res.status(200).json({ harvestDetails: harvestDetails })
 
             Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo },
                 (error, cultivationDetails) => {
                     if (error)
                         res.status(404).json({ message: "No Cultivation record Found" });
-                    // res.status(200).json({ cultivationDetails: cultivationDetails, harvestDetails: harvestDetails })
                     landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
                         (error, lands) => {
                             if (error)
@@ -368,16 +377,10 @@ router.post("/performharvest", function(req, res, next) {
 
 router.get("/getLandsForInspection", function(req, res, next) {
     landRegistration.find({ status: "harvest" }, (error, lands) => {
-        if (error)
-            res.status(404).json({ message: "No lAND record Found" });
-        // else {
-        //     lands.forEach(function(entry, index, array) {
-
-        //     });
-        else
-            res.status(200).json({ land: lands });
+        if (error) res.status(404).json({ message: "No lAND record Found" });
+        else res.status(200).json({ land: lands });
     });
-})
+});
 
 // permit('inspector'),
 
@@ -390,9 +393,7 @@ router.post("/inspectionReport", function(req, res, next) {
         FarmerName: req.body.FarmerName,
         verb: "landInspection"
     };
-    console.log("payload", payload);
-
-    let updateStatus = { inspectionStatus: 'true' };
+    let updateStatus = { inspectionStatus: "true" };
     landRegistration
         .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
@@ -401,168 +402,138 @@ router.post("/inspectionReport", function(req, res, next) {
                     message: "error"
                 });
             } else {
-                console.log("updated")
+                console.log("updated");
                 if (keyManager.doesKeyExist(req.body.InspectorName)) {
                     if (
-                        (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
+                        (batchlistBytes = prepareTransactions(
+                            payload,
+                            req.body.InspectorName
+                        ))
                     ) {
                         SubmitToServer(batchlistBytes).then(respo => {
                             console.log("respo", respo);
 
-                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo }, function(err, allInspectionData) {
-                                if (err) throw err;
-                                if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
-                                    console.log("Not empty")
-                                    Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
-                                            "$push": {
-                                                "InspectionData": {
-                                                    InspectorName: req.body.InspectorName,
-                                                    InspectionReport: req.body.InspectionReport,
-                                                    DateofInspection: new Date()
+                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo },
+                                function(err, allInspectionData) {
+                                    if (err) throw err;
+                                    if (
+                                        allInspectionData != null &&
+                                        allInspectionData.InspectionData.length > 0
+                                    ) {
+                                        console.log("Not empty");
+                                        Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
+                                                $push: {
+                                                    InspectionData: {
+                                                        InspectorName: req.body.InspectorName,
+                                                        InspectionReport: req.body.InspectionReport,
+                                                        DateofInspection: new Date()
+                                                    }
                                                 }
+                                            },
+                                            function(err, updatedres) {
+                                                if (err) throw err;
+                                                console.log(updatedres);
+                                                res.status(200).send({
+                                                    message: "updated inspection details",
+                                                    status: "COMMITTED"
+                                                });
                                             }
-                                        },
-                                        function(err, updatedres) {
+                                        );
+                                    } else {
+                                        console.log("empty");
+                                        var newInspection = Inspection({
+                                            RegistrationNo: req.body.RegistrationNo,
+                                            InspectionData: [{
+                                                InspectorName: req.body.InspectorName,
+                                                InspectionReport: req.body.InspectionReport,
+                                                DateofInspection: new Date()
+                                            }]
+                                        });
+                                        newInspection.save(function(err) {
                                             if (err) throw err;
-                                            console.log(updatedres)
+
+                                            console.log("Inspection Data created!");
                                             res.status(200).send({
                                                 message: "updated inspection details",
                                                 status: "COMMITTED"
                                             });
-                                        })
-                                } else {
-                                    console.log("empty")
-                                    var newInspection = Inspection({
-                                        RegistrationNo: req.body.RegistrationNo,
-                                        InspectionData: [{
-                                            InspectorName: req.body.InspectorName,
-                                            InspectionReport: req.body.InspectionReport,
-                                            DateofInspection: new Date(),
-                                        }]
-                                    });
-                                    newInspection.save(function(err) {
-                                        if (err) throw err;
-
-                                        console.log('Inspection Data created!');
-                                        res.status(200).send({
-                                            message: "updated inspection details",
-                                            status: "COMMITTED"
                                         });
-                                    });
+                                    }
                                 }
-                            })
+                            );
                         });
                     }
                 }
             }
-        })
-})
+        });
+});
 
 router.get("/getLandByProcessAgent/:username", function(req, res, next) {
-    console.log("entered", req.params)
-        // landRegistration.find({ ExporterName: req.params.username }, (err, lands) => {
-        //     console.log(lands)
-        //     res.status(200).send({ allLands: lands })
-        // })
     landRegistration.find({ ExporterName: req.params.username },
         (error, lands) => {
-            if (error) throw error
-            Inspection.find({ RegistrationNo: lands.RegistrationNo }, (error, inspectionDetails) => {
-                if (error) throw error
-                Cultivation.find({ RegistrationNo: lands.RegistrationNo }, (error, cultivationtionDetails) => {
-                    if (error) throw error
-                    Harvest.find({ RegistrationNo: lands.RegistrationNo }, (error, harvestDetails) => {
-                        if (error) throw error
-                        else res.status(200).json({ land: lands, inspectionDetails: inspectionDetails, cultivationtionDetails: cultivationtionDetails, harvestDetails: harvestDetails });
-                    })
-                })
-            })
-        })
-})
+            if (error) throw error;
+            Inspection.find({ RegistrationNo: lands.RegistrationNo },
+                (error, inspectionDetails) => {
+                    if (error) throw error;
+                    Cultivation.find({ RegistrationNo: lands.RegistrationNo },
+                        (error, cultivationtionDetails) => {
+                            if (error) throw error;
+                            Harvest.find({ RegistrationNo: lands.RegistrationNo },
+                                (error, harvestDetails) => {
+                                    if (error) throw error;
+                                    else
+                                        res
+                                        .status(200)
+                                        .json({
+                                            land: lands,
+                                            inspectionDetails: inspectionDetails,
+                                            cultivationtionDetails: cultivationtionDetails,
+                                            harvestDetails: harvestDetails
+                                        });
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
+});
 
 router.get("/getLandByRetailAgent/:username", function(req, res, next) {
-    // landRegistration.find({ ImporterName: req.params.username }, (err, lands) => {
-    //     console.log(lands)
-    //     res.status(200).send({ allLands: lands })
-    // })
     landRegistration.find({ ImporterName: req.params.username },
         (error, lands) => {
-            if (error) throw error
-            Inspection.find({ RegistrationNo: lands.RegistrationNo }, (error, inspectionDetails) => {
-                if (error) throw error
-                Cultivation.find({ RegistrationNo: lands.RegistrationNo }, (error, cultivationtionDetails) => {
-                    if (error) throw error
-                    Harvest.find({ RegistrationNo: lands.RegistrationNo }, (error, harvestDetails) => {
-                        if (error) throw error
-                        else res.status(200).json({ land: lands, inspectionDetails: inspectionDetails, cultivationtionDetails: cultivationtionDetails, harvestDetails: harvestDetails });
-                    })
-                })
-            })
-        })
-})
-
-// router.post("/inspectionReport", function(req, res, next) {
-//     var payload = {
-//         InspectionReport: req.body.InspectionReport,
-//         DateofInspection: new Date(),
-//         RegistrationNo: req.body.RegistrationNo,
-//         InspectorName: req.body.InspectorName,
-//         FarmerName: req.body.FarmerName,
-//         verb: "landInspection"
-//     };
-//     console.log("payload", payload);
-//     let updateStatus = { status: "inspected" };
-//     landRegistration
-//         .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
-//         .then(updatedResponse => {
-//             if (!updatedResponse) {
-//                 return res.status(404).send({
-//                     message: "error"
-//                 });
-//             } else {
-//                 console.log("updated");
-//                 if (keyManager.doesKeyExist(req.body.InspectorName)) {
-//                     if (
-//                         (batchlistBytes = prepareTransactions(payload, req.body.InspectorName))
-//                     ) {
-//                         SubmitToServer(batchlistBytes).then(respo => {
-//                             console.log("respo", respo);
-//                             var savepayload = new Inspection({
-//                                 InspectionReport: req.body.InspectionReport,
-//                                 DateofInspection: new Date(),
-//                                 InspectorName: req.body.InspectorName,
-//                                 RegistrationNo: req.body.RegistrationNo,
-//                             });
-
-//                             savepayload
-//                                 .save()
-//                                 .then(function(doc) {
-//                                     console.log(doc);
-//                                     res.status(200).json({ status: respo });
-//                                 })
-//                                 .catch(error => {
-//                                     console.log("error", error);
-//                                 });
-//                         });
-//                     }
-//                 }
-//             }
-//         })
-//         .catch(err => {
-//             if (err.kind === "ObjectId") {
-//                 return res.status(404).send({
-//                     message: "Land not found with id " + req.body.RegistrationNo
-//                 });
-//             }
-//             return res.status(500).send({
-//                 message: "Error updating status with id " + req.body.RegistrationNo
-//             });
-//         });
-// })
+            if (error) throw error;
+            Inspection.find({ RegistrationNo: lands.RegistrationNo },
+                (error, inspectionDetails) => {
+                    if (error) throw error;
+                    Cultivation.find({ RegistrationNo: lands.RegistrationNo },
+                        (error, cultivationtionDetails) => {
+                            if (error) throw error;
+                            Harvest.find({ RegistrationNo: lands.RegistrationNo },
+                                (error, harvestDetails) => {
+                                    if (error) throw error;
+                                    else
+                                        res
+                                        .status(200)
+                                        .json({
+                                            land: lands,
+                                            inspectionDetails: inspectionDetails,
+                                            cultivationtionDetails: cultivationtionDetails,
+                                            harvestDetails: harvestDetails
+                                        });
+                                }
+                            );
+                        }
+                    );
+                }
+            );
+        }
+    );
+});
 
 
 /* WARNING!!!!   Do not Go Beyond this*/
-
 
 // router.get("/create", function(req, res, next) {
 //     var newInspection = Inspection({
@@ -618,6 +589,5 @@ router.get("/getLandByRetailAgent/:username", function(req, res, next) {
 //         console.log(user)
 //     })
 // })
-
 
 module.exports = router;

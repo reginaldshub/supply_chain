@@ -2,15 +2,12 @@ var protobuf = require("protobufjs");
 var protos = require("./../shared/supplyChain")
 
 function protobuff(payload) {
-    // return new Promise((resolve, reject) => {
     console.log("payload", payload)
     if (payload.verb == 'landregistration') {
         var landRegistrationMessage = protos.supplyChainPackage.LandRegistrationParams.create()
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        landRegistrationMessage.addressparameters.push(addressParams)
-
+        landRegistrationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        landRegistrationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        landRegistrationMessage.addressparameters.FarmerName = payload.FarmerName
         landRegistrationMessage.FarmAddress = payload.FarmAddress
         landRegistrationMessage.State = payload.State
         landRegistrationMessage.Country = payload.Country
@@ -29,11 +26,9 @@ function protobuff(payload) {
 
         startCultivationMessage.CropVariety = payload.CropVariety
         startCultivationMessage.Dateofstart = payload.Dateofstart
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        startCultivationMessage.addressparameters.push(addressParams)
-        console.log(addressParams)
+        startCultivationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        startCultivationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        startCultivationMessage.addressparameters.FarmerName = payload.FarmerName
 
         let payloadInstance = protos.supplyChainPackage.PayLoad.create()
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION;
@@ -42,10 +37,10 @@ function protobuff(payload) {
         return payloadInstance;
     } else if (payload.verb == 'performharvest') {
         var performHarvestMessage = protos.supplyChainPackage.PerformHarvestParams.create()
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        performHarvestMessage.addressparameters.push(addressParams)
+        performHarvestMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        performHarvestMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        performHarvestMessage.addressparameters.FarmerName = payload.FarmerName
+
         performHarvestMessage.CropVariety = payload.CropVariety
         performHarvestMessage.Temperature = payload.Temperature
         performHarvestMessage.Humidity = payload.Humidity
@@ -61,10 +56,10 @@ function protobuff(payload) {
     } else if (payload.verb == 'landInspection') {
 
         var InspectMessage = protos.supplyChainPackage.InspectParams.create();
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        InspectMessage.addressparameters.push(addressParams)
+        InspectMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        InspectMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        InspectMessage.addressparameters.FarmerName = payload.FarmerName
+
         InspectMessage.InspectionReport = payload.InspectionReport
         InspectMessage.DateofInspection = payload.DateofInspection
         InspectMessage.InspectorName = payload.InspectorName
@@ -77,12 +72,11 @@ function protobuff(payload) {
 
     } else if (payload.verb == 'processharvest') {
 
-        // Quantity Rosting_duration Package_date_time Temperature Internal_batch_no Processor_name Processor_address var ProcessHarvestMessage = protos.supplyChainPackage.ProcessHarvestParams.create();
         var ProcessHarvestMessage = protos.supplyChainPackage.ProcessHarvestParams.create();
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        ProcessHarvestMessage.addressparameters.push(addressParams)
+        ProcessHarvestMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        ProcessHarvestMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        ProcessHarvestMessage.addressparameters.FarmerName = payload.FarmerName
+
         ProcessHarvestMessage.Quantity = payload.Quantity
         ProcessHarvestMessage.RostingDuration = payload.RostingDuration
         ProcessHarvestMessage.PackageDateTime = payload.PackageDateTime
@@ -99,10 +93,11 @@ function protobuff(payload) {
 
     } else if (payload.verb == 'purchasegrains') {
         var PurchaseGrainsMessage = protos.supplyChainPackage.PurchaseGrainsParams.create();
-        var addressParams = protos.supplyChainPackage.AddressParams.create()
-        addressParams.RegistrationNo = payload.RegistrationNo
-        addressParams.FarmerName = payload.FarmerName
-        PurchaseGrainsMessage.addressparameters.push(addressParams)
+
+        PurchaseGrainsMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        PurchaseGrainsMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        PurchaseGrainsMessage.addressparameters.FarmerName = payload.FarmerName
+
         PurchaseGrainsMessage.Quantity = payload.Quantity
         PurchaseGrainsMessage.RostingDuration = payload.RostingDuration
         PurchaseGrainsMessage.PackageDateTime = payload.PackageDateTime

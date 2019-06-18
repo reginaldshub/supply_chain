@@ -645,7 +645,7 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [ExporterName] LandRegistrationParams ExporterName
          * @property {string|null} [ImporterName] LandRegistrationParams ImporterName
          * @property {string|null} [DateofRegistration] LandRegistrationParams DateofRegistration
-         * @property {Array.<supplyChainPackage.IAddressParams>|null} [addressparameters] LandRegistrationParams addressparameters
+         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] LandRegistrationParams addressparameters
          */
 
         /**
@@ -657,7 +657,6 @@ $root.supplyChainPackage = (function() {
          * @param {supplyChainPackage.ILandRegistrationParams=} [properties] Properties to set
          */
         function LandRegistrationParams(properties) {
-            this.addressparameters = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -714,11 +713,11 @@ $root.supplyChainPackage = (function() {
 
         /**
          * LandRegistrationParams addressparameters.
-         * @member {Array.<supplyChainPackage.IAddressParams>} addressparameters
+         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.LandRegistrationParams
          * @instance
          */
-        LandRegistrationParams.prototype.addressparameters = $util.emptyArray;
+        LandRegistrationParams.prototype.addressparameters = null;
 
         /**
          * Creates a new LandRegistrationParams instance using the specified properties.
@@ -756,9 +755,8 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.ImporterName);
             if (message.DateofRegistration != null && message.hasOwnProperty("DateofRegistration"))
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.DateofRegistration);
-            if (message.addressparameters != null && message.addressparameters.length)
-                for (var i = 0; i < message.addressparameters.length; ++i)
-                    $root.supplyChainPackage.AddressParams.encode(message.addressparameters[i], writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
             return writer;
         };
 
@@ -812,9 +810,7 @@ $root.supplyChainPackage = (function() {
                     message.DateofRegistration = reader.string();
                     break;
                 case 7:
-                    if (!(message.addressparameters && message.addressparameters.length))
-                        message.addressparameters = [];
-                    message.addressparameters.push($root.supplyChainPackage.AddressParams.decode(reader, reader.uint32()));
+                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -870,13 +866,9 @@ $root.supplyChainPackage = (function() {
                 if (!$util.isString(message.DateofRegistration))
                     return "DateofRegistration: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                if (!Array.isArray(message.addressparameters))
-                    return "addressparameters: array expected";
-                for (var i = 0; i < message.addressparameters.length; ++i) {
-                    var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters[i]);
-                    if (error)
-                        return "addressparameters." + error;
-                }
+                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
+                if (error)
+                    return "addressparameters." + error;
             }
             return null;
         };
@@ -905,15 +897,10 @@ $root.supplyChainPackage = (function() {
                 message.ImporterName = String(object.ImporterName);
             if (object.DateofRegistration != null)
                 message.DateofRegistration = String(object.DateofRegistration);
-            if (object.addressparameters) {
-                if (!Array.isArray(object.addressparameters))
-                    throw TypeError(".supplyChainPackage.LandRegistrationParams.addressparameters: array expected");
-                message.addressparameters = [];
-                for (var i = 0; i < object.addressparameters.length; ++i) {
-                    if (typeof object.addressparameters[i] !== "object")
-                        throw TypeError(".supplyChainPackage.LandRegistrationParams.addressparameters: object expected");
-                    message.addressparameters[i] = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters[i]);
-                }
+            if (object.addressparameters != null) {
+                if (typeof object.addressparameters !== "object")
+                    throw TypeError(".supplyChainPackage.LandRegistrationParams.addressparameters: object expected");
+                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
             }
             return message;
         };
@@ -931,8 +918,6 @@ $root.supplyChainPackage = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.addressparameters = [];
             if (options.defaults) {
                 object.FarmAddress = "";
                 object.State = "";
@@ -940,6 +925,7 @@ $root.supplyChainPackage = (function() {
                 object.ExporterName = "";
                 object.ImporterName = "";
                 object.DateofRegistration = "";
+                object.addressparameters = null;
             }
             if (message.FarmAddress != null && message.hasOwnProperty("FarmAddress"))
                 object.FarmAddress = message.FarmAddress;
@@ -953,11 +939,8 @@ $root.supplyChainPackage = (function() {
                 object.ImporterName = message.ImporterName;
             if (message.DateofRegistration != null && message.hasOwnProperty("DateofRegistration"))
                 object.DateofRegistration = message.DateofRegistration;
-            if (message.addressparameters && message.addressparameters.length) {
-                object.addressparameters = [];
-                for (var j = 0; j < message.addressparameters.length; ++j)
-                    object.addressparameters[j] = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters[j], options);
-            }
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 
@@ -983,7 +966,7 @@ $root.supplyChainPackage = (function() {
          * @interface IStartCultivationParams
          * @property {string|null} [CropVariety] StartCultivationParams CropVariety
          * @property {string|null} [Dateofstart] StartCultivationParams Dateofstart
-         * @property {Array.<supplyChainPackage.IAddressParams>|null} [addressparameters] StartCultivationParams addressparameters
+         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] StartCultivationParams addressparameters
          */
 
         /**
@@ -995,7 +978,6 @@ $root.supplyChainPackage = (function() {
          * @param {supplyChainPackage.IStartCultivationParams=} [properties] Properties to set
          */
         function StartCultivationParams(properties) {
-            this.addressparameters = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1020,11 +1002,11 @@ $root.supplyChainPackage = (function() {
 
         /**
          * StartCultivationParams addressparameters.
-         * @member {Array.<supplyChainPackage.IAddressParams>} addressparameters
+         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.StartCultivationParams
          * @instance
          */
-        StartCultivationParams.prototype.addressparameters = $util.emptyArray;
+        StartCultivationParams.prototype.addressparameters = null;
 
         /**
          * Creates a new StartCultivationParams instance using the specified properties.
@@ -1054,9 +1036,8 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.CropVariety);
             if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.Dateofstart);
-            if (message.addressparameters != null && message.addressparameters.length)
-                for (var i = 0; i < message.addressparameters.length; ++i)
-                    $root.supplyChainPackage.AddressParams.encode(message.addressparameters[i], writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
             return writer;
         };
 
@@ -1098,9 +1079,7 @@ $root.supplyChainPackage = (function() {
                     message.Dateofstart = reader.string();
                     break;
                 case 3:
-                    if (!(message.addressparameters && message.addressparameters.length))
-                        message.addressparameters = [];
-                    message.addressparameters.push($root.supplyChainPackage.AddressParams.decode(reader, reader.uint32()));
+                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1144,13 +1123,9 @@ $root.supplyChainPackage = (function() {
                 if (!$util.isString(message.Dateofstart))
                     return "Dateofstart: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                if (!Array.isArray(message.addressparameters))
-                    return "addressparameters: array expected";
-                for (var i = 0; i < message.addressparameters.length; ++i) {
-                    var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters[i]);
-                    if (error)
-                        return "addressparameters." + error;
-                }
+                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
+                if (error)
+                    return "addressparameters." + error;
             }
             return null;
         };
@@ -1171,15 +1146,10 @@ $root.supplyChainPackage = (function() {
                 message.CropVariety = String(object.CropVariety);
             if (object.Dateofstart != null)
                 message.Dateofstart = String(object.Dateofstart);
-            if (object.addressparameters) {
-                if (!Array.isArray(object.addressparameters))
-                    throw TypeError(".supplyChainPackage.StartCultivationParams.addressparameters: array expected");
-                message.addressparameters = [];
-                for (var i = 0; i < object.addressparameters.length; ++i) {
-                    if (typeof object.addressparameters[i] !== "object")
-                        throw TypeError(".supplyChainPackage.StartCultivationParams.addressparameters: object expected");
-                    message.addressparameters[i] = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters[i]);
-                }
+            if (object.addressparameters != null) {
+                if (typeof object.addressparameters !== "object")
+                    throw TypeError(".supplyChainPackage.StartCultivationParams.addressparameters: object expected");
+                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
             }
             return message;
         };
@@ -1197,21 +1167,17 @@ $root.supplyChainPackage = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.addressparameters = [];
             if (options.defaults) {
                 object.CropVariety = "";
                 object.Dateofstart = "";
+                object.addressparameters = null;
             }
             if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
                 object.CropVariety = message.CropVariety;
             if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
                 object.Dateofstart = message.Dateofstart;
-            if (message.addressparameters && message.addressparameters.length) {
-                object.addressparameters = [];
-                for (var j = 0; j < message.addressparameters.length; ++j)
-                    object.addressparameters[j] = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters[j], options);
-            }
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 
@@ -1238,7 +1204,7 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [InspectionReport] InspectParams InspectionReport
          * @property {string|null} [DateofInspection] InspectParams DateofInspection
          * @property {string|null} [InspectorName] InspectParams InspectorName
-         * @property {Array.<supplyChainPackage.IAddressParams>|null} [addressparameters] InspectParams addressparameters
+         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] InspectParams addressparameters
          */
 
         /**
@@ -1250,7 +1216,6 @@ $root.supplyChainPackage = (function() {
          * @param {supplyChainPackage.IInspectParams=} [properties] Properties to set
          */
         function InspectParams(properties) {
-            this.addressparameters = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1283,11 +1248,11 @@ $root.supplyChainPackage = (function() {
 
         /**
          * InspectParams addressparameters.
-         * @member {Array.<supplyChainPackage.IAddressParams>} addressparameters
+         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.InspectParams
          * @instance
          */
-        InspectParams.prototype.addressparameters = $util.emptyArray;
+        InspectParams.prototype.addressparameters = null;
 
         /**
          * Creates a new InspectParams instance using the specified properties.
@@ -1319,9 +1284,8 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.DateofInspection);
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.InspectorName);
-            if (message.addressparameters != null && message.addressparameters.length)
-                for (var i = 0; i < message.addressparameters.length; ++i)
-                    $root.supplyChainPackage.AddressParams.encode(message.addressparameters[i], writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
             return writer;
         };
 
@@ -1366,9 +1330,7 @@ $root.supplyChainPackage = (function() {
                     message.InspectorName = reader.string();
                     break;
                 case 4:
-                    if (!(message.addressparameters && message.addressparameters.length))
-                        message.addressparameters = [];
-                    message.addressparameters.push($root.supplyChainPackage.AddressParams.decode(reader, reader.uint32()));
+                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1415,13 +1377,9 @@ $root.supplyChainPackage = (function() {
                 if (!$util.isString(message.InspectorName))
                     return "InspectorName: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                if (!Array.isArray(message.addressparameters))
-                    return "addressparameters: array expected";
-                for (var i = 0; i < message.addressparameters.length; ++i) {
-                    var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters[i]);
-                    if (error)
-                        return "addressparameters." + error;
-                }
+                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
+                if (error)
+                    return "addressparameters." + error;
             }
             return null;
         };
@@ -1444,15 +1402,10 @@ $root.supplyChainPackage = (function() {
                 message.DateofInspection = String(object.DateofInspection);
             if (object.InspectorName != null)
                 message.InspectorName = String(object.InspectorName);
-            if (object.addressparameters) {
-                if (!Array.isArray(object.addressparameters))
-                    throw TypeError(".supplyChainPackage.InspectParams.addressparameters: array expected");
-                message.addressparameters = [];
-                for (var i = 0; i < object.addressparameters.length; ++i) {
-                    if (typeof object.addressparameters[i] !== "object")
-                        throw TypeError(".supplyChainPackage.InspectParams.addressparameters: object expected");
-                    message.addressparameters[i] = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters[i]);
-                }
+            if (object.addressparameters != null) {
+                if (typeof object.addressparameters !== "object")
+                    throw TypeError(".supplyChainPackage.InspectParams.addressparameters: object expected");
+                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
             }
             return message;
         };
@@ -1470,12 +1423,11 @@ $root.supplyChainPackage = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.addressparameters = [];
             if (options.defaults) {
                 object.InspectionReport = "";
                 object.DateofInspection = "";
                 object.InspectorName = "";
+                object.addressparameters = null;
             }
             if (message.InspectionReport != null && message.hasOwnProperty("InspectionReport"))
                 object.InspectionReport = message.InspectionReport;
@@ -1483,11 +1435,8 @@ $root.supplyChainPackage = (function() {
                 object.DateofInspection = message.DateofInspection;
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 object.InspectorName = message.InspectorName;
-            if (message.addressparameters && message.addressparameters.length) {
-                object.addressparameters = [];
-                for (var j = 0; j < message.addressparameters.length; ++j)
-                    object.addressparameters[j] = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters[j], options);
-            }
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 
@@ -1516,7 +1465,7 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [Humidity] PerformHarvestParams Humidity
          * @property {string|null} [Dateofharvest] PerformHarvestParams Dateofharvest
          * @property {string|null} [Quantity] PerformHarvestParams Quantity
-         * @property {Array.<supplyChainPackage.IAddressParams>|null} [addressparameters] PerformHarvestParams addressparameters
+         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] PerformHarvestParams addressparameters
          */
 
         /**
@@ -1528,7 +1477,6 @@ $root.supplyChainPackage = (function() {
          * @param {supplyChainPackage.IPerformHarvestParams=} [properties] Properties to set
          */
         function PerformHarvestParams(properties) {
-            this.addressparameters = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1577,11 +1525,11 @@ $root.supplyChainPackage = (function() {
 
         /**
          * PerformHarvestParams addressparameters.
-         * @member {Array.<supplyChainPackage.IAddressParams>} addressparameters
+         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.PerformHarvestParams
          * @instance
          */
-        PerformHarvestParams.prototype.addressparameters = $util.emptyArray;
+        PerformHarvestParams.prototype.addressparameters = null;
 
         /**
          * Creates a new PerformHarvestParams instance using the specified properties.
@@ -1617,9 +1565,8 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.Dateofharvest);
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.Quantity);
-            if (message.addressparameters != null && message.addressparameters.length)
-                for (var i = 0; i < message.addressparameters.length; ++i)
-                    $root.supplyChainPackage.AddressParams.encode(message.addressparameters[i], writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             return writer;
         };
 
@@ -1670,9 +1617,7 @@ $root.supplyChainPackage = (function() {
                     message.Quantity = reader.string();
                     break;
                 case 6:
-                    if (!(message.addressparameters && message.addressparameters.length))
-                        message.addressparameters = [];
-                    message.addressparameters.push($root.supplyChainPackage.AddressParams.decode(reader, reader.uint32()));
+                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1725,13 +1670,9 @@ $root.supplyChainPackage = (function() {
                 if (!$util.isString(message.Quantity))
                     return "Quantity: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                if (!Array.isArray(message.addressparameters))
-                    return "addressparameters: array expected";
-                for (var i = 0; i < message.addressparameters.length; ++i) {
-                    var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters[i]);
-                    if (error)
-                        return "addressparameters." + error;
-                }
+                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
+                if (error)
+                    return "addressparameters." + error;
             }
             return null;
         };
@@ -1758,15 +1699,10 @@ $root.supplyChainPackage = (function() {
                 message.Dateofharvest = String(object.Dateofharvest);
             if (object.Quantity != null)
                 message.Quantity = String(object.Quantity);
-            if (object.addressparameters) {
-                if (!Array.isArray(object.addressparameters))
-                    throw TypeError(".supplyChainPackage.PerformHarvestParams.addressparameters: array expected");
-                message.addressparameters = [];
-                for (var i = 0; i < object.addressparameters.length; ++i) {
-                    if (typeof object.addressparameters[i] !== "object")
-                        throw TypeError(".supplyChainPackage.PerformHarvestParams.addressparameters: object expected");
-                    message.addressparameters[i] = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters[i]);
-                }
+            if (object.addressparameters != null) {
+                if (typeof object.addressparameters !== "object")
+                    throw TypeError(".supplyChainPackage.PerformHarvestParams.addressparameters: object expected");
+                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
             }
             return message;
         };
@@ -1784,14 +1720,13 @@ $root.supplyChainPackage = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.addressparameters = [];
             if (options.defaults) {
                 object.CropVariety = "";
                 object.Temperature = "";
                 object.Humidity = "";
                 object.Dateofharvest = "";
                 object.Quantity = "";
+                object.addressparameters = null;
             }
             if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
                 object.CropVariety = message.CropVariety;
@@ -1803,11 +1738,8 @@ $root.supplyChainPackage = (function() {
                 object.Dateofharvest = message.Dateofharvest;
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 object.Quantity = message.Quantity;
-            if (message.addressparameters && message.addressparameters.length) {
-                object.addressparameters = [];
-                for (var j = 0; j < message.addressparameters.length; ++j)
-                    object.addressparameters[j] = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters[j], options);
-            }
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 
@@ -1838,7 +1770,7 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [InternalBatchNo] ProcessHarvestParams InternalBatchNo
          * @property {string|null} [ProcessorName] ProcessHarvestParams ProcessorName
          * @property {string|null} [ProcessorAddress] ProcessHarvestParams ProcessorAddress
-         * @property {Array.<supplyChainPackage.IAddressParams>|null} [addressparameters] ProcessHarvestParams addressparameters
+         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] ProcessHarvestParams addressparameters
          */
 
         /**
@@ -1850,7 +1782,6 @@ $root.supplyChainPackage = (function() {
          * @param {supplyChainPackage.IProcessHarvestParams=} [properties] Properties to set
          */
         function ProcessHarvestParams(properties) {
-            this.addressparameters = [];
             if (properties)
                 for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                     if (properties[keys[i]] != null)
@@ -1915,11 +1846,11 @@ $root.supplyChainPackage = (function() {
 
         /**
          * ProcessHarvestParams addressparameters.
-         * @member {Array.<supplyChainPackage.IAddressParams>} addressparameters
+         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.ProcessHarvestParams
          * @instance
          */
-        ProcessHarvestParams.prototype.addressparameters = $util.emptyArray;
+        ProcessHarvestParams.prototype.addressparameters = null;
 
         /**
          * Creates a new ProcessHarvestParams instance using the specified properties.
@@ -1959,9 +1890,8 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.ProcessorName);
             if (message.ProcessorAddress != null && message.hasOwnProperty("ProcessorAddress"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.ProcessorAddress);
-            if (message.addressparameters != null && message.addressparameters.length)
-                for (var i = 0; i < message.addressparameters.length; ++i)
-                    $root.supplyChainPackage.AddressParams.encode(message.addressparameters[i], writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             return writer;
         };
 
@@ -2018,9 +1948,7 @@ $root.supplyChainPackage = (function() {
                     message.ProcessorAddress = reader.string();
                     break;
                 case 8:
-                    if (!(message.addressparameters && message.addressparameters.length))
-                        message.addressparameters = [];
-                    message.addressparameters.push($root.supplyChainPackage.AddressParams.decode(reader, reader.uint32()));
+                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2079,13 +2007,9 @@ $root.supplyChainPackage = (function() {
                 if (!$util.isString(message.ProcessorAddress))
                     return "ProcessorAddress: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                if (!Array.isArray(message.addressparameters))
-                    return "addressparameters: array expected";
-                for (var i = 0; i < message.addressparameters.length; ++i) {
-                    var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters[i]);
-                    if (error)
-                        return "addressparameters." + error;
-                }
+                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
+                if (error)
+                    return "addressparameters." + error;
             }
             return null;
         };
@@ -2116,15 +2040,10 @@ $root.supplyChainPackage = (function() {
                 message.ProcessorName = String(object.ProcessorName);
             if (object.ProcessorAddress != null)
                 message.ProcessorAddress = String(object.ProcessorAddress);
-            if (object.addressparameters) {
-                if (!Array.isArray(object.addressparameters))
-                    throw TypeError(".supplyChainPackage.ProcessHarvestParams.addressparameters: array expected");
-                message.addressparameters = [];
-                for (var i = 0; i < object.addressparameters.length; ++i) {
-                    if (typeof object.addressparameters[i] !== "object")
-                        throw TypeError(".supplyChainPackage.ProcessHarvestParams.addressparameters: object expected");
-                    message.addressparameters[i] = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters[i]);
-                }
+            if (object.addressparameters != null) {
+                if (typeof object.addressparameters !== "object")
+                    throw TypeError(".supplyChainPackage.ProcessHarvestParams.addressparameters: object expected");
+                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
             }
             return message;
         };
@@ -2142,8 +2061,6 @@ $root.supplyChainPackage = (function() {
             if (!options)
                 options = {};
             var object = {};
-            if (options.arrays || options.defaults)
-                object.addressparameters = [];
             if (options.defaults) {
                 object.Quantity = 0;
                 object.RostingDuration = "";
@@ -2152,6 +2069,7 @@ $root.supplyChainPackage = (function() {
                 object.InternalBatchNo = "";
                 object.ProcessorName = "";
                 object.ProcessorAddress = "";
+                object.addressparameters = null;
             }
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 object.Quantity = message.Quantity;
@@ -2167,11 +2085,8 @@ $root.supplyChainPackage = (function() {
                 object.ProcessorName = message.ProcessorName;
             if (message.ProcessorAddress != null && message.hasOwnProperty("ProcessorAddress"))
                 object.ProcessorAddress = message.ProcessorAddress;
-            if (message.addressparameters && message.addressparameters.length) {
-                object.addressparameters = [];
-                for (var j = 0; j < message.addressparameters.length; ++j)
-                    object.addressparameters[j] = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters[j], options);
-            }
+            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
+                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 

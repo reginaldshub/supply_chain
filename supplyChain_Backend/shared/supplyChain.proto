@@ -31,7 +31,7 @@ message LandRegistrationParams {
 	string Exporter_name = 4;
 	string Importer_name = 5; 
 	string Dateof_registration = 6;
-	repeated AddressParams addressparameters = 7;
+	AddressParams addressparameters = 7;
 	// string Registration_no = 7;
 	// string Farmer_name = 8; 
 }
@@ -39,7 +39,7 @@ message LandRegistrationParams {
 message StartCultivationParams {
 	string Crop_variety = 1;
 	string Dateofstart = 2;
-	repeated AddressParams addressparameters = 3;
+	AddressParams addressparameters = 3;
 	// string Registration_no = 3;
 	// string Farmer_name = 4; 
 }
@@ -48,7 +48,7 @@ message InspectParams {
 	string Inspection_report = 1;
 	string Dateof_inspection = 2;
 	string Inspector_name = 3;
-	repeated AddressParams addressparameters = 4;
+	AddressParams addressparameters = 4;
 	// string Registration_no = 4;
 	// string Farmer_name = 5; 
 }
@@ -59,7 +59,7 @@ message PerformHarvestParams {
 	string Humidity = 3;
 	string Dateofharvest = 4;
 	string Quantity = 5;
-	repeated AddressParams addressparameters = 6;
+	AddressParams addressparameters = 6;
 	// string Registration_no = 6;
 	// string Farmer_name = 7; 
 }
@@ -72,7 +72,7 @@ message ProcessHarvestParams {
 	string Internal_batch_no = 5;
 	string Processor_name = 6;
 	string Processor_address = 7;
-	repeated AddressParams addressparameters = 8;
+	AddressParams addressparameters = 8;
 	// string Registration_no = 8;
 	// string Farmer_name = 9; 
 }
