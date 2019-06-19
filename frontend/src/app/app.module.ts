@@ -68,6 +68,10 @@ import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-a
 import { InspectionComponent } from './inspector-dashboard/inspection/inspection.component';
 import { ProcessingComponent } from './process-agent-dashboard/processing/processing.component';
 import { ProcessingDetailsComponent } from './process-agent-dashboard/processing/processing-details/processing-details.component';
+import { ProcessedDashboardComponent } from './process-agent-dashboard/processed-dashboard/processed-dashboard.component';
+import { SetPriceComponent } from './process-agent-dashboard/set-price/set-price.component';
+import { TrasferedDashboardComponent } from './process-agent-dashboard/trasfered-dashboard/trasfered-dashboard.component';
+import { ProcessHeaderComponent } from './process-agent-dashboard/process-header/process-header.component';
 
 
 @NgModule({
@@ -92,7 +96,11 @@ import { ProcessingDetailsComponent } from './process-agent-dashboard/processing
     RetailAgentDashboardComponent,
     InspectionComponent,
     ProcessingComponent,
-    ProcessingDetailsComponent
+    ProcessingDetailsComponent,
+    ProcessedDashboardComponent,
+    SetPriceComponent,
+    TrasferedDashboardComponent,
+    ProcessHeaderComponent
   ],
   imports: [
     BrowserModule,

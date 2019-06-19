@@ -1,0 +1,22 @@
+<div class="menu">
+    <mat-toolbar> 
+        <div class ='dashboards'>
+            <a  class='anchor' [routerLink]="['/processedDashboard']" routerLinkActive="active"  mat-menu-item>Packages</a>
+            <a  class='anchor' [routerLink]="['/processAgentDashboard']" routerLinkActive="active"  mat-menu-item>Dashboard</a>
+            <a  class='anchor' [routerLink]="['/TransferDashboard']" routerLinkActive="active"  mat-menu-item>TransferedPackages</a>
+            
+        </div>
+        <div class="icon">
+        <h2>{{name}}</h2>
+        <a [matMenuTriggerFor]="menu">
+            <i class="material-icons">
+                person_pin
+                </i>
+              </a>
+      </div>
+      </mat-toolbar>
+      <mat-menu #menu="matMenu">
+          <a   [routerLink]="['/profile']" routerLinkActive="active"  mat-menu-item>Profile</a>
+          <a [routerLink]="['/login']"  mat-menu-item>Signout</a>
+        </mat-menu>
+      </div>

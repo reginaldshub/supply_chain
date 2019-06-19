@@ -1,19 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ServiceService } from '../service.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ServiceService } from 'src/app/service.service';
+
 @Component({
-  selector: 'app-process-agent-dashboard',
-  templateUrl: './process-agent-dashboard.component.html',
-  styleUrls: ['./process-agent-dashboard.component.css']
+  selector: 'app-processed-dashboard',
+  templateUrl: './processed-dashboard.component.html',
+  styleUrls: ['./processed-dashboard.component.css']
 })
-export class ProcessAgentDashboardComponent implements OnInit {
-
-  displayedColumns: string[] = ['checked', 'RegistrationNo', 'FarmerName', 'FarmAddress', 'State'];
-
-
+export class ProcessedDashboardComponent implements OnInit {
+ 
+  displayedColumns: string[] = [ 'RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<LandData>(ELEMENT_DATA);
@@ -55,26 +54,9 @@ export class ProcessAgentDashboardComponent implements OnInit {
     }
   }
 
-
-  process() {
-  console.log(this.lands);
-  this.router.navigate(['process',{lands:this.lands}]);
-  }
-
-  checked(registrationNo, check){
-    if(!check){
-      this.lands.push(registrationNo);
-    }else if(check){
-      var index = this.lands.indexOf(registrationNo);
-       if (index > -1) {
-        this.lands.splice(index, 1);
-    
-     }
+    setPrice(id){
+      this.router.navigate(['/setPrice',id]);
     }
-    if(this.lands.length == 0) 
-    this.disable = true;
-    else this.disable = false;
-  }
 }
 
 export interface LandData {
@@ -86,4 +68,5 @@ export interface LandData {
 }
 
 let ELEMENT_DATA: LandData[];
+
 

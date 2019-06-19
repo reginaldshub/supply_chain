@@ -13,23 +13,18 @@ export class ProcessingComponent implements OnInit {
 
   process:FormGroup;
   constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
-data;
-bool= false;
-id;
-details;
-crop;
-
-  ngOnInit() {
-
-    this.router.params.subscribe(params => {
-      let id = params['id'];
-      this.service.getlandbyId(id).subscribe((res: any) => {
-        console.log(this.data = res.land );
-       console.log(this.crop = res.cultivationtionDetails[0]);
-      console.log(this.details=res.harvestDetails[0]);
-        this.bool = true;
+   data;bool= true ;id;details= [];crop;lands;
+   
+  ngOnInit(){
+  this.lands =this.router.snapshot.paramMap.get('lands');
+     var array = this.lands.split(",").map(Number);
+     array.forEach(element => {
+      this.service.getlandbyId(element).subscribe((res: any) => {
+        this.details.push(res);
+        console.log(this.details);
+    
       })
-    })
+  });
     
     this.process=this.formBuilder.group({
       quantity        : ['',Validators.required],
@@ -44,14 +39,17 @@ crop;
 
 
 onSubmit(){
-  this.process.value['RegistrationNo']=localStorage.getItem("id");
+  
+  // this.process.value['RegistrationNo']=localStorage.getItem("id");
+  this.process.value['lands']= this.lands;
   this.process.value['FarmerName']=localStorage.getItem("name");
   console.log(this.process.value);
-  this.service.process(this.process.value).subscribe((res:any)=>{  
-  this.route.navigate(['processAgentDashboard']);
-  })
-
+  this.route.navigate(['processedDashboard'])
+  // this.service.process(this.process.value).subscribe((res:any)=>{  
+  // this.route.navigate(['processAgentDashboard']);
+  // })
 }
+
 backtodash(){
   this.route.navigate(['processAgentDashboard']);
  }

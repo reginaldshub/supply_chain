@@ -19,6 +19,9 @@ import { RetailAgentDashboardComponent } from './retail-agent-dashboard/retail-a
 import { InspectionComponent } from './inspector-dashboard/inspection/inspection.component';
 import { ProcessingComponent } from './process-agent-dashboard/processing/processing.component';
 import { ProcessingDetailsComponent } from './process-agent-dashboard/processing/processing-details/processing-details.component';
+import { ProcessedDashboardComponent } from './process-agent-dashboard/processed-dashboard/processed-dashboard.component';
+import { SetPriceComponent } from './process-agent-dashboard/set-price/set-price.component';
+import { TrasferedDashboardComponent } from './process-agent-dashboard/trasfered-dashboard/trasfered-dashboard.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -38,8 +41,11 @@ const routes: Routes = [
   {path:'inspectionDetails/:id',component:InspectionDetailsComponent},
   {path:'inspection/:id',component:InspectionComponent},
   {path:'processAgentDashboard',component:ProcessAgentDashboardComponent},
-  {path:'process/:id',component:ProcessingComponent},
+  {path:'process',component:ProcessingComponent},
   {path:'processDetails/:id',component:ProcessingDetailsComponent},
+  {path:'processedDashboard',component:ProcessedDashboardComponent},
+  {path:'setPrice/:id',component:SetPriceComponent},
+  {path:'TransferDashboard',component:TrasferedDashboardComponent},
   {path:'retailAgentDashboard',component:RetailAgentDashboardComponent}
 ];
 

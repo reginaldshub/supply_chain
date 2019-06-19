@@ -12,12 +12,16 @@ mat-card{
  .outer{
     font-family: sans-serif  
  }
+
+ 
  .outer1{
-     height: 91vh;
+     margin-top:3%;
+     height: 84vh;
      display:grid;
-     align-items: center;
-     grid-template-columns: 6fr 2fr 1fr;
+     align-items: start;
+     grid-template-columns:10fr 3fr 1fr;
  }
+
  .inner1{
      grid-column: 2/3;
      grid-row: 1/2;
@@ -63,3 +67,37 @@ mat-card{
      justify-items: center;
  }
  
+
+.filter{
+    display:grid;
+    grid-template-columns: 8fr 2fr;
+    align-items: center;
+}
+
+#addland{
+justify-self: end;
+align-self: center;
+}
+.landlist{
+    width:100%;
+   
+}
+table {
+    width: 100%;
+  }
+  
+  .inner{
+      grid-row:1/2;
+      grid-column:2/3;
+  }
+
+ 
+
+ .expansionPanel{
+   display: grid;
+   grid-template-columns: 1fr 12fr 1fr;
+ }
+
+ .panel{
+     grid-column: 2/3;
+ }

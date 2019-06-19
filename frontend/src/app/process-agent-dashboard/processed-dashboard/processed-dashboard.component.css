@@ -1,0 +1,90 @@
+
+app-process-header{
+    position:fixed;
+    left:0;
+    top:0;
+    right:0;
+    z-index: 2;   
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+.toolbar{
+ margin-top:60px;   
+ display: grid;
+ background-color: #3f51b5;
+ justify-items: center;
+ color:white
+}
+
+.filter{
+    display:grid;
+    grid-template-columns: 8fr 2fr;
+    align-items: center;
+}
+
+#addland{
+justify-self: end;
+align-self: center;
+}
+.landlist{
+    width:100%;
+   
+}
+table {
+    width: 100%;
+  }
+  .outer{
+      display:grid;
+      grid-template-columns: 1fr 9fr 1fr;
+  }
+  .inner{
+      grid-row:1/2;
+      grid-column:2/3;
+  }
+
+ .notRegistered{
+     display:grid;
+     justify-items: center;
+     align-items: center;
+ }
+
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+  }
+
+    ul li {
+    font-size: medium;
+    font-family:sans-serif;
+    }
+  
+  
+    .custom-list {
+      list-style-type: none;
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+  }
+  
+  .custom-list li {
+      list-style-type: none;
+      list-style: none;
+      padding: 0px;
+      margin: 0px;
+      float:left;
+      font-weight: bold;
+  }
+  
+  .custom-list li.heading-text{
+      width: 175px;
+      font-family: sans-serif
+  }
+  
+  .custom-list li.seperator{
+      width: 25px;
+  }
+  
+  .custom-list li.details-text{
+      width: 200px;
+      font-weight: normal;
+  }
