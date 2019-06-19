@@ -31,6 +31,7 @@ $root.supplyChainPackage = (function() {
          * @property {supplyChainPackage.IPerformHarvestParams|null} [performHarvest] PayLoad performHarvest
          * @property {supplyChainPackage.IProcessHarvestParams|null} [processHarvest] PayLoad processHarvest
          * @property {supplyChainPackage.IPurchaseGrainsParams|null} [purchaseGrains] PayLoad purchaseGrains
+         * @property {supplyChainPackage.IUpdateProcessDetailsParams|null} [updateProcessDetails] PayLoad updateProcessDetails
          */
 
         /**
@@ -105,6 +106,14 @@ $root.supplyChainPackage = (function() {
         PayLoad.prototype.purchaseGrains = null;
 
         /**
+         * PayLoad updateProcessDetails.
+         * @member {supplyChainPackage.IUpdateProcessDetailsParams|null|undefined} updateProcessDetails
+         * @memberof supplyChainPackage.PayLoad
+         * @instance
+         */
+        PayLoad.prototype.updateProcessDetails = null;
+
+        /**
          * Creates a new PayLoad instance using the specified properties.
          * @function create
          * @memberof supplyChainPackage.PayLoad
@@ -142,6 +151,8 @@ $root.supplyChainPackage = (function() {
                 $root.supplyChainPackage.ProcessHarvestParams.encode(message.processHarvest, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
             if (message.purchaseGrains != null && message.hasOwnProperty("purchaseGrains"))
                 $root.supplyChainPackage.PurchaseGrainsParams.encode(message.purchaseGrains, writer.uint32(/* id 7, wireType 2 =*/58).fork()).ldelim();
+            if (message.updateProcessDetails != null && message.hasOwnProperty("updateProcessDetails"))
+                $root.supplyChainPackage.UpdateProcessDetailsParams.encode(message.updateProcessDetails, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             return writer;
         };
 
@@ -197,6 +208,9 @@ $root.supplyChainPackage = (function() {
                 case 7:
                     message.purchaseGrains = $root.supplyChainPackage.PurchaseGrainsParams.decode(reader, reader.uint32());
                     break;
+                case 8:
+                    message.updateProcessDetails = $root.supplyChainPackage.UpdateProcessDetailsParams.decode(reader, reader.uint32());
+                    break;
                 default:
                     reader.skipType(tag & 7);
                     break;
@@ -242,6 +256,7 @@ $root.supplyChainPackage = (function() {
                 case 3:
                 case 4:
                 case 5:
+                case 6:
                     break;
                 }
             if (message.landRegistration != null && message.hasOwnProperty("landRegistration")) {
@@ -273,6 +288,11 @@ $root.supplyChainPackage = (function() {
                 var error = $root.supplyChainPackage.PurchaseGrainsParams.verify(message.purchaseGrains);
                 if (error)
                     return "purchaseGrains." + error;
+            }
+            if (message.updateProcessDetails != null && message.hasOwnProperty("updateProcessDetails")) {
+                var error = $root.supplyChainPackage.UpdateProcessDetailsParams.verify(message.updateProcessDetails);
+                if (error)
+                    return "updateProcessDetails." + error;
             }
             return null;
         };
@@ -314,6 +334,10 @@ $root.supplyChainPackage = (function() {
             case 5:
                 message.action = 5;
                 break;
+            case "UPDATE_PROCESS_DETAILS":
+            case 6:
+                message.action = 6;
+                break;
             }
             if (object.landRegistration != null) {
                 if (typeof object.landRegistration !== "object")
@@ -345,6 +369,11 @@ $root.supplyChainPackage = (function() {
                     throw TypeError(".supplyChainPackage.PayLoad.purchaseGrains: object expected");
                 message.purchaseGrains = $root.supplyChainPackage.PurchaseGrainsParams.fromObject(object.purchaseGrains);
             }
+            if (object.updateProcessDetails != null) {
+                if (typeof object.updateProcessDetails !== "object")
+                    throw TypeError(".supplyChainPackage.PayLoad.updateProcessDetails: object expected");
+                message.updateProcessDetails = $root.supplyChainPackage.UpdateProcessDetailsParams.fromObject(object.updateProcessDetails);
+            }
             return message;
         };
 
@@ -369,6 +398,7 @@ $root.supplyChainPackage = (function() {
                 object.performHarvest = null;
                 object.processHarvest = null;
                 object.purchaseGrains = null;
+                object.updateProcessDetails = null;
             }
             if (message.action != null && message.hasOwnProperty("action"))
                 object.action = options.enums === String ? $root.supplyChainPackage.PayLoad.Action[message.action] : message.action;
@@ -384,6 +414,8 @@ $root.supplyChainPackage = (function() {
                 object.processHarvest = $root.supplyChainPackage.ProcessHarvestParams.toObject(message.processHarvest, options);
             if (message.purchaseGrains != null && message.hasOwnProperty("purchaseGrains"))
                 object.purchaseGrains = $root.supplyChainPackage.PurchaseGrainsParams.toObject(message.purchaseGrains, options);
+            if (message.updateProcessDetails != null && message.hasOwnProperty("updateProcessDetails"))
+                object.updateProcessDetails = $root.supplyChainPackage.UpdateProcessDetailsParams.toObject(message.updateProcessDetails, options);
             return object;
         };
 
@@ -408,6 +440,7 @@ $root.supplyChainPackage = (function() {
          * @property {number} PERFORM_HARVEST=3 PERFORM_HARVEST value
          * @property {number} PROCESS_HARVEST=4 PROCESS_HARVEST value
          * @property {number} PURCHASE_GRAINS=5 PURCHASE_GRAINS value
+         * @property {number} UPDATE_PROCESS_DETAILS=6 UPDATE_PROCESS_DETAILS value
          */
         PayLoad.Action = (function() {
             var valuesById = {}, values = Object.create(valuesById);
@@ -417,6 +450,7 @@ $root.supplyChainPackage = (function() {
             values[valuesById[3] = "PERFORM_HARVEST"] = 3;
             values[valuesById[4] = "PROCESS_HARVEST"] = 4;
             values[valuesById[5] = "PURCHASE_GRAINS"] = 5;
+            values[valuesById[6] = "UPDATE_PROCESS_DETAILS"] = 6;
             return values;
         })();
 
@@ -1770,7 +1804,6 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [InternalBatchNo] ProcessHarvestParams InternalBatchNo
          * @property {string|null} [ProcessorName] ProcessHarvestParams ProcessorName
          * @property {string|null} [ProcessorAddress] ProcessHarvestParams ProcessorAddress
-         * @property {supplyChainPackage.IAddressParams|null} [addressparameters] ProcessHarvestParams addressparameters
          */
 
         /**
@@ -1845,14 +1878,6 @@ $root.supplyChainPackage = (function() {
         ProcessHarvestParams.prototype.ProcessorAddress = "";
 
         /**
-         * ProcessHarvestParams addressparameters.
-         * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
-         * @memberof supplyChainPackage.ProcessHarvestParams
-         * @instance
-         */
-        ProcessHarvestParams.prototype.addressparameters = null;
-
-        /**
          * Creates a new ProcessHarvestParams instance using the specified properties.
          * @function create
          * @memberof supplyChainPackage.ProcessHarvestParams
@@ -1890,8 +1915,6 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.ProcessorName);
             if (message.ProcessorAddress != null && message.hasOwnProperty("ProcessorAddress"))
                 writer.uint32(/* id 7, wireType 2 =*/58).string(message.ProcessorAddress);
-            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
-                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 8, wireType 2 =*/66).fork()).ldelim();
             return writer;
         };
 
@@ -1946,9 +1969,6 @@ $root.supplyChainPackage = (function() {
                     break;
                 case 7:
                     message.ProcessorAddress = reader.string();
-                    break;
-                case 8:
-                    message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -2006,11 +2026,6 @@ $root.supplyChainPackage = (function() {
             if (message.ProcessorAddress != null && message.hasOwnProperty("ProcessorAddress"))
                 if (!$util.isString(message.ProcessorAddress))
                     return "ProcessorAddress: string expected";
-            if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
-                var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
-                if (error)
-                    return "addressparameters." + error;
-            }
             return null;
         };
 
@@ -2040,11 +2055,6 @@ $root.supplyChainPackage = (function() {
                 message.ProcessorName = String(object.ProcessorName);
             if (object.ProcessorAddress != null)
                 message.ProcessorAddress = String(object.ProcessorAddress);
-            if (object.addressparameters != null) {
-                if (typeof object.addressparameters !== "object")
-                    throw TypeError(".supplyChainPackage.ProcessHarvestParams.addressparameters: object expected");
-                message.addressparameters = $root.supplyChainPackage.AddressParams.fromObject(object.addressparameters);
-            }
             return message;
         };
 
@@ -2069,7 +2079,6 @@ $root.supplyChainPackage = (function() {
                 object.InternalBatchNo = "";
                 object.ProcessorName = "";
                 object.ProcessorAddress = "";
-                object.addressparameters = null;
             }
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 object.Quantity = message.Quantity;
@@ -2085,8 +2094,6 @@ $root.supplyChainPackage = (function() {
                 object.ProcessorName = message.ProcessorName;
             if (message.ProcessorAddress != null && message.hasOwnProperty("ProcessorAddress"))
                 object.ProcessorAddress = message.ProcessorAddress;
-            if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
-                object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;
         };
 
@@ -2102,6 +2109,216 @@ $root.supplyChainPackage = (function() {
         };
 
         return ProcessHarvestParams;
+    })();
+
+    supplyChainPackage.UpdateProcessDetailsParams = (function() {
+
+        /**
+         * Properties of an UpdateProcessDetailsParams.
+         * @memberof supplyChainPackage
+         * @interface IUpdateProcessDetailsParams
+         * @property {number|null} [setPrice] UpdateProcessDetailsParams setPrice
+         * @property {string|null} [ProcessorName] UpdateProcessDetailsParams ProcessorName
+         */
+
+        /**
+         * Constructs a new UpdateProcessDetailsParams.
+         * @memberof supplyChainPackage
+         * @classdesc Represents an UpdateProcessDetailsParams.
+         * @implements IUpdateProcessDetailsParams
+         * @constructor
+         * @param {supplyChainPackage.IUpdateProcessDetailsParams=} [properties] Properties to set
+         */
+        function UpdateProcessDetailsParams(properties) {
+            if (properties)
+                for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                    if (properties[keys[i]] != null)
+                        this[keys[i]] = properties[keys[i]];
+        }
+
+        /**
+         * UpdateProcessDetailsParams setPrice.
+         * @member {number} setPrice
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @instance
+         */
+        UpdateProcessDetailsParams.prototype.setPrice = 0;
+
+        /**
+         * UpdateProcessDetailsParams ProcessorName.
+         * @member {string} ProcessorName
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @instance
+         */
+        UpdateProcessDetailsParams.prototype.ProcessorName = "";
+
+        /**
+         * Creates a new UpdateProcessDetailsParams instance using the specified properties.
+         * @function create
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {supplyChainPackage.IUpdateProcessDetailsParams=} [properties] Properties to set
+         * @returns {supplyChainPackage.UpdateProcessDetailsParams} UpdateProcessDetailsParams instance
+         */
+        UpdateProcessDetailsParams.create = function create(properties) {
+            return new UpdateProcessDetailsParams(properties);
+        };
+
+        /**
+         * Encodes the specified UpdateProcessDetailsParams message. Does not implicitly {@link supplyChainPackage.UpdateProcessDetailsParams.verify|verify} messages.
+         * @function encode
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {supplyChainPackage.IUpdateProcessDetailsParams} message UpdateProcessDetailsParams message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdateProcessDetailsParams.encode = function encode(message, writer) {
+            if (!writer)
+                writer = $Writer.create();
+            if (message.setPrice != null && message.hasOwnProperty("setPrice"))
+                writer.uint32(/* id 1, wireType 0 =*/8).int32(message.setPrice);
+            if (message.ProcessorName != null && message.hasOwnProperty("ProcessorName"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.ProcessorName);
+            return writer;
+        };
+
+        /**
+         * Encodes the specified UpdateProcessDetailsParams message, length delimited. Does not implicitly {@link supplyChainPackage.UpdateProcessDetailsParams.verify|verify} messages.
+         * @function encodeDelimited
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {supplyChainPackage.IUpdateProcessDetailsParams} message UpdateProcessDetailsParams message or plain object to encode
+         * @param {$protobuf.Writer} [writer] Writer to encode to
+         * @returns {$protobuf.Writer} Writer
+         */
+        UpdateProcessDetailsParams.encodeDelimited = function encodeDelimited(message, writer) {
+            return this.encode(message, writer).ldelim();
+        };
+
+        /**
+         * Decodes an UpdateProcessDetailsParams message from the specified reader or buffer.
+         * @function decode
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @param {number} [length] Message length if known beforehand
+         * @returns {supplyChainPackage.UpdateProcessDetailsParams} UpdateProcessDetailsParams
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdateProcessDetailsParams.decode = function decode(reader, length) {
+            if (!(reader instanceof $Reader))
+                reader = $Reader.create(reader);
+            var end = length === undefined ? reader.len : reader.pos + length, message = new $root.supplyChainPackage.UpdateProcessDetailsParams();
+            while (reader.pos < end) {
+                var tag = reader.uint32();
+                switch (tag >>> 3) {
+                case 1:
+                    message.setPrice = reader.int32();
+                    break;
+                case 2:
+                    message.ProcessorName = reader.string();
+                    break;
+                default:
+                    reader.skipType(tag & 7);
+                    break;
+                }
+            }
+            return message;
+        };
+
+        /**
+         * Decodes an UpdateProcessDetailsParams message from the specified reader or buffer, length delimited.
+         * @function decodeDelimited
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+         * @returns {supplyChainPackage.UpdateProcessDetailsParams} UpdateProcessDetailsParams
+         * @throws {Error} If the payload is not a reader or valid buffer
+         * @throws {$protobuf.util.ProtocolError} If required fields are missing
+         */
+        UpdateProcessDetailsParams.decodeDelimited = function decodeDelimited(reader) {
+            if (!(reader instanceof $Reader))
+                reader = new $Reader(reader);
+            return this.decode(reader, reader.uint32());
+        };
+
+        /**
+         * Verifies an UpdateProcessDetailsParams message.
+         * @function verify
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {Object.<string,*>} message Plain object to verify
+         * @returns {string|null} `null` if valid, otherwise the reason why it is not
+         */
+        UpdateProcessDetailsParams.verify = function verify(message) {
+            if (typeof message !== "object" || message === null)
+                return "object expected";
+            if (message.setPrice != null && message.hasOwnProperty("setPrice"))
+                if (!$util.isInteger(message.setPrice))
+                    return "setPrice: integer expected";
+            if (message.ProcessorName != null && message.hasOwnProperty("ProcessorName"))
+                if (!$util.isString(message.ProcessorName))
+                    return "ProcessorName: string expected";
+            return null;
+        };
+
+        /**
+         * Creates an UpdateProcessDetailsParams message from a plain object. Also converts values to their respective internal types.
+         * @function fromObject
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {Object.<string,*>} object Plain object
+         * @returns {supplyChainPackage.UpdateProcessDetailsParams} UpdateProcessDetailsParams
+         */
+        UpdateProcessDetailsParams.fromObject = function fromObject(object) {
+            if (object instanceof $root.supplyChainPackage.UpdateProcessDetailsParams)
+                return object;
+            var message = new $root.supplyChainPackage.UpdateProcessDetailsParams();
+            if (object.setPrice != null)
+                message.setPrice = object.setPrice | 0;
+            if (object.ProcessorName != null)
+                message.ProcessorName = String(object.ProcessorName);
+            return message;
+        };
+
+        /**
+         * Creates a plain object from an UpdateProcessDetailsParams message. Also converts values to other types if specified.
+         * @function toObject
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @static
+         * @param {supplyChainPackage.UpdateProcessDetailsParams} message UpdateProcessDetailsParams
+         * @param {$protobuf.IConversionOptions} [options] Conversion options
+         * @returns {Object.<string,*>} Plain object
+         */
+        UpdateProcessDetailsParams.toObject = function toObject(message, options) {
+            if (!options)
+                options = {};
+            var object = {};
+            if (options.defaults) {
+                object.setPrice = 0;
+                object.ProcessorName = "";
+            }
+            if (message.setPrice != null && message.hasOwnProperty("setPrice"))
+                object.setPrice = message.setPrice;
+            if (message.ProcessorName != null && message.hasOwnProperty("ProcessorName"))
+                object.ProcessorName = message.ProcessorName;
+            return object;
+        };
+
+        /**
+         * Converts this UpdateProcessDetailsParams to JSON.
+         * @function toJSON
+         * @memberof supplyChainPackage.UpdateProcessDetailsParams
+         * @instance
+         * @returns {Object.<string,*>} JSON object
+         */
+        UpdateProcessDetailsParams.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return UpdateProcessDetailsParams;
     })();
 
     supplyChainPackage.PurchaseGrainsParams = (function() {

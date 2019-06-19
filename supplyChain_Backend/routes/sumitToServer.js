@@ -14,16 +14,14 @@ function SubmitToServer(batchListBytes) {
                 console.log("response from processor", response.body);
                 setTimeout(() => {
                     // parseUrl(response.body)
-                    Request.get(
-                        JSON.parse(response.body).link,
-                        (error, response, body) => {
-                            if (error) {
-                                reject(error);
-                            }
-                            console.log(JSON.parse(body).data[0].status);
-                            resolve(JSON.parse(body).data[0].status);
+                    Request.get(JSON.parse(response.body).link, (error, response, body) => {
+                        if (error) {
+                            reject(error);
                         }
-                    );
+                        console.log("Look At This", JSON.parse(body))
+                            // console.log(JSON.parse(body).data[0].status);
+                        resolve(JSON.parse(body).data[0].status);
+                    });
                 }, 1000);
             }
         );

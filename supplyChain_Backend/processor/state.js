@@ -1,5 +1,6 @@
 const { get_land_registry_address } = require('../shared/Addressing')
 const encode = obj => Buffer.from(JSON.stringify(obj))
+const decode = buf => JSON.parse(buf);
 
 land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Country, ExporterName, ImporterName, DateOfRegistration, signer_public_keys) => {
     let address = get_land_registry_address(RegistrationNo, FarmerName)
@@ -78,4 +79,52 @@ inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, Inspe
         console.log(err);
     })
 }
-module.exports = { land_registration, start_cultivation, inspect_land }
+
+
+
+process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, signer_public_keys) => {
+    let address = get_process_address(ProcessorName)
+    console.log("address", address);
+    let process_data = {
+        Quantity: Quantity,
+        RostingDuration: RostingDuration,
+        PackageDateTime: PackageDateTime,
+        Temperature: Temperature,
+        InternalBatchNo: InternalBatchNo,
+        ProcessorName: ProcessorName,
+        processorAddress: processorAddress,
+    }
+    let public_key = signer_public_keys;
+    return state.setState({
+        [address]: encode({ process_data, public_key })
+    }).then((result) => {
+        console.log(result);
+    }).catch((err) => {
+        console.log(err);
+    })
+}
+
+update_processDetails = (state, setPrice, ProcessorName, signer_public_keys) => {
+    let address = get_process_address(ProcessorName)
+    if (!address) {
+        throw InvalidTransaction("Failed to load Account: {:?}", err)
+    } else {
+        return state.getState([address]).then((stateEntries) => {
+            const entry = stateEntries[address]
+            let account = decode(entry);
+            console.log("entry", entry);
+            console.log("account", account);
+            account.process_data.setPrice = setPrice;
+            return state.setState({
+                [address]: encode(account, ProcessorName)
+            }).then((result) => {
+                console.log("Updated Price" + result)
+            }).catch((err) => {
+                console.log(err);
+            })
+
+        })
+    }
+}
+
+module.exports = { land_registration, start_cultivation, inspect_land, process_harvest, update_processDetails }

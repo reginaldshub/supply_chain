@@ -6,6 +6,7 @@ var Cultivation = require("../models/Cultivation");
 var landRegistration = require("./../models/landRegistration");
 var Harvest = require("./../models/Harvest");
 var Inspection = require("./../models/Inspection");
+var Process = require("./../models/process");
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -531,6 +532,83 @@ router.get("/getLandByRetailAgent/:username", function(req, res, next) {
         }
     );
 });
+
+// Process Agent
+router.post("/processHarvest", function(req, res, next) {
+
+    var payload = {
+        quantity: req.body.quantity,
+        rostingDuration: req.body.rostingDuration,
+        packageDateTime: new Date(),
+        temperature: req.body.temperature,
+        internalBatchNo: req.body.internalBatchNo,
+        processorName: req.body.processorName,
+        processorAddress: req.body.processorAddress,
+        verb: "processHarvest"
+    };
+    console.log("payload", payload);
+    if (keyManager.doesKeyExist(req.body.processorName)) {
+        if ((batchlistBytes = prepareTransactions(payload, req.body.processorName))) {
+            SubmitToServer(batchlistBytes).then(respo => {
+                console.log("respo", respo);
+                var savepayload = new Process({
+                    quantity: req.body.quantity,
+                    rostingDuration: req.body.rostingDuration,
+                    packageDateTime: new Date(),
+                    temperature: req.body.temperature,
+                    internalBatchNo: req.body.internalBatchNo,
+                    processorName: req.body.processorName,
+                    processorAddress: req.body.processorAddress
+                });
+
+                savepayload
+                    .save()
+                    .then(function(doc) {
+                        console.log(doc);
+                        res.status(200).json({ status: respo });
+                    })
+                    .catch(error => {
+                        console.log("error", error);
+                    });
+            });
+        }
+    }
+
+})
+
+
+// Update Process Agent (setPrice)
+router.post("/updateprocessHarvest/:processorName", function(req, res, next) {
+
+    var payload = {
+        processorName: req.params.processorName,
+        setPrice: req.body.setPrice,
+        verb: "updateProcessDetails"
+    };
+    console.log("index Payload", payload)
+    if (keyManager.doesKeyExist(req.params.processorName)) {
+        if ((batchlistBytes = prepareTransactions(payload, req.params.processorName))) {
+            SubmitToServer(batchlistBytes).then(respo => {
+                console.log("respo", respo);
+
+                let updateStatus = { setPrice: req.body.setPrice }
+                Process.updateOne({ processorName: req.params.processorName }, { $set: updateStatus }, { new: true })
+                    .then(updatedResponse => {
+                        if (!updatedResponse) {
+                            return res.status(404).send({ message: "error" });
+                        } else {
+                            res.status(200).send({ message: "Updated Successfully" });
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error", error);
+                    });
+
+            });
+        }
+    }
+})
+
 
 
 /* WARNING!!!!   Do not Go Beyond this*/
