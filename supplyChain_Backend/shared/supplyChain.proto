@@ -8,7 +8,8 @@ message PayLoad{
         INSPECTION = 2;
         PERFORM_HARVEST = 3;
         PROCESS_HARVEST = 4;
-        PURCHASE_GRAINS = 5;
+		PURCHASE_GRAINS = 5;
+		UPDATE_PROCESS_DETAILS = 6;
     }
     Action action = 1;
     LandRegistrationParams land_registration = 2;
@@ -16,29 +17,42 @@ message PayLoad{
     InspectParams inspection = 4;
     PerformHarvestParams perform_harvest = 5;
     ProcessHarvestParams process_harvest = 6;
-    PurchaseGrainsParams purchase_grains = 7;
+	PurchaseGrainsParams purchase_grains = 7;
+	UpdateProcessDetailsParams updateProcessDetails = 8;
+}
+
+message AddressParams{
+	string Registration_no = 1;
+	string Farmer_name = 2;
 }
 
 message LandRegistrationParams {
-	string Registration_no = 1;
-	string Farmer_name = 2; 
-	string Farm_address = 3; 
-	string State = 4; 
-	string Country = 5; 
-	string Exporter_name = 6;
-	string Importer_name = 7; 
-	string Dateof_registration = 8;
+	string Farm_address = 1; 
+	string State = 2; 
+	string Country = 3; 
+	string Exporter_name = 4;
+	string Importer_name = 5; 
+	string Dateof_registration = 6;
+	AddressParams addressparameters = 7;
+	// string Registration_no = 7;
+	// string Farmer_name = 8; 
 }
 
 message StartCultivationParams {
 	string Crop_variety = 1;
 	string Dateofstart = 2;
+	AddressParams addressparameters = 3;
+	// string Registration_no = 3;
+	// string Farmer_name = 4; 
 }
 
 message InspectParams {
 	string Inspection_report = 1;
 	string Dateof_inspection = 2;
 	string Inspector_name = 3;
+	AddressParams addressparameters = 4;
+	// string Registration_no = 4;
+	// string Farmer_name = 5; 
 }
 
 message PerformHarvestParams {
@@ -47,6 +61,9 @@ message PerformHarvestParams {
 	string Humidity = 3;
 	string Dateofharvest = 4;
 	string Quantity = 5;
+	AddressParams addressparameters = 6;
+	// string Registration_no = 6;
+	// string Farmer_name = 7; 
 }
 
 message ProcessHarvestParams {
@@ -57,8 +74,15 @@ message ProcessHarvestParams {
 	string Internal_batch_no = 5;
 	string Processor_name = 6;
 	string Processor_address = 7;
+	// AddressParams addressparameters = 8;
+	// string Registration_no = 8;
+	// string Farmer_name = 9; 
 }
 
+message UpdateProcessDetailsParams{
+	int32 set_price = 1;
+	string Processor_name = 2;
+}
 message PurchaseGrainsParams {
 	int32 Quantity = 1;
 	string Rosting_duration = 2;
@@ -67,4 +91,7 @@ message PurchaseGrainsParams {
 	string Internal_batch_no = 5;
 	string Processor_name = 6;
 	string Processor_address = 7;
+	repeated AddressParams addressparameters = 8;
+	// string Registration_no = 8;
+	// string Farmer_name = 9; 
 }

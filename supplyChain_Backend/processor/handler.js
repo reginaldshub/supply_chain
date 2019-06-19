@@ -2,7 +2,7 @@ const { TransactionHandler } = require('sawtooth-sdk/processor/handler')
 const { InvalidTransaction, InternalError } = require('sawtooth-sdk/processor/exceptions')
 const cbor = require('cbor')
 const env = require('../shared/env');
-const { land_registration, start_cultivation, inspect_land } = require('./state')
+const { land_registration, start_cultivation, inspect_land, process_harvest, update_processDetails } = require('./state')
 var protos = require("./../shared/supplyChain")
 
 const encode = obj => Buffer.from(JSON.stringify(obj))
@@ -19,17 +19,28 @@ class SupplyChainHandler extends TransactionHandler {
         let header = transactionProcessRequest.header;
         this.signer_public_keys = header.signerPublicKey;
         let payload = cbor.decode(transactionProcessRequest.payload);
-        console.log(payload);
+        console.log("payload", payload)
         if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
-            var newPayload = payload.landRegistration;
+            let newPayload = payload.landRegistration;
             console.log("newPayload", newPayload)
-            return land_registration(state, newPayload.RegistrationNo, newPayload.FarmerName, newPayload.FarmAddress, newPayload.State, newPayload.Country, newPayload.ExporterName, newPayload.ImporterName, newPayload.DateOfRegistration, this.signer_public_keys)
-        } else if (payload.verb === 'startcultivation') {
-            return start_cultivation(state, payload.RegistrationNo, payload.CropVariety, payload.Dateofstart, payload.FarmerName, this.signer_public_keys)
-        } else if (payload.verb === 'performharvest') {
-            return start_harvest(state, payload.RegistrationNo, payload.FarmerName, payload.CropVariety, payload.Temperature, payload.Humidity, payload.Dateofharvest, payload.Quantity, this.signer_public_keys)
-        } else if (payload.verb === 'landInspection') {
-            return inspect_land(state, payload.InspectionReport, payload.DateofInspection, payload.RegistrationNo, payload.InspectorName, payload.FarmerName, this.signer_public_keys)
+            return land_registration(state, newPayload.addressparameters.RegistrationNo, newPayload.addressparameters.FarmerName, newPayload.FarmAddress, newPayload.State, newPayload.Country, newPayload.ExporterName, newPayload.ImporterName, newPayload.DateOfRegistration, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
+            let newPayload = payload.startCultivation;
+            console.log("newPayload", newPayload)
+            return start_cultivation(state, newPayload.addressparameters.RegistrationNo, newPayload.CropVariety, newPayload.Dateofstart, newPayload.addressparameters.FarmerName, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST) {
+            let newPayload = payload.performHarvest;
+            console.log("newPayload", newPayload)
+            return start_harvest(state, newPayload.addressparameters.RegistrationNo, newPayload.addressparameters.FarmerName, newPayload.CropVariety, newPayload.Temperature, newPayload.Humidity, newPayload.Dateofharvest, newPayload.Quantity, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
+            let newPayload = payload.inspection;
+            return inspect_land(state, newPayload.InspectionReport, newPayload.DateofInspection, newPayload.addressparameters.RegistrationNo, newPayload.InspectorName, newPayload.addressparameters.FarmerName, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST) {
+            let newPayload = payload.processHarvest;
+            return process_harvest(state, newPayload.Quantity, newPayload.RostingDuration, newPayload.PackageDateTime, newPayload.Temperature, newPayload.InternalBatchNo, newPayload.ProcessorName, newPayload.processorAddress, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
+            let newPayload = payload.updateProcessDetails;
+            return update_processDetails(state, newPayload.setPrice, newPayload.ProcessorName, this.signer_public_keys)
         } else {
             throw new InvalidTransaction(`Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`)
         }
