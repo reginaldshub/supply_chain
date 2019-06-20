@@ -159,11 +159,11 @@ router.post("/landregistration", function(req, res, next) {
     }
 });
 
-// router.get("/allLands/:email", function(req, res, next) {
-//     landRegistration.find({ email: req.params.email }, (error, lands) => {
-//         res.status(200).json({ allLands: lands });
-//     });
-// });
+router.get("/allLands", function(req, res, next) {
+    landRegistration.find({ email: req.params.email }, (error, lands) => {
+        res.status(200).json({ allLands: lands });
+    });
+});
 
 router.get("/getLandByFarmerName/:email", function(req, res, next) {
     landRegistration.find({ email: req.params.email }, (error, lands) => {
