@@ -462,6 +462,14 @@ router.post("/inspectionReport", function(req, res, next) {
         });
 });
 
+
+router.get("/getLandsForProcessAgent", function(req, res, next) {
+    landRegistration.find({ status: "yield" }, (error, lands) => {
+        if (error) res.status(404).json({ message: "No lAND record Found" });
+        else res.status(200).json({ land: lands });
+    });
+});
+
 // Process Agent
 router.post("/createPackage", function(req, res, next) {
 
