@@ -2,8 +2,8 @@ const { get_land_registry_address } = require('../shared/Addressing')
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
 
-land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Country, ExporterName, ImporterName, DateOfRegistration, signer_public_keys) => {
-    let address = get_land_registry_address(RegistrationNo, FarmerName)
+land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Country, ExporterName, ImporterName, DateOfRegistration, farmers_public_key) => {
+    let address = get_land_registry_address(RegistrationNo, farmers_public_key)
     console.log("address", address);
     let land_data = {
         RegistrationNo: RegistrationNo,
@@ -15,9 +15,8 @@ land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Coun
         ImporterName: ImporterName,
         DateOfRegistration: DateOfRegistration
     }
-    let public_key = signer_public_keys;
     return state.setState({
-        [address]: encode({ land_data, public_key })
+        [address]: encode({ land_data, farmers_public_key })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
@@ -25,16 +24,15 @@ land_registration = (state, RegistrationNo, FarmerName, FarmAddress, State, Coun
     })
 }
 
-start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName, signer_public_keys) => {
-    let address = get_cultivation_address(RegistrationNo, FarmerName)
+start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName, farmers_public_key) => {
+    let address = get_cultivation_address(RegistrationNo, farmers_public_key)
     console.log("address", address);
     let cultivation_data = {
         CropVariety: CropVariety,
         Dateofstart: Dateofstart
     }
-    let public_key = signer_public_keys;
     return state.setState({
-        [address]: encode({ cultivation_data, public_key })
+        [address]: encode({ cultivation_data, farmers_public_key })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
@@ -42,8 +40,8 @@ start_cultivation = (state, RegistrationNo, CropVariety, Dateofstart, FarmerName
     })
 }
 
-start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Humidity, Dateofharvest, Quantity, signer_public_keys) => {
-    let address = get_harvest_address(RegistrationNo, FarmerName)
+start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Humidity, Dateofharvest, Quantity, farmers_public_key) => {
+    let address = get_harvest_address(RegistrationNo, farmers_public_key)
     console.log("address", address);
     let harvest_data = {
         CropVariety: CropVariety,
@@ -52,9 +50,8 @@ start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Hu
         Dateofharvest: Dateofharvest,
         Quantity: Quantity
     }
-    let public_key = signer_public_keys;
     return state.setState({
-        [address]: encode({ harvest_data, public_key })
+        [address]: encode({ harvest_data, farmers_public_key })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
@@ -62,17 +59,16 @@ start_harvest = (state, RegistrationNo, FarmerName, CropVariety, Temperature, Hu
     })
 }
 
-inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, InspectorName, FarmerName, signer_public_keys) => {
-    let address = get_inspection_address(RegistrationNo, FarmerName, InspectorName)
+inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, InspectorName, FarmerName, farmers_public_key, inspectors_public_key) => {
+    let address = get_inspection_address(RegistrationNo, farmers_public_key, inspectors_public_key)
     console.log("address", address);
     let inspection_data = {
         InspectionReport: InspectionReport,
         DateofInspection: DateofInspection,
         InspectorName: InspectorName
     }
-    let public_key = signer_public_keys;
     return state.setState({
-        [address]: encode({ inspection_data, public_key })
+        [address]: encode({ inspection_data, inspectors_public_key })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
@@ -82,8 +78,8 @@ inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, Inspe
 
 
 
-process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, signer_public_keys) => {
-    let address = get_process_address(ProcessorName)
+process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, process_agents_public_keys) => {
+    let address = get_process_address(process_agents_public_keys)
     console.log("address", address);
     let process_data = {
         Quantity: Quantity,
@@ -94,9 +90,8 @@ process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperatur
         ProcessorName: ProcessorName,
         processorAddress: processorAddress,
     }
-    let public_key = signer_public_keys;
     return state.setState({
-        [address]: encode({ process_data, public_key })
+        [address]: encode({ process_data, process_agents_public_keys })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
@@ -104,10 +99,10 @@ process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperatur
     })
 }
 
-update_processDetails = (state, setPrice, ProcessorName, signer_public_keys) => {
-    let address = get_process_address(ProcessorName)
+update_processDetails = (state, setPrice, ProcessorName, process_agents_public_keys) => {
+    let address = get_process_address(process_agents_public_keys)
     if (!address) {
-        throw InvalidTransaction("Failed to load Account: {:?}", err)
+        throw InvalidTransaction("Failed to load Account", err)
     } else {
         return state.getState([address]).then((stateEntries) => {
             const entry = stateEntries[address]
@@ -116,7 +111,7 @@ update_processDetails = (state, setPrice, ProcessorName, signer_public_keys) => 
             console.log("account", account);
             account.process_data.setPrice = setPrice;
             return state.setState({
-                [address]: encode(account, ProcessorName)
+                [address]: encode(account, process_agents_public_keys)
             }).then((result) => {
                 console.log("Updated Price" + result)
             }).catch((err) => {

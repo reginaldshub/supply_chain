@@ -50,7 +50,8 @@ message InspectParams {
 	string Inspection_report = 1;
 	string Dateof_inspection = 2;
 	string Inspector_name = 3;
-	AddressParams addressparameters = 4;
+	string Farmers_public_key = 4;
+	AddressParams addressparameters = 5;
 	// string Registration_no = 4;
 	// string Farmer_name = 5; 
 }

@@ -9,7 +9,9 @@ var schema = new Schema({
     internalBatchNo: { type: String, required: true },
     processorName: { type: String, required: true },
     processorAddress: { type: String, required: true },
-    setPrice: { type: Number, required: false }
+    setPrice: { type: Number, required: false },
+    lands: { type: String, required: true },
+    email: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Process', schema);
