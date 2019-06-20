@@ -22,6 +22,9 @@ export class SetPriceComponent implements OnInit {
 
     this.router.params.subscribe(params => {
       this.id = params['id'];
+      this.service.getpackagebyId(this.id).subscribe((res:any)=>{
+        console.log(res);
+      })
     })
 
     this.setPrice = this.formBuilder.group({
@@ -31,12 +34,10 @@ export class SetPriceComponent implements OnInit {
 
 
   onSubmit() {
-    this.setPrice.value['id'] = this.id
-    console.log(this.setPrice.value);
-    // this.service.setPrice(this.setPrice.value).subscribe((res:any)=>{
-    //   console.log(res);
-    //   this.route.navigate(['dashboard']);
-    // })
+    this.setPrice.value['email'] = localStorage.get('email');
+    this.service.setPrice(this.setPrice.value,this.id).subscribe((res:any)=>{
+      console.log(res);
+    })
 
   }
   backtodash() {

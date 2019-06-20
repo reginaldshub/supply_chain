@@ -73,8 +73,8 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/createPackage",data)
   }
 
-  setPrice(price){
-    return this.http.post("http://localhost:3000/setPrice",price)
+  setPrice(price,id){
+    return this.http.post("http://localhost:3000//"+id,price)
   }
 
   getLandByProcessAgent(id){
@@ -90,4 +90,10 @@ export class ServiceService {
     var email =localStorage.getItem("email");
     return this.http.get("http://localhost:3000/getPackage/"+email);
   }
+
+  getpackagebyId(id){
+    console.log(id);
+    return this.http.get("http://localhost:3000/getPackages/"+id);
+  }
+
 }

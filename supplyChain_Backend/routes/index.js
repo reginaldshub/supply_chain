@@ -554,6 +554,14 @@ router.get("/getPackage/:email", function(req, res, next) {
     });
 });
 
+router.get("/getPackages/:id", function(req, res, next) {
+    console.log(req.params.id);
+    Process.findOne({ internalBatchNo: req.params.id }, (error, package) => {
+        if (error) res.status(404).json({ message: "No Package record Found" });
+        res.status(200).json({ package: package });
+    });
+});
+
 /* WARNING!!!!   Do not Go Beyond this*/
 
 // router.get("/create", function(req, res, next) {
