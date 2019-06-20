@@ -1,0 +1,17 @@
+<app-process-header></app-process-header>
+<div class="setPrice">
+<mat-card>
+    <div class="outer">
+     <h2>Set price</h2>
+     </div>
+<form [formGroup]="setPrice" (submit)="onSubmit()">
+    <mat-form-field>
+      <input formControlName="price" matInput placeholder="Price">
+      <mat-error>price is required.</mat-error>
+    </mat-form-field>
+    <div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="setPrice.invalid"> setPrice</button> 
+    </div>
+</form>
+</mat-card>
+</div>

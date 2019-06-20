@@ -1,21 +1,19 @@
+<div class="menu">
 <mat-toolbar> 
-  <div class="menu">
-    <div>
-    {{name}}
-    <button mat-button [matMenuTriggerFor]="menu">
+    <div class="icon">
+    <h2>{{name}}</h2>
+    <a [matMenuTriggerFor]="menu">
         <i class="material-icons">
             person_pin
             </i>
-    </button>
+          </a>
   </div>
-    <mat-menu #menu="matMenu">
+  </mat-toolbar>
+  <mat-menu #menu="matMenu">
       <a   [routerLink]="['/profile']" routerLinkActive="active"  mat-menu-item>Profile</a>
       <a [routerLink]="['/login']"  mat-menu-item>Signout</a>
     </mat-menu>
   </div>
-  </mat-toolbar>
-
-
    
 
   

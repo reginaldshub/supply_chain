@@ -1,0 +1,335 @@
+<app-process-header></app-process-header>
+<div class ="outer2">
+<div class="outer1">
+  <!-- <div *ngIf="bool">
+      <div class="grid1" >
+          <div class="inner">
+              <div class="outer">
+                  <h2>Land Registration Details</h2>
+              </div>
+              <div class="grid">
+                  <ul class="custom-list">
+                      <li class="heading-text">Registration No</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.RegistrationNo}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Farmer Name</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.FarmerName}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Farm Address</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.FarmAddress}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">State</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.State}}</li>
+                      <li class="clear-float"></li>
+                  </ul>
+      
+      
+                  <ul class="custom-list">
+                      <li class="heading-text">Country</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.Country}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Exporter Name</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.ExporterName}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Importer Name</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.ImporterName}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Date Of Registration</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{data.DateOfRegistration}}}</li>
+                      <li class="clear-float"></li>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="inner">
+              <div class="outer">
+                  <h2>Cultivation Details</h2>
+              </div>
+              <div class="grid">
+                  <ul class="custom-list">
+                      <li class="heading-text">Crop Variety</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{crop.CropVariety}}</li>
+                      <li class="clear-float"></li>
+                  </ul>
+      
+                  <ul class="custom-list">
+                      <li class="heading-text">Start of Date</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{crop.Dateofstart}}</li>
+                      <li class="clear-float"></li>
+                  </ul>
+              </div>
+          </div>
+    
+          <div class="inner">
+              <div class="outer">
+                  <h2>Harvesting Details</h2>
+              </div>
+      
+              <div class="grid">
+                  <ul class="custom-list">
+                      <li class="heading-text">Crop Variety</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{details.CropVariety}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Temperature</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{details.Temperature}}</li>
+                      <li class="clear-float"></li>
+      
+                  </ul>
+      
+                  <ul class="custom-list">
+                      <li class="heading-text">Humidity</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{details.Humidity}}</li>
+                      <li class="clear-float"></li>
+      
+                      <li class="heading-text">Dateofharvest</li>
+                      <li class="seperator">:</li>
+                      <li class="details-text">{{details.Dateofharvest}}</li>
+                      <li class="clear-float"></li>
+                  </ul>
+                  
+              </div>
+      
+          </div>
+              
+</div>
+</div> -->
+<div class="expansionPanel" *ngIf="bool">
+<div class="panel" *ngFor=" let detail of details">
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+         Details of land
+        </mat-panel-title>
+        <mat-panel-description>
+          registration, cultivation, inspection,harvest
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="grid1">
+          <div class="display" >
+              <div class="inner">
+                  <div class="outer">
+                      <h2>Land Registration Details</h2>
+                  </div>
+                  <div class="grid">
+                      <ul class="custom-list">
+                          <li class="heading-text">Registration No</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.RegistrationNo}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Farmer Name</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.FarmerName}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Farm Address</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.FarmAddress}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">State</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.State}}</li>
+                          <li class="clear-float"></li>
+                      </ul>
+          
+          
+                      <ul class="custom-list">
+                          <li class="heading-text">Country</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.Country}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Exporter Name</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.ExporterName}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Importer Name</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.ImporterName}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Date Of Registration</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.land.DateOfRegistration}}}</li>
+                          <li class="clear-float"></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          
+          
+          
+          
+          <div class="display">
+              <div class="inner">
+                  <div class="outer">
+                      <h2>Cultivation Details</h2>
+                  </div>
+                  <div class="grid">
+                      <ul class="custom-list">
+                          <li class="heading-text">Crop Variety</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.cultivationtionDetails[0].CropVariety}}</li>
+                          <li class="clear-float"></li>
+                      </ul>
+          
+                      <ul class="custom-list">
+                          <li class="heading-text">Start of Date</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.cultivationtionDetails[0].Dateofstart}}</li>
+                          <li class="clear-float"></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="display">
+              <div class="inner">
+                  <div class="outer">
+                      <h2>Harvesting Details</h2>
+                  </div>
+          
+                  <div class="grid">
+                      <ul class="custom-list">
+                          <li class="heading-text">Crop Variety</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.harvestDetails[0].CropVariety}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Temperature</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.harvestDetails[0].Temperature}}</li>
+                          <li class="clear-float"></li>
+          
+                      </ul>
+          
+                      <ul class="custom-list">
+                          <li class="heading-text">Humidity</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.harvestDetails[0].Humidity}}</li>
+                          <li class="clear-float"></li>
+          
+                          <li class="heading-text">Dateofharvest</li>
+                          <li class="seperator">:</li>
+                          <li class="details-text">{{detail.harvestDetails[0].Dateofharvest}}</li>
+                          <li class="clear-float"></li>
+                      </ul>
+                      
+                  </div>
+      
+              </div>
+              
+          </div>
+
+
+            <div class="display">  
+                <div class="inner">
+                    <div class="outer">
+                        <h2>Inspection Details</h2>
+                    </div>
+                    <div *ngFor="let det of detail.inspectionDetails[0].InspectionData" class="grid">
+                        <ul class="custom-list">
+                            <li class="heading-text">Date of Inspection</li>
+                            <li class="seperator">:</li>
+                            <li class="details-text">{{det.DateofInspection}}</li>
+                            <li class="clear-float"></li>
+            
+                            <li class="heading-text">InspectorName</li>
+                            <li class="seperator">:</li>
+                            <li class="details-text">{{det.InspectorName}}</li>
+                            <li class="clear-float"></li>
+                        </ul>
+            
+            
+                        <ul class="custom-list">
+                            <li class="heading-text">InspectionReport</li>
+                            <li class="seperator">:</li>
+                            <li class="details-text">{{det.InspectionReport}}</li>
+                            <li class="clear-float"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>               
+   </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </div>
+</div>
+
+  <div class="inner1">
+    <mat-card>
+      <h2>Processing:Create Package</h2>
+      <form [formGroup]="process" (submit)="onSubmit()">
+        <mat-form-field>
+          <input formControlName="quantity" matInput placeholder="Quantity">
+          <mat-error>quantity is required.</mat-error>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input formControlName="rostingDuration" matInput placeholder="Rosting Duration">
+          <mat-error>RostingDuration is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="packageDateTime" matInput [matDatepicker]="picker" placeholder="Package Date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field>
+          <input formControlName="temperature" matInput placeholder="Temperature">
+          <mat-error>temperature is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="internalBatchNo" matInput placeholder="Internal BatchNo">
+          <mat-error>internalBatchNo is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="processorName" matInput placeholder="Processor Name ">
+          <mat-error>Processor Name is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="processorAddress" matInput placeholder="Processor Address">
+          <mat-error>Processor Address is required.</mat-error>
+        </mat-form-field>
+
+        <div class="end">
+    
+          <button mat-raised-button color="primary" type="submit" [disabled]="process.invalid">create package</button>
+        </div>
+      </form>
+
+    </mat-card>
+
+  </div>
+</div>
+
+</div>

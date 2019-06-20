@@ -6,12 +6,13 @@ import { map, tap } from 'rxjs/operators'
   providedIn: 'root'
 })
 export class ServiceService {
-
+  
   landDetails:any;
   constructor(private http:HttpClient) { }
-
-   lands(name){
-    return this.http.get("http://localhost:3000/getLandByFarmerName/"+name);
+  
+  lands(){
+    // var key =localStorage.getItem("email"); 
+    return this.http.get("http://localhost:3000/allLands");
   }
 
   getLandsForInspection(){
@@ -62,8 +63,18 @@ export class ServiceService {
   harvest(data){
     return this.http.post("http://localhost:3000/performharvest",data)
   }
+  
   harvestDetails(id){
+    // var key =localStorage.getItem("email");
     return this.http.get("http://localhost:3000/getHarvestDetails/"+id)
+  }
+
+  process(data){
+    return this.http.post("http://localhost:3000/process",data)
+  }
+
+  setPrice(price){
+    return this.http.post("http://localhost:3000/setPrice",price)
   }
   getLandByProcessAgent(id){
     console.log(id)

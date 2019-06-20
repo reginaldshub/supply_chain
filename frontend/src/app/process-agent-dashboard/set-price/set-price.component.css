@@ -1,0 +1,12 @@
+
+.setPrice{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;   
+    height: 91vh;
+}
+
+mat-card{
+    grid-column: 3/4;
+    justify-self: center;
+    align-self: center;
+}
