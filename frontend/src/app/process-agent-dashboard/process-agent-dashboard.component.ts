@@ -17,7 +17,7 @@ export class ProcessAgentDashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<LandData>(ELEMENT_DATA);
-  lands=[];
+  lands = [];
   display = false;
   disable = true;
 
@@ -29,18 +29,13 @@ export class ProcessAgentDashboardComponent implements OnInit {
   }
 
   getAll() {
-    this.service.lands().subscribe((res: any) => {
+    this.service.getharvestedlands().subscribe((res: any) => {
       console.log(res)
-      if (res.allLands.length == 0) {
+      if (res.land.length == 0) {
         this.display = false;
       } else {
         this.display = true;
-
-        res.allLands.forEach(element => {
-          element['check'] = false;
-        });
-
-        ELEMENT_DATA = res.allLands as LandData[];
+        ELEMENT_DATA = res.land as LandData[];
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -57,22 +52,22 @@ export class ProcessAgentDashboardComponent implements OnInit {
 
 
   process() {
-  console.log(this.lands);
-  this.router.navigate(['process',{lands:this.lands}]);
+    console.log(this.lands);
+    this.router.navigate(['process', { lands: this.lands }]);
   }
 
-  checked(registrationNo, check){
-    if(!check){
+  checked(registrationNo, check) {
+    if (!check) {
       this.lands.push(registrationNo);
-    }else if(check){
+    } else if (check) {
       var index = this.lands.indexOf(registrationNo);
-       if (index > -1) {
+      if (index > -1) {
         this.lands.splice(index, 1);
-    
-     }
+
+      }
     }
-    if(this.lands.length == 0) 
-    this.disable = true;
+    if (this.lands.length == 0)
+      this.disable = true;
     else this.disable = false;
   }
 }

@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var schema = new Schema({
     RegistrationNo: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: false },
     InspectionData: [{
         InspectorName: { type: String, required: true },
         InspectionReport: { type: String, require: true },

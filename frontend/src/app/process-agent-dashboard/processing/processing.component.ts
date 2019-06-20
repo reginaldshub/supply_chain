@@ -40,18 +40,13 @@ export class ProcessingComponent implements OnInit {
 
 onSubmit(){
   this.process.value['lands']= this.lands;
+  this.process.value['email'] = localStorage.getItem('email');
   console.log(this.process.value);
-  this.process.value['lands'] = localStorage.getItem('email');
-  console.log("hi");
   this.service.process(this.process.value).subscribe((res:any)=>{  
     console.log(res);
   this.route.navigate(['processAgentDashboard']);
   })
 }
-
-backtodash(){
-  this.route.navigate(['processAgentDashboard']);
- }
 
 }
 

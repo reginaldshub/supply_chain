@@ -11,8 +11,8 @@ import { ServiceService } from 'src/app/service.service';
   styleUrls: ['./processed-dashboard.component.css']
 })
 export class ProcessedDashboardComponent implements OnInit {
- 
-  displayedColumns: string[] = [ 'RegistrationNo', 'FarmerName', 'FarmAddress', 'State','Action'];
+
+  displayedColumns: string[] = [ 'internalBatchNo', 'processorName', 'processorAddress', 'quantity','temperature','rostingDuration','Action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<LandData>(ELEMENT_DATA);
@@ -28,18 +28,13 @@ export class ProcessedDashboardComponent implements OnInit {
   }
 
   getAll() {
-    this.service.lands().subscribe((res: any) => {
-      console.log(res)
-      if (res.allLands.length == 0) {
+    this.service.getpackages().subscribe((res: any) => {
+      if (res.package.length == 0) {
         this.display = false;
+        console.log("result");
       } else {
         this.display = true;
-
-        res.allLands.forEach(element => {
-          element['check'] = false;
-        });
-
-        ELEMENT_DATA = res.allLands as LandData[];
+        ELEMENT_DATA = res.package ;
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

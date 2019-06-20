@@ -13,7 +13,7 @@ var schema = new Schema({
     DateOfRegistration: { type: String, required: true },
     status: { type: String, required: false },
     inspectionStatus: { type: Boolean, required: false },
-    email: { type: String, required: true }
+    email: { type: String, required: false }
 });
 
 schema.statics.hashPassword = function hashPassword(password) {
