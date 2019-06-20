@@ -12,38 +12,36 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SetPriceComponent implements OnInit {
 
-  setPrice:FormGroup;
-  constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
- data;
- bool= false;
+  setPrice: FormGroup;
+  constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private service: ServiceService, private route: Router) { }
+  data;
+  bool = false;
+  id;
 
   ngOnInit() {
 
     this.router.params.subscribe(params => {
-      let id = params['id'];
-      this.service.getlandbyId(id).subscribe((res: any) => {
-        console.log(this.data = res.land );
-        this.bool = true;
-      })
+      this.id = params['id'];
     })
-    
-    this.setPrice=this.formBuilder.group({
-      price:['',Validators.required]
+
+    this.setPrice = this.formBuilder.group({
+      price: ['', Validators.required]
     })
   }
 
 
-onSubmit(){
-  console.log(this.setPrice.value);
-  // this.service.setPrice(this.setPrice.value).subscribe((res:any)=>{
-  //   console.log(res);
-  //   this.route.navigate(['dashboard']);
-  // })
+  onSubmit() {
+    this.setPrice.value['id'] = this.id
+    console.log(this.setPrice.value);
+    // this.service.setPrice(this.setPrice.value).subscribe((res:any)=>{
+    //   console.log(res);
+    //   this.route.navigate(['dashboard']);
+    // })
 
-}
-backtodash(){
-  this.route.navigate(['dashboard']);
- }
+  }
+  backtodash() {
+    this.route.navigate(['dashboard']);
+  }
 
 }
 

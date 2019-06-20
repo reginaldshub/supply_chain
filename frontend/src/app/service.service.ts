@@ -11,8 +11,8 @@ export class ServiceService {
   constructor(private http:HttpClient) { }
   
   lands(){
-    var key =localStorage.getItem("email"); 
-    return this.http.get("http://localhost:3000/allLands"+key);
+    // var key =localStorage.getItem("email"); 
+    return this.http.get("http://localhost:3000/allLands");
   }
 
   getLandsForInspection(){
@@ -64,9 +64,9 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/performharvest",data)
   }
   
-  harvestDetails(){
-    var key =localStorage.getItem("email");
-    return this.http.get("http://localhost:3000/getHarvestDetails/"+key)
+  harvestDetails(id){
+    // var key =localStorage.getItem("email");
+    return this.http.get("http://localhost:3000/getHarvestDetails/"+id)
   }
 
   process(data){

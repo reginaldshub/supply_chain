@@ -1,8 +1,9 @@
 <app-process-header></app-process-header>
-<mat-card style="width:20%">
+<div class="setPrice">
+<mat-card>
     <div class="outer">
      <h2>Set price</h2>
-    </div>
+     </div>
 <form [formGroup]="setPrice" (submit)="onSubmit()">
     <mat-form-field>
       <input formControlName="price" matInput placeholder="Price">
@@ -13,3 +14,4 @@
     </div>
 </form>
 </mat-card>
+</div>
