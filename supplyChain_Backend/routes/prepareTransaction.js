@@ -8,11 +8,11 @@ const { protobuff } = require('./payload');
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
 
-function prepareTransactions(payload, FarmerName) {
+function prepareTransactions(payload, email) {
 
     var keyManager = new KeyManager();
     console.log("prepareTransaction", payload);
-    var tempUserPublicKey = keyManager.readpublickey(FarmerName)
+    var tempUserPublicKey = keyManager.readpublickey(email)
     protopayload = protobuff(payload);
     console.log("protopayload", protopayload)
     const payloadBytes = cbor.encode(protopayload)
@@ -28,7 +28,7 @@ function prepareTransactions(payload, FarmerName) {
         nonce: (new Date()).toString()
     }).finish()
 
-    const signature = keyManager.sign(transactionHeaderBytes, FarmerName);
+    const signature = keyManager.sign(transactionHeaderBytes, email);
 
     const transaction = protobuf.Transaction.create({
         header: transactionHeaderBytes,
@@ -43,7 +43,7 @@ function prepareTransactions(payload, FarmerName) {
         transactionIds: transactions.map((txn) => txn.headerSignature),
     }).finish()
 
-    headerSignature = keyManager.sign(batchHeaderBytes, FarmerName);
+    headerSignature = keyManager.sign(batchHeaderBytes, email);
 
     const batch = protobuf.Batch.create({
         header: batchHeaderBytes,

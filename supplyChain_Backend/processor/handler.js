@@ -34,7 +34,7 @@ class SupplyChainHandler extends TransactionHandler {
             return start_harvest(state, newPayload.addressparameters.RegistrationNo, newPayload.addressparameters.FarmerName, newPayload.CropVariety, newPayload.Temperature, newPayload.Humidity, newPayload.Dateofharvest, newPayload.Quantity, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
             let newPayload = payload.inspection;
-            return inspect_land(state, newPayload.InspectionReport, newPayload.DateofInspection, newPayload.addressparameters.RegistrationNo, newPayload.InspectorName, newPayload.addressparameters.FarmerName, this.signer_public_keys)
+            return inspect_land(state, newPayload.InspectionReport, newPayload.DateofInspection, newPayload.addressparameters.RegistrationNo, newPayload.InspectorName, newPayload.addressparameters.FarmerName, newPayload.FarmersPublicKey, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST) {
             let newPayload = payload.processHarvest;
             return process_harvest(state, newPayload.Quantity, newPayload.RostingDuration, newPayload.PackageDateTime, newPayload.Temperature, newPayload.InternalBatchNo, newPayload.ProcessorName, newPayload.processorAddress, this.signer_public_keys)

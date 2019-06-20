@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
     CropVariety: { type: String, require: true },
     Dateofstart: { type: Date, required: true },
-    RegistrationNo: { type: String, required: true }
+    RegistrationNo: { type: String, required: true },
+    email: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Cultivation', schema);

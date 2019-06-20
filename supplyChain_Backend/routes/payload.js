@@ -63,6 +63,7 @@ function protobuff(payload) {
         InspectMessage.InspectionReport = payload.InspectionReport
         InspectMessage.DateofInspection = payload.DateofInspection
         InspectMessage.InspectorName = payload.InspectorName
+        InspectMessage.FarmersPublicKey = payload.FarmersPublicKey
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.INSPECTION;

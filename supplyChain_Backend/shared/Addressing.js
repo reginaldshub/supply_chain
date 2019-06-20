@@ -24,30 +24,30 @@ const prefix = {
     purchase: '06'
 }
 
-get_land_registry_address = (RegistrationNo, FarmerName) => {
+get_land_registry_address = (RegistrationNo, farmers_public_key) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    return TP_NAMESPACE + prefix.land + _hash(FarmerName) + _hash(RegistrationNo)
+    return TP_NAMESPACE + prefix.land + _hash(farmers_public_key) + _hash(RegistrationNo)
 }
 
 
-get_cultivation_address = (RegistrationNo, FarmerName) => {
+get_cultivation_address = (RegistrationNo, farmers_public_key) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    return TP_NAMESPACE + prefix.cultivation + _hash(FarmerName) + _hash(RegistrationNo)
+    return TP_NAMESPACE + prefix.cultivation + _hash(farmers_public_key) + _hash(RegistrationNo)
 }
 
-get_harvest_address = (RegistrationNo, FarmerName) => {
+get_harvest_address = (RegistrationNo, farmers_public_key) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    return TP_NAMESPACE + prefix.harvest + _hash(FarmerName) + _hash(RegistrationNo)
+    return TP_NAMESPACE + prefix.harvest + _hash(farmers_public_key) + _hash(RegistrationNo)
 }
 
-get_inspection_address = (RegistrationNo, FarmerName, InspectorName) => {
+get_inspection_address = (RegistrationNo, farmers_public_key, inspectors_public_key) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6);
-    return TP_NAMESPACE + prefix.inspection + _hash(FarmerName).substring(0, 20) + _hash(RegistrationNo).substring(0, 20) + _hash(InspectorName).substring(0, 22)
+    return TP_NAMESPACE + prefix.inspection + _hash(farmers_public_key).substring(0, 20) + _hash(RegistrationNo).substring(0, 20) + _hash(inspectors_public_key).substring(0, 22)
 }
 
-get_process_address = (ProcessorName) => {
+get_process_address = (process_agents_public_keys) => {
     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6)
-    return TP_NAMESPACE + prefix.processAgent + createHash('sha512').update(ProcessorName).digest('hex').toLowerCase().substring(0, 62);
+    return TP_NAMESPACE + prefix.processAgent + createHash('sha512').update(process_agents_public_keys).digest('hex').toLowerCase().substring(0, 62);
 }
 
 // get_retail_address = (RegistrationNo, FarmerName, InspectorName) => {

@@ -1238,6 +1238,7 @@ $root.supplyChainPackage = (function() {
          * @property {string|null} [InspectionReport] InspectParams InspectionReport
          * @property {string|null} [DateofInspection] InspectParams DateofInspection
          * @property {string|null} [InspectorName] InspectParams InspectorName
+         * @property {string|null} [FarmersPublicKey] InspectParams FarmersPublicKey
          * @property {supplyChainPackage.IAddressParams|null} [addressparameters] InspectParams addressparameters
          */
 
@@ -1281,6 +1282,14 @@ $root.supplyChainPackage = (function() {
         InspectParams.prototype.InspectorName = "";
 
         /**
+         * InspectParams FarmersPublicKey.
+         * @member {string} FarmersPublicKey
+         * @memberof supplyChainPackage.InspectParams
+         * @instance
+         */
+        InspectParams.prototype.FarmersPublicKey = "";
+
+        /**
          * InspectParams addressparameters.
          * @member {supplyChainPackage.IAddressParams|null|undefined} addressparameters
          * @memberof supplyChainPackage.InspectParams
@@ -1318,8 +1327,10 @@ $root.supplyChainPackage = (function() {
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.DateofInspection);
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.InspectorName);
+            if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.FarmersPublicKey);
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
-                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+                $root.supplyChainPackage.AddressParams.encode(message.addressparameters, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
             return writer;
         };
 
@@ -1364,6 +1375,9 @@ $root.supplyChainPackage = (function() {
                     message.InspectorName = reader.string();
                     break;
                 case 4:
+                    message.FarmersPublicKey = reader.string();
+                    break;
+                case 5:
                     message.addressparameters = $root.supplyChainPackage.AddressParams.decode(reader, reader.uint32());
                     break;
                 default:
@@ -1410,6 +1424,9 @@ $root.supplyChainPackage = (function() {
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 if (!$util.isString(message.InspectorName))
                     return "InspectorName: string expected";
+            if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
+                if (!$util.isString(message.FarmersPublicKey))
+                    return "FarmersPublicKey: string expected";
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters")) {
                 var error = $root.supplyChainPackage.AddressParams.verify(message.addressparameters);
                 if (error)
@@ -1436,6 +1453,8 @@ $root.supplyChainPackage = (function() {
                 message.DateofInspection = String(object.DateofInspection);
             if (object.InspectorName != null)
                 message.InspectorName = String(object.InspectorName);
+            if (object.FarmersPublicKey != null)
+                message.FarmersPublicKey = String(object.FarmersPublicKey);
             if (object.addressparameters != null) {
                 if (typeof object.addressparameters !== "object")
                     throw TypeError(".supplyChainPackage.InspectParams.addressparameters: object expected");
@@ -1461,6 +1480,7 @@ $root.supplyChainPackage = (function() {
                 object.InspectionReport = "";
                 object.DateofInspection = "";
                 object.InspectorName = "";
+                object.FarmersPublicKey = "";
                 object.addressparameters = null;
             }
             if (message.InspectionReport != null && message.hasOwnProperty("InspectionReport"))
@@ -1469,6 +1489,8 @@ $root.supplyChainPackage = (function() {
                 object.DateofInspection = message.DateofInspection;
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 object.InspectorName = message.InspectorName;
+            if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
+                object.FarmersPublicKey = message.FarmersPublicKey;
             if (message.addressparameters != null && message.hasOwnProperty("addressparameters"))
                 object.addressparameters = $root.supplyChainPackage.AddressParams.toObject(message.addressparameters, options);
             return object;

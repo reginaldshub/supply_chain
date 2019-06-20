@@ -12,7 +12,8 @@ var schema = new Schema({
     ImporterName: { type: String, required: true },
     DateOfRegistration: { type: String, required: true },
     status: { type: String, required: false },
-    inspectionStatus: { type: Boolean, required: false }
+    inspectionStatus: { type: Boolean, required: false },
+    email: { type: String, required: true }
 });
 
 schema.statics.hashPassword = function hashPassword(password) {
