@@ -9,7 +9,7 @@ export class ServiceService {
   
   landDetails:any;
   constructor(private http:HttpClient) { }
-
+  
   lands(){
     var key =localStorage.getItem("email"); 
     return this.http.get("http://localhost:3000/allLands"+key);

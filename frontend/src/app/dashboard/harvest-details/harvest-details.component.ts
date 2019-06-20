@@ -20,8 +20,7 @@ crop;
     this.route.params.subscribe(params => {
       this.id = +params['id']; // (+) converts string 'id' to a number
       console.log(this.id)
-  
-      this.service.harvestDetails(this.id).subscribe((res: any) => {
+      this.service.harvestDetails().subscribe((res: any) => {
         this.bool=true;
          this.data = res.land;
          this.crop = res.cultivationDetails;
@@ -29,6 +28,4 @@ crop;
       })
     });
   }
-
-
 }
