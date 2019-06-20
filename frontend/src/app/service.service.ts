@@ -68,9 +68,9 @@ export class ServiceService {
     // var key =localStorage.getItem("email");
     return this.http.get("http://localhost:3000/getHarvestDetails/"+id)
   }
-
+ 
   process(data){
-    return this.http.post("http://localhost:3000/process",data)
+    return this.http.post("http://localhost:3000/createPackage",data)
   }
 
   setPrice(price){
