@@ -486,51 +486,59 @@ router.post("/createPackage", function(req, res, next) {
         verb: "processHarvest"
     };
     if (keyManager.doesKeyExist(req.body.email)) {
-        if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
-            SubmitToServer(batchlistBytes).then(respo => {
-                console.log("respo", respo);
-                var savepayload = new Process({
-                    quantity: req.body.quantity,
-                    rostingDuration: req.body.rostingDuration,
-                    packageDateTime: new Date(),
-                    temperature: req.body.temperature,
-                    internalBatchNo: req.body.internalBatchNo,
-                    processorName: req.body.processorName,
-                    processorAddress: req.body.processorAddress,
-                    lands: req.body.lands,
-                    email: req.body.email,
-                });
+        Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {
+            if (err) throw err;
+            else if (package == null) {
+                if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
+                    SubmitToServer(batchlistBytes).then(respo => {
+                        console.log("respo", respo);
+                        var savepayload = new Process({
+                            quantity: req.body.quantity,
+                            rostingDuration: req.body.rostingDuration,
+                            packageDateTime: new Date(),
+                            temperature: req.body.temperature,
+                            internalBatchNo: req.body.internalBatchNo,
+                            processorName: req.body.processorName,
+                            processorAddress: req.body.processorAddress,
+                            lands: req.body.lands,
+                            email: req.body.email,
+                        });
 
-                savepayload.save().then(function(doc) {
-                        console.log(doc);
-                        res.status(200).json({ status: respo });
-                    })
-                    .catch(error => {
-                        console.log("error", error);
+                        savepayload.save().then(function(doc) {
+                                console.log(doc);
+                                res.status(200).json({ status: respo });
+                            })
+                            .catch(error => {
+                                console.log("error", error);
+                            });
                     });
-            });
-        }
+                }
+            } else {
+                res.status(403).json({ message: "Package already Exists" });
+            }
+
+        })
+
     }
 
 })
 
 
 // Update Process Agent (setPrice)
-router.post("/updatePackagePrice/:email", function(req, res, next) {
+router.post("/updatePackagePrice/:internalBatchNo", function(req, res, next) {
 
     var payload = {
-        processorName: req.params.processorName,
+        email: req.body.email,
         setPrice: req.body.setPrice,
         verb: "updateProcessDetails"
     };
     console.log("index Payload", payload)
-    if (keyManager.doesKeyExist(req.params.email)) {
-        if ((batchlistBytes = prepareTransactions(payload, req.params.processorName))) {
+    if (keyManager.doesKeyExist(req.body.email)) {
+        if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
             SubmitToServer(batchlistBytes).then(respo => {
-                console.log("respo", respo);
 
                 let updateStatus = { setPrice: req.body.setPrice }
-                Process.updateOne({ email: req.params.email }, { $set: updateStatus }, { new: true })
+                Process.updateOne({ internalBatchNo: req.params.internalBatchNo }, { $set: updateStatus }, { new: true })
                     .then(updatedResponse => {
                         if (!updatedResponse) {
                             return res.status(404).send({ message: "error" });
