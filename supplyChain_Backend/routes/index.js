@@ -482,6 +482,7 @@ router.post("/createPackage", function(req, res, next) {
         processorName: req.body.processorName,
         processorAddress: req.body.processorAddress,
         lands: req.body.lands,
+        email: req.body.email,
         verb: "processHarvest"
     };
     if (keyManager.doesKeyExist(req.body.email)) {
@@ -496,7 +497,8 @@ router.post("/createPackage", function(req, res, next) {
                     internalBatchNo: req.body.internalBatchNo,
                     processorName: req.body.processorName,
                     processorAddress: req.body.processorAddress,
-                    lands: req.body.lands
+                    lands: req.body.lands,
+                    email: req.body.email,
                 });
 
                 savepayload.save().then(function(doc) {
@@ -546,7 +548,7 @@ router.post("/updatePackagePrice/:email", function(req, res, next) {
 })
 
 router.get("/getPackage/:email", function(req, res, next) {
-    Process.findOne({ email: req.params.email }, (error, package) => {
+    Process.find({ email: req.params.email }, (error, package) => {
         if (error) res.status(404).json({ message: "No User record Found" });
         res.status(200).json({ package: package });
     });

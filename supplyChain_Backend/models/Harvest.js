@@ -8,7 +8,7 @@ var schema = new Schema({
     Dateofharvest: { type: String, require: true },
     Quantity: { type: String, require: true },
     RegistrationNo: { type: String, required: true },
-    email: { type: String, required: true }
+    email: { type: String, required: false }
 });
 
 module.exports = mongoose.model('Harvest', schema);
