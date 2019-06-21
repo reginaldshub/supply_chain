@@ -29,13 +29,13 @@ export class TransferComponent implements OnInit {
     })
 
     this.transfer = this.formBuilder.group({
-      retailAgentemail: ['', Validators.required]
+      retailAgentEmail: ['', Validators.required]
     })
   }
 
   onSubmit() {
     this.transfer.value['email'] = localStorage.getItem('email')
-    this.transfer.value['id'] = this.id;
+    this.transfer.value['internalBatchNo'] = this.id;
     console.log(this.transfer.value);
     this.service.transfer(this.transfer.value).subscribe((res:any)=>{
       console.log(res);

@@ -13,8 +13,8 @@ import { Router } from '@angular/router';
 export class RetailAgentDashboardComponent implements OnInit {
 
  
-  displayedColumns: string[] = ['RegistrationNo', 'FarmerName', 'FarmAddress', 'State'];
-
+  displayedColumns: string[] = [ 'internalBatchNo', 'processorName', 'processorAddress', 'quantity','temperature','rostingDuration','From'];
+ 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource = new MatTableDataSource<LandData>(ELEMENT_DATA);
@@ -28,18 +28,22 @@ export class RetailAgentDashboardComponent implements OnInit {
   }
  
   getAll(){
-  //  this.service.lands().subscribe((res:any)=>{
-  //    if(res.allLands.length==0){
-  //      this.display=false;
-  //    }else{
-  //    this.display=true;
-  //    ELEMENT_DATA= res.allLands as LandData[];
-  //    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-  //    this.dataSource.paginator = this.paginator;
-  //    this.dataSource.sort = this.sort;
-  //    }
+    let email = localStorage.getItem('email');
+    let data = {"RetailAgentEmail":email}
+    console.log(data);
+   this.service.getTransferedPackages(data).subscribe((res:any)=>{
+     console.log(res.packages);
+     if(res.packages.length==0){
+       this.display=false;
+     }else{
+     this.display=true;
+     ELEMENT_DATA= res.packages;
+     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+     this.dataSource.paginator = this.paginator;
+     this.dataSource.sort = this.sort;
+     }
      
-  //    })
+     })
   }
   applyFilter(filterValue: string){
     this.dataSource.filter = filterValue.trim().toLowerCase();
