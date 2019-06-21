@@ -50,6 +50,11 @@ get_process_address = (process_agents_public_keys) => {
     return TP_NAMESPACE + prefix.processAgent + createHash('sha512').update(process_agents_public_keys).digest('hex').toLowerCase().substring(0, 62);
 }
 
+get_retail_address = (retail_agents_public_keys) => {
+    let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6)
+    return TP_NAMESPACE + prefix.retailAgent + createHash('sha512').update(retail_agents_public_keys).digest('hex').toLowerCase().substring(0, 62);
+}
+
 // get_retail_address = (RegistrationNo, FarmerName, InspectorName) => {
 //     let TP_NAMESPACE = createHash('sha512').update('supplychain').digest('hex').toLowerCase().substring(0, 6)
 //     return TP_NAMESPACE + prefix.retailAgent + _hash(FarmerName).substring(0, 20) + _hash(RegistrationNo).substring(0, 20) + _hash(InspectorName).substring(0, 22)

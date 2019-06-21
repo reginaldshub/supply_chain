@@ -7,6 +7,7 @@ var landRegistration = require("./../models/landRegistration");
 var Harvest = require("./../models/Harvest");
 var Inspection = require("./../models/Inspection");
 var Process = require("./../models/process");
+var Retail = require("./../models/retail")
 const { prepareTransactions } = require("./prepareTransaction");
 const { SubmitToServer } = require("./sumitToServer.js");
 const KeyManager = require("./keymanager");
@@ -162,12 +163,12 @@ router.post("/landregistration", function(req, res, next) {
 });
 
 // router.get("/allLands", function(req, res, next) {
-//     landRegistration.find({ email: req.params.email }, (error, lands) => {
+//     landRegistration.find({}, (error, lands) => {
 //         res.status(200).json({ allLands: lands });
 //     });
 // });
 
-router.get("/getLandByFarmerName/:email", function(req, res, next) {
+router.get("/getLandsByFarmerEmail/:email", function(req, res, next) {
     landRegistration.find({ email: req.params.email }, (error, lands) => {
         if (error) throw error;
         else res.status(200).json({ allLands: lands });
@@ -220,8 +221,7 @@ router.post("/startcultivation", function(req, res, next) {
     };
 
     let updateStatus = { status: "harvest" };
-    landRegistration
-        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
             if (!updatedResponse) {
                 return res.status(404).send({
@@ -571,6 +571,65 @@ router.get("/getPackages/:id", function(req, res, next) {
         res.status(200).json({ package: package });
     });
 });
+// Transfer Package By Process Agent
+router.post("/transferPackage", function(req, res, next) {
+    if (keyManager.doesKeyExist(req.body.retailAgentEmail)) {
+        var retailAgentPublicKey = keyManager.readpublickey(req.body.retailAgentEmail)
+        var payload = {
+            email: req.body.email,
+            retailAgentPublicKey: retailAgentPublicKey,
+            internalBatchNo: req.body.internalBatchNo,
+            verb: "transferPackage"
+        };
+
+        if (keyManager.doesKeyExist(req.body.email)) {
+            Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {
+                if (err) throw err;
+
+                if (package == null) {
+                    res.status(404).json({ message: "NO Entry Found" })
+                } else {
+                    if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
+                        SubmitToServer(batchlistBytes).then(respo => {
+                            var savepayload = new Retail({
+                                quantity: package.quantity,
+                                rostingDuration: package.rostingDuration,
+                                packageDateTime: package.packageDateTime,
+                                temperature: package.temperature,
+                                internalBatchNo: package.internalBatchNo,
+                                processorName: package.processorName,
+                                processorAddress: package.processorAddress,
+                                setPrice: package.setPrice,
+                                lands: package.lands,
+                                RetailAgentEmail: req.body.retailAgentEmail,
+                                ProcessAgentEmail: req.body.email,
+                            });
+
+                            savepayload.save().then(function(doc) {
+                                    package.remove(function(err) {
+                                        if (err) throw err;
+                                        console.log('Data successfully deleted!');
+                                        res.status(200).json({ status: respo });
+                                    });
+
+                                })
+                                .catch(error => {
+                                    console.log("error", error);
+                                });
+
+
+                        });
+                    }
+                }
+
+            })
+
+        }
+    } else {
+        res.status(404).json({ message: "Retail Agent Not FOund" })
+    }
+})
+
 
 /* WARNING!!!!   Do not Go Beyond this*/
 
