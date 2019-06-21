@@ -35,6 +35,7 @@ export class DashboardComponent implements OnInit {
 
   getAll() {
     this.service.lands().subscribe((res: any) => {
+      console.log(res);
       if (res.allLands.length == 0) {
         this.display = false;
       } else {

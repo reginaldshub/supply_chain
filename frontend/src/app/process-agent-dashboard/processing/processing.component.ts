@@ -44,7 +44,7 @@ onSubmit(){
   console.log(this.process.value);
   this.service.process(this.process.value).subscribe((res:any)=>{  
     console.log(res);
-  this.route.navigate(['processAgentDashboard']);
+  this.route.navigate(['processedDashboard']);
   })
 }
 

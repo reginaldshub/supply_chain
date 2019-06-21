@@ -11,8 +11,9 @@ export class ServiceService {
   constructor(private http:HttpClient) { }
   
   lands(){
-    // var key =localStorage.getItem("email"); 
-    return this.http.get("http://localhost:3000/allLands");
+     var key =localStorage.getItem("email"); 
+     console.log(key);
+    return this.http.get("http://localhost:3000/getLandByFarmerName/"+key);
   }
 
   getLandsForInspection(){
@@ -74,7 +75,7 @@ export class ServiceService {
   }
 
   setPrice(price,id){
-    return this.http.post("http://localhost:3000//"+id,price)
+    return this.http.post("http://localhost:3000/updatePackagePrice/"+id,price)
   }
 
   getLandByProcessAgent(id){

@@ -102,6 +102,7 @@ router.post("/login", function(req, res, next) {
 });
 
 router.post("/landregistration", function(req, res, next) {
+    console.log(req.body)
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
         FarmerName: req.body.FarmerName,
@@ -140,6 +141,7 @@ router.post("/landregistration", function(req, res, next) {
                                 Country: req.body.Country,
                                 ExporterName: req.body.ExporterName,
                                 ImporterName: req.body.ImporterName,
+                                email: req.body.email,
                                 DateOfRegistration: new Date(),
                                 status: "cultivate"
                             });
@@ -159,11 +161,11 @@ router.post("/landregistration", function(req, res, next) {
     }
 });
 
-router.get("/allLands", function(req, res, next) {
-    landRegistration.find({ email: req.params.email }, (error, lands) => {
-        res.status(200).json({ allLands: lands });
-    });
-});
+// router.get("/allLands", function(req, res, next) {
+//     landRegistration.find({ email: req.params.email }, (error, lands) => {
+//         res.status(200).json({ allLands: lands });
+//     });
+// });
 
 router.get("/getLandByFarmerName/:email", function(req, res, next) {
     landRegistration.find({ email: req.params.email }, (error, lands) => {
@@ -526,7 +528,7 @@ router.post("/createPackage", function(req, res, next) {
 
 // Update Process Agent (setPrice)
 router.post("/updatePackagePrice/:internalBatchNo", function(req, res, next) {
-
+console.log(req.body)
     var payload = {
         email: req.body.email,
         setPrice: req.body.setPrice,

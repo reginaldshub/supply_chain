@@ -1,17 +1,79 @@
 <app-process-header></app-process-header>
-<div class="setPrice">
-<mat-card>
-    <div class="outer">
-     <h2>Set price</h2>
-     </div>
-<form [formGroup]="setPrice" (submit)="onSubmit()">
-    <mat-form-field>
-      <input formControlName="price" matInput placeholder="Price">
-      <mat-error>price is required.</mat-error>
-    </mat-form-field>
-    <div>
-    <button mat-raised-button color="primary" type="submit" [disabled]="setPrice.invalid"> setPrice</button> 
+
+ <div class="display" *ngIf="bool">
+  <div class="inner">
+      <div class="outer">
+          <h2>Package Details</h2>
+      </div>
+
+      <div class="grid">
+          <ul class="custom-list">
+              <li class="heading-text">internalBatchNo</li>
+              <li class="seperator">:</li>
+              <li class="details-text">{{package.internalBatchNo}}</li>
+              <li class="clear-float"></li>
+
+              <li class="heading-text">processorName</li>
+              <li class="seperator">:</li>
+              <li class="details-text">{{package.processorName}}</li>
+              <li class="clear-float"></li>
+
+          </ul>
+
+          <ul class="custom-list">
+              <li class="heading-text">quantity</li>
+              <li class="seperator">:</li>
+              <li class="details-text">{{package.quantity}}</li>
+              <li class="clear-float"></li>
+
+              <li class="heading-text">processorAddress</li>
+              <li class="seperator">:</li>
+              <li class="details-text">{{package.processorAddress}}</li>
+              <li class="clear-float"></li>
+          </ul>
+
+          <ul class="custom-list">
+            <li class="heading-text">rostingDuration</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.rostingDuration}}</li>
+            <li class="clear-float"></li>
+
+            <li class="heading-text">packageDateTime</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.packageDateTime}}</li>
+            <li class="clear-float"></li>
+        </ul>
+
+        <ul class="custom-list">
+          <li class="heading-text">lands</li>
+          <li class="seperator">:</li>
+          <li class="details-text">{{package.lands}}</li>
+          <li class="clear-float"></li>
+
+      </ul>
+          
+      </div>
+
+  </div>
+  
+  <div class="setPrice">
+    <mat-card>
+        <div class="outer">
+         <h2>Set price</h2>
+         </div>
+    <form [formGroup]="setPrice" (submit)="onSubmit()">
+        <mat-form-field>
+          <input formControlName="setPrice" matInput placeholder="setPrice">
+          <mat-error>price is required.</mat-error>
+        </mat-form-field>
+        <div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="setPrice.invalid"> setPrice</button> 
+        </div>
+    </form>
+    </mat-card>
     </div>
-</form>
-</mat-card>
-</div>
+
+</div> 
+
+
+
