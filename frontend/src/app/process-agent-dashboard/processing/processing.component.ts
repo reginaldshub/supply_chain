@@ -13,7 +13,7 @@ export class ProcessingComponent implements OnInit {
 
   process:FormGroup;
   constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
-   data;bool= true ;id;details= [];crop;lands;
+   data;bool= true ;id;details= [];crop;lands; bool1=false
    
   ngOnInit(){
   this.lands =this.router.snapshot.paramMap.get('lands');

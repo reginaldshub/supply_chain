@@ -22,6 +22,7 @@ import { ProcessingDetailsComponent } from './process-agent-dashboard/processing
 import { ProcessedDashboardComponent } from './process-agent-dashboard/processed-dashboard/processed-dashboard.component';
 import { SetPriceComponent } from './process-agent-dashboard/set-price/set-price.component';
 import { TrasferedDashboardComponent } from './process-agent-dashboard/trasfered-dashboard/trasfered-dashboard.component';
+import { TransferComponent } from './process-agent-dashboard/transfer/transfer.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -46,6 +47,7 @@ const routes: Routes = [
   {path:'processedDashboard',component:ProcessedDashboardComponent},
   {path:'setPrice/:id',component:SetPriceComponent},
   {path:'TransferDashboard',component:TrasferedDashboardComponent},
+  {path:'transfer/:id',component:TransferComponent},
   {path:'retailAgentDashboard',component:RetailAgentDashboardComponent}
 ];
 

@@ -97,4 +97,9 @@ export class ServiceService {
     return this.http.get("http://localhost:3000/getPackages/"+id);
   }
 
+
+  transfer(data){
+    return this.http.post("http://localhost:3000/transfer/",data)
+  }
+
 }
