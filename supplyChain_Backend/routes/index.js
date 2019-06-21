@@ -485,7 +485,7 @@ router.post("/createPackage", function(req, res, next) {
         processorAddress: req.body.processorAddress,
         lands: req.body.lands,
         email: req.body.email,
-        verb: "processHarvest"
+        verb: "createPackage"
     };
     if (keyManager.doesKeyExist(req.body.email)) {
         Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {
@@ -503,7 +503,7 @@ router.post("/createPackage", function(req, res, next) {
                             processorName: req.body.processorName,
                             processorAddress: req.body.processorAddress,
                             lands: req.body.lands,
-                            email: req.body.email,
+                            ProcessAgentEmail: req.body.email,
                         });
 
                         savepayload.save().then(function(doc) {
@@ -558,7 +558,7 @@ console.log(req.body)
 })
 
 router.get("/getPackage/:email", function(req, res, next) {
-    Process.find({ email: req.params.email }, (error, package) => {
+    Process.find({ ProcessAgentEmail: req.params.email }, (error, package) => {
         if (error) res.status(404).json({ message: "No User record Found" });
         res.status(200).json({ package: package });
     });
@@ -581,6 +581,8 @@ router.post("/transferPackage", function(req, res, next) {
             internalBatchNo: req.body.internalBatchNo,
             verb: "transferPackage"
         };
+        console.log("req.body",req.body)
+        console.log("payload",payload)
 
         if (keyManager.doesKeyExist(req.body.email)) {
             Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {

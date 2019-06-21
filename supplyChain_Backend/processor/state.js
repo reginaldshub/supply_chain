@@ -122,7 +122,7 @@ update_processDetails = (state, setPrice, ProcessorName, process_agents_public_k
     }
 }
 
-transfer_package = (state, state, retailAgentPublicKey, internalBatchNo, process_agents_public_keys) => {
+transfer_package = (state, retailAgentPublicKey, internalBatchNo, process_agents_public_keys) => {
     let processAgentAddress = get_process_address(process_agents_public_keys)
     let retailAgentAddress = get_retail_address(retailAgentPublicKey)
     if (!processAgentAddress) {

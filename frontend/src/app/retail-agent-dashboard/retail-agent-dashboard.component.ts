@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class RetailAgentDashboardComponent implements OnInit {
 
  
-  displayedColumns: string[] = [ 'internalBatchNo', 'processorName', 'processorAddress', 'quantity','temperature','rostingDuration','Action'];
+  displayedColumns: string[] = [ 'internalBatchNo', 'processorName', 'processorAddress', 'quantity','temperature','rostingDuration','From'];
  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,11 +32,12 @@ export class RetailAgentDashboardComponent implements OnInit {
     let data = {"RetailAgentEmail":email}
     console.log(data);
    this.service.getTransferedPackages(data).subscribe((res:any)=>{
-     if(res.allLands.length==0){
+     console.log(res.packages);
+     if(res.packages.length==0){
        this.display=false;
      }else{
      this.display=true;
-     ELEMENT_DATA= res.allLands as LandData[];
+     ELEMENT_DATA= res.packages;
      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
      this.dataSource.paginator = this.paginator;
      this.dataSource.sort = this.sort;

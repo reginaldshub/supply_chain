@@ -11,7 +11,7 @@ var schema = new Schema({
     processorAddress: { type: String, required: true },
     setPrice: { type: Number, required: false },
     lands: { type: String, required: true },
-    RetailAgentEmail: { type: String, required: true },
+    RetailAgentEmail: { type: String, required: false },
     ProcessAgentEmail: { type: String, required: true }
 });
 

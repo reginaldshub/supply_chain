@@ -36,13 +36,13 @@ class SupplyChainHandler extends TransactionHandler {
             let newPayload = payload.inspection;
             return inspect_land(state, newPayload.InspectionReport, newPayload.DateofInspection, newPayload.addressparameters.RegistrationNo, newPayload.InspectorName, newPayload.addressparameters.FarmerName, newPayload.FarmersPublicKey, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
-            let newPayload = payload.processHarvest;
+            let newPayload = payload.createPackage;
             return create_package(state, newPayload.Quantity, newPayload.RostingDuration, newPayload.PackageDateTime, newPayload.Temperature, newPayload.InternalBatchNo, newPayload.ProcessorName, newPayload.processorAddress, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
             let newPayload = payload.updateProcessDetails;
             return update_processDetails(state, newPayload.setPrice, newPayload.ProcessorName, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
-            let newPayload = payload.updateProcessDetails;
+            let newPayload = payload.transferPackage;
             return transfer_package(state, newPayload.retailAgentPublicKey, newPayload.internalBatchNo, this.signer_public_keys)
         } else {
             throw new InvalidTransaction(`Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`)

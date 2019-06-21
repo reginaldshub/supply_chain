@@ -71,12 +71,9 @@ function protobuff(payload) {
         console.log("landInspection", payloadInstance)
         return payloadInstance;
 
-    } else if (payload.verb == 'processHarvest') {
+    } else if (payload.verb == 'createPackage') {
 
         var CreatePackageMessage = protos.supplyChainPackage.CreatePackageParams.create();
-        CreatePackageMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        CreatePackageMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        CreatePackageMessage.addressparameters.FarmerName = payload.FarmerName
 
         CreatePackageMessage.Quantity = payload.quantity
         CreatePackageMessage.RostingDuration = payload.rostingDuration
@@ -87,7 +84,7 @@ function protobuff(payload) {
         CreatePackageMessage.processorAddress = payload.processorAddress
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
-        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST;
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE
         payloadInstance.createPackage = CreatePackageMessage;
         console.log("createPackage", payloadInstance)
         return payloadInstance;
@@ -111,7 +108,7 @@ function protobuff(payload) {
         TransferPackageMessage.internalBatchNo = payload.internalBatchNo
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
-        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PURCHASE_GRAINS;
+        payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE;
         payloadInstance.transferPackage = TransferPackageMessage;
         console.log("transferPackage", payloadInstance)
         return payloadInstance;

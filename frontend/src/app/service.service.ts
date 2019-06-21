@@ -13,7 +13,7 @@ export class ServiceService {
   lands(){
      var key =localStorage.getItem("email"); 
      console.log(key);
-    return this.http.get("http://localhost:3000/getLandByFarmerName/"+key);
+    return this.http.get("http://localhost:3000/getLandsByFarmerEmail/"+key);
   }
 
   getLandsForInspection(){
@@ -99,11 +99,11 @@ export class ServiceService {
 
 
   transfer(data){
-    return this.http.post("http://localhost:3000/transfer/",data)
+    return this.http.post("http://localhost:3000/transferPackage/",data)
   }
 
   getTransferedPackages(data){
-    return this.http.post("http://localhost:3000/getTransferedPackages/",data)
+    return this.http.post("http://localhost:3000/getTransferredPackages/",data)
   }
 
 }
