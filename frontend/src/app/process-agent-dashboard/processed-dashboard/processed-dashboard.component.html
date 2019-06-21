@@ -47,7 +47,9 @@
                 <!-- ID Column -->
                 <ng-container matColumnDef="internalBatchNo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> internalBatchNo </th>
-                    <td mat-cell *matCellDef="let row"> <a [routerLink]="['/landDetails', row.internalBatchNo]"> {{row.internalBatchNo}}</a>  </td>
+                    <!-- <td mat-cell *matCellDef="let row"> <a [routerLink]="['/landDetails', row.internalBatchNo]"> {{row.internalBatchNo}}</a>  </td> -->
+                    <td mat-cell *matCellDef="let row"> {{row.internalBatchNo}}  </td>
+
                 </ng-container>
 
                 <!-- Progress Column -->
@@ -79,7 +81,9 @@
             <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef>Action</th>
                     <td mat-cell *matCellDef="let row">
-                            <a style="color:red" mat-button (click)="setPrice(row.internalBatchNo)" >SetPrice</a> 
+                            <a style="color:red"  *ngIf="row.setPrice == null" mat-button (click)="setPrice(row.internalBatchNo)" >SetPrice</a> 
+                            <a style="color:red"  *ngIf="row.setPrice != null" mat-button [routerLink]="['/transfer', row.internalBatchNo]" >Transfer</a> 
+
                     </td>
             </ng-container>
                

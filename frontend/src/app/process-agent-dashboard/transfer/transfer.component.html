@@ -45,9 +45,15 @@
         </ul>
 
         <ul class="custom-list">
+
           <li class="heading-text">lands</li>
           <li class="seperator">:</li>
           <li class="details-text">{{package.lands}}</li>
+          <li class="clear-float"></li>
+
+          <li class="heading-text">Price of the package</li>
+          <li class="seperator">:</li>
+          <li class="details-text">{{package.setPrice}}</li>
           <li class="clear-float"></li>
 
       </ul>
@@ -55,25 +61,20 @@
       </div>
 
   </div>
-  
-  <div class="setPrice">
-    <mat-card>
-        <div class="outer">
-         <h2>Set price</h2>
-         </div>
-    <form [formGroup]="setPrice" (submit)="onSubmit()">
-        <mat-form-field>
-          <input formControlName="setPrice" matInput placeholder="setPrice">
-          <mat-error>price is required.</mat-error>
-        </mat-form-field>
-        <div>
-        <button mat-raised-button color="primary" type="submit" [disabled]="setPrice.invalid"> setPrice</button> 
-        </div>
-    </form>
-    </mat-card>
-    </div>
-
-</div> 
-
-
-
+<div class="setPrice">
+  <mat-card>
+      <div class="outer">
+       <h2>Transfer Package</h2>
+       </div>
+  <form [formGroup]="transfer" (submit)="onSubmit()">
+      <mat-form-field>
+        <input formControlName="retailAgentemail" matInput placeholder="To:email">
+        <mat-error>email is required.</mat-error>
+      </mat-form-field>
+      <div>
+      <button mat-raised-button color="primary" type="submit" [disabled]="transfer.invalid"> transfer</button> 
+      </div>
+  </form>
+  </mat-card>
+  </div>
+  </div>

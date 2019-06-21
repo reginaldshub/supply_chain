@@ -30,7 +30,8 @@ export class LandRegisterComponent implements OnInit {
   }
 
   onSubmit(){
-   console.log(this.landRegister.value);
+  let email = localStorage.getItem('email');
+   console.log(this.landRegister.value['email']=email);
    this.service.land_register(this.landRegister.value).subscribe((res:any)=>{
      console.log(res);
      this.route.navigate(['dashboard']);

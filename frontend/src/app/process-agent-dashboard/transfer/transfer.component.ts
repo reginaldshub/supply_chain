@@ -6,13 +6,12 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-set-price',
-  templateUrl: './set-price.component.html',
-  styleUrls: ['./set-price.component.css']
+  selector: 'app-transfer',
+  templateUrl: './transfer.component.html',
+  styleUrls: ['./transfer.component.css']
 })
-export class SetPriceComponent implements OnInit {
-
-  setPrice: FormGroup;
+export class TransferComponent implements OnInit {
+  transfer: FormGroup;
   constructor(private router: ActivatedRoute, private formBuilder: FormBuilder, private service: ServiceService, private route: Router) { }
   data;
   bool = false;
@@ -29,25 +28,19 @@ export class SetPriceComponent implements OnInit {
       })
     })
 
-    this.setPrice = this.formBuilder.group({
-      setPrice: ['', Validators.required]
+    this.transfer = this.formBuilder.group({
+      retailAgentemail: ['', Validators.required]
     })
   }
-
 
   onSubmit() {
-
-    this.setPrice.value['email'] = localStorage.getItem('email')
-    console.log(this.setPrice.value);
-    this.service.setPrice(this.setPrice.value,this.id).subscribe((res:any)=>{
+    this.transfer.value['email'] = localStorage.getItem('email')
+    this.transfer.value['id'] = this.id;
+    console.log(this.transfer.value);
+    this.service.transfer(this.transfer.value).subscribe((res:any)=>{
       console.log(res);
-      this.route.navigate(['processedDashboard']);
+      this.route.navigate(['TransferDashboard']);
     })
-
   }
-  backtodash() {
-
-  }
-
 }
 

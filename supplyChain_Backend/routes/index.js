@@ -103,6 +103,7 @@ router.post("/login", function(req, res, next) {
 });
 
 router.post("/landregistration", function(req, res, next) {
+    console.log(req.body)
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
         FarmerName: req.body.FarmerName,
@@ -527,7 +528,7 @@ router.post("/createPackage", function(req, res, next) {
 
 // Update Process Agent (setPrice)
 router.post("/updatePackagePrice/:internalBatchNo", function(req, res, next) {
-
+console.log(req.body)
     var payload = {
         email: req.body.email,
         setPrice: req.body.setPrice,
@@ -563,6 +564,13 @@ router.get("/getPackage/:email", function(req, res, next) {
     });
 });
 
+router.get("/getPackages/:id", function(req, res, next) {
+    console.log(req.params.id);
+    Process.findOne({ internalBatchNo: req.params.id }, (error, package) => {
+        if (error) res.status(404).json({ message: "No Package record Found" });
+        res.status(200).json({ package: package });
+    });
+});
 // Transfer Package By Process Agent
 router.post("/transferPackage", function(req, res, next) {
     if (keyManager.doesKeyExist(req.body.retailAgentEmail)) {

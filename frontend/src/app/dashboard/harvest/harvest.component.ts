@@ -46,6 +46,8 @@ export class HarvestComponent implements OnInit {
   onSubmit() {
     this.harvest.value['RegistrationNo'] = localStorage.getItem("id");
     this.harvest.value['FarmerName'] = localStorage.getItem("name");
+    this.harvest.value['email']=localStorage.getItem('email');
+  
     console.log(this.harvest.value);
     this.service.harvest(this.harvest.value).subscribe((res: any) => {
       console.log(res);

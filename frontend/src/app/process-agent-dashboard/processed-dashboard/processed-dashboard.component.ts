@@ -34,6 +34,7 @@ export class ProcessedDashboardComponent implements OnInit {
         console.log("result");
       } else {
         this.display = true;
+        console.log(res.package);
         ELEMENT_DATA = res.package ;
         this.dataSource = new MatTableDataSource(ELEMENT_DATA);
         this.dataSource.paginator = this.paginator;
