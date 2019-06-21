@@ -78,7 +78,7 @@ inspect_land = (state, InspectionReport, DateofInspection, RegistrationNo, Inspe
 
 
 
-process_harvest = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, process_agents_public_keys) => {
+create_package = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, process_agents_public_keys) => {
     let address = get_process_address(process_agents_public_keys)
     console.log("address", address);
     let process_data = {
@@ -111,7 +111,7 @@ update_processDetails = (state, setPrice, ProcessorName, process_agents_public_k
             console.log("account", account);
             account.process_data.setPrice = setPrice;
             return state.setState({
-                [address]: encode(account, process_agents_public_keys)
+                [address]: encode({ account, process_agents_public_keys })
             }).then((result) => {
                 console.log("Updated Price" + result)
             }).catch((err) => {
@@ -122,4 +122,26 @@ update_processDetails = (state, setPrice, ProcessorName, process_agents_public_k
     }
 }
 
-module.exports = { land_registration, start_cultivation, inspect_land, process_harvest, update_processDetails }
+transfer_package = (state, state, retailAgentPublicKey, internalBatchNo, process_agents_public_keys) => {
+    let processAgentAddress = get_process_address(process_agents_public_keys)
+    let retailAgentAddress = get_retail_address(retailAgentPublicKey)
+    if (!processAgentAddress) {
+        throw InvalidTransaction("Failed to load Account", err)
+    } else {
+        return state.getState([processAgentAddress]).then((stateEntries) => {
+            const entry = stateEntries[processAgentAddress]
+            let account = decode(entry);
+            console.log("entry", entry);
+            console.log("account", account);
+            return state.setState({
+                [retailAgentAddress]: encode({ account, retailAgentPublicKey })
+            }).then((result) => {
+                console.log("Updated to Retail Agent" + result)
+            }).catch((err) => {
+                console.log(err);
+            })
+        })
+    }
+}
+
+module.exports = { land_registration, start_cultivation, inspect_land, create_package, update_processDetails, transfer_package }

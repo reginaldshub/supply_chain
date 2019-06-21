@@ -73,23 +73,23 @@ function protobuff(payload) {
 
     } else if (payload.verb == 'processHarvest') {
 
-        var ProcessHarvestMessage = protos.supplyChainPackage.ProcessHarvestParams.create();
-        ProcessHarvestMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        ProcessHarvestMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        ProcessHarvestMessage.addressparameters.FarmerName = payload.FarmerName
+        var CreatePackageMessage = protos.supplyChainPackage.CreatePackageParams.create();
+        CreatePackageMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
+        CreatePackageMessage.addressparameters.RegistrationNo = payload.RegistrationNo
+        CreatePackageMessage.addressparameters.FarmerName = payload.FarmerName
 
-        ProcessHarvestMessage.Quantity = payload.quantity
-        ProcessHarvestMessage.RostingDuration = payload.rostingDuration
-        ProcessHarvestMessage.PackageDateTime = payload.packageDateTime
-        ProcessHarvestMessage.Temperature = payload.temperature
-        ProcessHarvestMessage.InternalBatchNo = payload.internalBatchNo
-        ProcessHarvestMessage.ProcessorName = payload.processorName
-        ProcessHarvestMessage.processorAddress = payload.processorAddress
+        CreatePackageMessage.Quantity = payload.quantity
+        CreatePackageMessage.RostingDuration = payload.rostingDuration
+        CreatePackageMessage.PackageDateTime = payload.packageDateTime
+        CreatePackageMessage.Temperature = payload.temperature
+        CreatePackageMessage.InternalBatchNo = payload.internalBatchNo
+        CreatePackageMessage.ProcessorName = payload.processorName
+        CreatePackageMessage.processorAddress = payload.processorAddress
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST;
-        payloadInstance.processHarvest = ProcessHarvestMessage;
-        console.log("processHarvest", payloadInstance)
+        payloadInstance.createPackage = CreatePackageMessage;
+        console.log("createPackage", payloadInstance)
         return payloadInstance;
 
     } else if (payload.verb == 'updateProcessDetails') {
@@ -104,25 +104,16 @@ function protobuff(payload) {
         console.log("updateProcessDetails", payloadInstance)
         return payloadInstance;
 
-    } else if (payload.verb == 'purchasegrains') {
-        var PurchaseGrainsMessage = protos.supplyChainPackage.PurchaseGrainsParams.create();
+    } else if (payload.verb == 'transferPackage') {
+        var TransferPackageMessage = protos.supplyChainPackage.TransferPackageParams.create();
 
-        PurchaseGrainsMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        PurchaseGrainsMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        PurchaseGrainsMessage.addressparameters.FarmerName = payload.FarmerName
-
-        PurchaseGrainsMessage.Quantity = payload.Quantity
-        PurchaseGrainsMessage.RostingDuration = payload.RostingDuration
-        PurchaseGrainsMessage.PackageDateTime = payload.PackageDateTime
-        PurchaseGrainsMessage.Temperature = payload.Temperature
-        PurchaseGrainsMessage.InternalBatchNo = payload.InternalBatchNo
-        PurchaseGrainsMessage.ProcessorName = payload.ProcessorName
-        PurchaseGrainsMessage.ProcessorName = payload.ProcessorAddress
+        TransferPackageMessage.retailAgentPublicKey = payload.retailAgentPublicKey
+        TransferPackageMessage.internalBatchNo = payload.internalBatchNo
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PURCHASE_GRAINS;
-        payloadInstance.processHarvest = PurchaseGrainsMessage;
-        console.log("purchasegrains", payloadInstance)
+        payloadInstance.transferPackage = TransferPackageMessage;
+        console.log("transferPackage", payloadInstance)
         return payloadInstance;
     }
 }

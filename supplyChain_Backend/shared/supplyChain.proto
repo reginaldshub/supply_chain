@@ -7,8 +7,8 @@ message PayLoad{
         START_CULTIVATION = 1;
         INSPECTION = 2;
         PERFORM_HARVEST = 3;
-        PROCESS_HARVEST = 4;
-		PURCHASE_GRAINS = 5;
+        CREATE_PACKAGE = 4;
+		TRANSFER_PACKAGE = 5;
 		UPDATE_PROCESS_DETAILS = 6;
     }
     Action action = 1;
@@ -16,8 +16,8 @@ message PayLoad{
     StartCultivationParams start_cultivation = 3;
     InspectParams inspection = 4;
     PerformHarvestParams perform_harvest = 5;
-    ProcessHarvestParams process_harvest = 6;
-	PurchaseGrainsParams purchase_grains = 7;
+    CreatePackageParams create_package = 6;  //Process Agent
+	TransferPackageParams transfer_package = 7;  //Retail Agent
 	UpdateProcessDetailsParams updateProcessDetails = 8;
 }
 
@@ -67,7 +67,7 @@ message PerformHarvestParams {
 	// string Farmer_name = 7; 
 }
 
-message ProcessHarvestParams {
+message CreatePackageParams {
 	int32 Quantity = 1;
 	string Rosting_duration = 2;
 	string Package_date_time = 3;
@@ -84,15 +84,7 @@ message UpdateProcessDetailsParams{
 	int32 set_price = 1;
 	string Processor_name = 2;
 }
-message PurchaseGrainsParams {
-	int32 Quantity = 1;
-	string Rosting_duration = 2;
-	string Package_date_time = 3;
-	string Temperature = 4;
-	string Internal_batch_no = 5;
-	string Processor_name = 6;
-	string Processor_address = 7;
-	repeated AddressParams addressparameters = 8;
-	// string Registration_no = 8;
-	// string Farmer_name = 9; 
+message TransferPackageParams {
+	string retail_agent_public_key = 1;
+	int32 internal_batch_no = 2;
 }

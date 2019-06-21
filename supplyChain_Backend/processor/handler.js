@@ -2,7 +2,7 @@ const { TransactionHandler } = require('sawtooth-sdk/processor/handler')
 const { InvalidTransaction, InternalError } = require('sawtooth-sdk/processor/exceptions')
 const cbor = require('cbor')
 const env = require('../shared/env');
-const { land_registration, start_cultivation, inspect_land, process_harvest, update_processDetails } = require('./state')
+const { land_registration, start_cultivation, inspect_land, create_package, update_processDetails, transfer_package } = require('./state')
 var protos = require("./../shared/supplyChain")
 
 const encode = obj => Buffer.from(JSON.stringify(obj))
@@ -35,12 +35,15 @@ class SupplyChainHandler extends TransactionHandler {
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
             let newPayload = payload.inspection;
             return inspect_land(state, newPayload.InspectionReport, newPayload.DateofInspection, newPayload.addressparameters.RegistrationNo, newPayload.InspectorName, newPayload.addressparameters.FarmerName, newPayload.FarmersPublicKey, this.signer_public_keys)
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PROCESS_HARVEST) {
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
             let newPayload = payload.processHarvest;
-            return process_harvest(state, newPayload.Quantity, newPayload.RostingDuration, newPayload.PackageDateTime, newPayload.Temperature, newPayload.InternalBatchNo, newPayload.ProcessorName, newPayload.processorAddress, this.signer_public_keys)
+            return create_package(state, newPayload.Quantity, newPayload.RostingDuration, newPayload.PackageDateTime, newPayload.Temperature, newPayload.InternalBatchNo, newPayload.ProcessorName, newPayload.processorAddress, this.signer_public_keys)
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
             let newPayload = payload.updateProcessDetails;
             return update_processDetails(state, newPayload.setPrice, newPayload.ProcessorName, this.signer_public_keys)
+        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
+            let newPayload = payload.updateProcessDetails;
+            return transfer_package(state, newPayload.retailAgentPublicKey, newPayload.internalBatchNo, this.signer_public_keys)
         } else {
             throw new InvalidTransaction(`Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`)
         }
