@@ -102,4 +102,8 @@ export class ServiceService {
     return this.http.post("http://localhost:3000/transfer/",data)
   }
 
+  getTransferedPackages(data){
+    return this.http.post("http://localhost:3000/getTransferedPackages/",data)
+  }
+
 }
