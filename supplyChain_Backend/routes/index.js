@@ -606,18 +606,15 @@ router.post("/transferPackage", function(req, res, next) {
                             });
 
                             savepayload.save().then(function(doc) {
-                                    package.remove(function(err) {
-                                        if (err) throw err;
-                                        console.log('Data successfully deleted!');
-                                        res.status(200).json({ status: respo });
-                                    });
-
-                                })
-                                .catch(error => {
-                                    console.log("error", error);
+                                package.remove(function(err) {
+                                    if (err) throw err;
+                                    console.log('Data successfully deleted!');
+                                    res.status(200).json({ status: respo });
                                 });
 
-
+                            }).catch(error => {
+                                console.log("error", error);
+                            });
                         });
                     }
                 }
@@ -628,6 +625,13 @@ router.post("/transferPackage", function(req, res, next) {
     } else {
         res.status(404).json({ message: "Retail Agent Not FOund" })
     }
+})
+
+router.post("/getTransferredPackages", function(req, res, next) {
+    Retail.find(req.body, function(err, packages) {
+        if (err) throw err;
+        else res.status(200).json({ packages: packages })
+    })
 })
 
 
