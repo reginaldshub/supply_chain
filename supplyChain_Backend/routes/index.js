@@ -593,7 +593,8 @@ router.post("/transferPackage", function(req, res, next) {
                                 processorAddress: package.processorAddress,
                                 setPrice: package.setPrice,
                                 lands: package.lands,
-                                email: req.body.retailAgentEmail,
+                                RetailAgentEmail: req.body.retailAgentEmail,
+                                ProcessAgentEmail: req.body.email,
                             });
 
                             savepayload.save().then(function(doc) {

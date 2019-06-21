@@ -11,7 +11,8 @@ var schema = new Schema({
     processorAddress: { type: String, required: true },
     setPrice: { type: Number, required: false },
     lands: { type: String, required: true },
-    email: { type: String, required: true }
+    RetailAgentEmail: { type: String, required: true },
+    ProcessAgentEmail: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Process', schema);
