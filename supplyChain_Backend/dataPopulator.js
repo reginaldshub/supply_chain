@@ -15,9 +15,9 @@ student.Farmer.forEach((farmer) => {
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err;
-    var dbo = db.db("CrudDB");
+    var dbo = db.db("supplyChain");
     dbo.collection("users").insertMany(student.Farmer, { useNewUrlParser: true }, function(err, res) {
         if (err) throw err;
         dbo.collection("users").insertMany(student.Inspector, { useNewUrlParser: true }, function(err, res) {
