@@ -17,8 +17,11 @@ nodeMailer = require("nodemailer");
 var batchlistBytes = null;
 var keyManager = new KeyManager();
 
+/*
+  User Registration route
+ */
 router.post("/registration", function(req, res, next) {
-    console.log(req.body);
+    // check if email is already registered
     User.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
             return res.status(409).json({ message: "User Already Registered." });
@@ -33,77 +36,74 @@ router.post("/registration", function(req, res, next) {
                 role: req.body.role,
                 password: User.hashPassword(req.body.password)
             });
-
-            user.save().then(function(doc) {
-                    // function(token, user, done) {
-                    let transporter = nodeMailer.createTransport({
-                        host: "smtp.gmail.com",
-                        port: 465,
-                        secure: true,
-                        auth: {
-                            user: "anthony7jmj@gmail.com",
-                            pass: "qnoodlnbgotuwodp"
-                        }
-                    });
-                    let mailOptions = {
-                        from: '"Reginald Anthony" <anthony7jmj@gmail.com>', // sender address
-                        to: user.email, // list of receivers
-                        subject: "Registered Successfully", // Subject line
-                        text: "" // plain text body
-                    };
-
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            return console.log(error);
-                        }
-                        console.log("Message %s sent: %s", info.messageId, info.response);
-                        // res.status(200).send({ success: true, message: "email is verified and token is sent your mail" });
-                    });
-                    // }
-
-                    return res.status(201).json({ message: "registered sucessfully" });
-                })
-                .catch(function(err) {
-                    return res.status(501).json({ message: "Error registering User." });
+            // saving the user registration details to db
+            user.save().then((doc) => {
+                // sending mail to successfully registered user
+                let transporter = nodeMailer.createTransport({
+                    host: "smtp.gmail.com",
+                    port: 465,
+                    secure: true,
+                    auth: {
+                        user: "anthony7jmj@gmail.com",
+                        pass: "qnoodlnbgotuwodp"
+                    }
                 });
+                let mailOptions = {
+                    from: '"Reginald Anthony" <anthony7jmj@gmail.com>', // sender address
+                    to: user.email, // list of receivers
+                    subject: "Registered Successfully", // Subject line
+                    text: "" // plain text body
+                };
+
+                transporter.sendMail(mailOptions, (error, info) => {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    console.log("Message %s sent: %s", info.messageId, info.response);
+                });
+                return res.status(201).json({ message: "registered sucessfully" });
+            }).catch(function(err) {
+                return res.status(501).json({ message: "Error registering User." });
+            });
         }
     });
 });
 
+/*
+  User Login route
+ */
 router.post("/login", function(req, res, next) {
-    console.log(req.body);
-    User.findOne({ email: req.body.email }).exec().then(function(doc) {
-            if (doc) {
-                console.log(doc);
-                if (doc.isValid(req.body.password)) {
-                    // generate token
-                    let token = jwt.sign({ name: doc.name }, "secret", {
-                        expiresIn: "20m"
-                    });
-
-                    return res.status(200).send({
-                        success: true,
-                        message: "Succesfully fetched User details",
-                        name: doc.name,
-                        id: doc.id,
-                        email: doc.email,
-                        role: doc.role,
-                        token
-                    });
-                } else {
-                    return res.status(401).json({ message: " Invalid Credentials" });
-                }
+    User.findOne({ email: req.body.email }).exec().then(function(userDetails) {
+        if (userDetails) {
+            if (userDetails.isValid(req.body.password)) {
+                // generate token with expiry time
+                let token = jwt.sign({ name: userDetails.name }, "secret", {
+                    expiresIn: "20m"
+                });
+                return res.status(200).send({
+                    success: true,
+                    message: "Succesfully fetched User details",
+                    name: userDetails.name,
+                    id: userDetails.id,
+                    email: userDetails.email,
+                    role: userDetails.role,
+                    token
+                });
             } else {
-                return res.status(404).json({ message: "User is not registered." });
+                return res.status(401).json({ message: " Invalid Credentials" });
             }
-        })
-        .catch(function(err) {
-            return res.status(501).json({ message: "Some internal error" });
-        });
+        } else {
+            return res.status(404).json({ message: "User is not registered." });
+        }
+    }).catch(function(err) {
+        return res.status(501).json({ message: "Some internal error" });
+    });
 });
 
+/*
+    Land Registration route
+ */
 router.post("/landregistration", function(req, res, next) {
-    console.log(req.body)
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
         FarmerName: req.body.FarmerName,
@@ -118,18 +118,16 @@ router.post("/landregistration", function(req, res, next) {
         status: "cultivate",
         inspectionStatus: false
     };
-    // let FarmerName = req.body.FarmerName;
     if (keyManager.doesKeyExist(req.body.email)) {
         console.log("keys are already created for" + req.body.email);
     } else {
         var output = keyManager.createkeys(req.body.email);
         keyManager.savekeys(req.body.email, output);
     }
-
     if (keyManager.doesKeyExist(req.body.email)) {
         landRegistration.findOne({ RegistrationNo: req.body.RegistrationNo },
             (error, lands) => {
-
+                // if no lands are registrerd
                 if (lands == null) {
                     if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
                         SubmitToServer(batchlistBytes).then(respo => {
@@ -162,12 +160,9 @@ router.post("/landregistration", function(req, res, next) {
     }
 });
 
-// router.get("/allLands", function(req, res, next) {
-//     landRegistration.find({}, (error, lands) => {
-//         res.status(200).json({ allLands: lands });
-//     });
-// });
-
+/*
+ Get Lands By Farmer's Email address route
+ */
 router.get("/getLandsByFarmerEmail/:email", function(req, res, next) {
     landRegistration.find({ email: req.params.email }, (error, lands) => {
         if (error) throw error;
@@ -175,7 +170,11 @@ router.get("/getLandsByFarmerEmail/:email", function(req, res, next) {
     });
 });
 
+/*
+ Get Lands By Registration Number route
+ */
 router.get("/getLandById/:RegistrationNo", function(req, res, next) {
+    // Querying based on RegistrationNo
     landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, lands) => {
             if (error) throw error;
@@ -210,8 +209,10 @@ router.get("/getLandById/:RegistrationNo", function(req, res, next) {
     );
 });
 
+/*
+ Cultivation route
+ */
 router.post("/startcultivation", function(req, res, next) {
-    console.log(req.body);
     var payload = {
         FarmerName: req.body.FarmerName,
         RegistrationNo: req.body.RegistrationNo,
@@ -221,66 +222,61 @@ router.post("/startcultivation", function(req, res, next) {
     };
 
     let updateStatus = { status: "harvest" };
-    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
-        .then(updatedResponse => {
-            if (!updatedResponse) {
-                return res.status(404).send({
-                    message: "error"
-                });
-            } else {
-                console.log("updated");
-                if (keyManager.doesKeyExist(req.body.email)) {
-                    if (
-                        (batchlistBytes = prepareTransactions(payload, req.body.email))
-                    ) {
-                        SubmitToServer(batchlistBytes).then(respo => {
-                            console.log("respo", respo);
-                            var savepayload = new Cultivation({
-                                CropVariety: req.body.CropVariety,
-                                Dateofstart: new Date(),
-                                RegistrationNo: req.body.RegistrationNo
-                            });
-
-                            savepayload.save().then(function(doc) {
-                                    console.log(doc);
-                                    res.status(200).json({ status: respo });
-                                })
-                                .catch(error => {
-                                    console.log("error", error);
-                                });
+    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true }).then(updatedResponse => {
+        if (!updatedResponse) {
+            return res.status(404).send({
+                message: "error"
+            });
+        } else {
+            if (keyManager.doesKeyExist(req.body.email)) {
+                if (batchlistBytes = prepareTransactions(payload, req.body.email)) {
+                    SubmitToServer(batchlistBytes).then(respo => {
+                        var savepayload = new Cultivation({
+                            CropVariety: req.body.CropVariety,
+                            Dateofstart: new Date(),
+                            RegistrationNo: req.body.RegistrationNo
                         });
-                    }
+                        savepayload.save().then(function(doc) {
+                            console.log(doc);
+                            res.status(200).json({ status: respo });
+                        }).catch(error => {
+                            console.log("error", error);
+                        });
+                    });
                 }
             }
-        })
-        .catch(err => {
-            if (err.kind === "ObjectId") {
-                return res.status(404).send({
-                    message: "Land not found with id " + req.body.RegistrationNo
-                });
-            }
-            return res.status(500).send({
-                message: "Error updating status with id " + req.body.RegistrationNo
-            });
-        });
+        }
+    }).catch(err => {
+        // if (err.kind === "ObjectId") {
+        //     return res.status(404).send({
+        //         message: "Land not found with id " + req.body.RegistrationNo
+        //     });
+        // }
+        return res.status(500).send({ message: "Error updating status with id " + req.body.RegistrationNo });
+    });
 });
 
+/*
+ Cultivation Details route
+ */
 router.get("/getCultivationDetails/:RegistrationNo", function(req, res, next) {
     Cultivation.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, cultivationDetails) => {
-            if (error)
+            if (error) {
                 res.status(404).json({ message: "No Cultivation record Found" });
+            }
             landRegistration.findOne({ RegistrationNo: req.params.RegistrationNo },
                 (error, lands) => {
-                    res
-                        .status(200)
-                        .json({ land: lands, cultivationDetails: cultivationDetails });
+                    res.status(200).json({ land: lands, cultivationDetails: cultivationDetails });
                 }
             );
         }
     );
 });
 
+/*
+ Harvest Details route
+ */
 router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
     Harvest.findOne({ RegistrationNo: req.params.RegistrationNo },
         (error, harvestDetails) => {
@@ -307,6 +303,9 @@ router.get("/getHarvestDetails/:RegistrationNo", function(req, res, next) {
     );
 });
 
+/*
+ Profile Details route
+ */
 router.get("/getUserProfile/:email", function(req, res, next) {
     User.findOne({ email: req.params.email }, (error, profile) => {
         if (error) res.status(404).json({ message: "No User record Found" });
@@ -314,6 +313,9 @@ router.get("/getUserProfile/:email", function(req, res, next) {
     });
 });
 
+/*
+ Perform Harvest route
+ */
 router.post("/performharvest", function(req, res, next) {
     var payload = {
         FarmerName: req.body.FarmerName,
@@ -326,21 +328,14 @@ router.post("/performharvest", function(req, res, next) {
         verb: "performharvest"
     };
     let updateStatus = { status: "yield" };
-    landRegistration
-        .updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
         .then(updatedResponse => {
             if (!updatedResponse) {
-                return res.status(404).send({
-                    message: "error"
-                });
+                return res.status(404).send({ message: "error" });
             } else {
-                console.log("updated");
                 if (keyManager.doesKeyExist(req.body.email)) {
-                    if (
-                        (batchlistBytes = prepareTransactions(payload, req.body.email))
-                    ) {
+                    if (batchlistBytes = prepareTransactions(payload, req.body.email)) {
                         SubmitToServer(batchlistBytes).then(respo => {
-                            console.log("respo", respo);
                             var savepayload = new Harvest({
                                 CropVariety: req.body.CropVariety,
                                 Temperature: req.body.Temperature,
@@ -349,33 +344,29 @@ router.post("/performharvest", function(req, res, next) {
                                 Quantity: req.body.Quantity,
                                 RegistrationNo: req.body.RegistrationNo
                             });
-
-                            savepayload
-                                .save()
-                                .then(function(doc) {
-                                    console.log(doc);
-                                    res.status(200).json({ status: respo });
-                                })
-                                .catch(error => {
-                                    console.log("error", error);
-                                });
+                            savepayload.save().then(function(doc) {
+                                console.log(doc);
+                                res.status(200).json({ status: respo });
+                            }).catch(error => {
+                                console.log("error", error);
+                            });
                         });
                     }
                 }
             }
-        })
-        .catch(err => {
+        }).catch(err => {
             if (err.kind === "ObjectId") {
                 return res.status(404).send({
                     message: "Land not found with id " + req.body.RegistrationNo
                 });
             }
-            return res.status(500).send({
-                message: "Error updating status with id " + req.body.RegistrationNo
-            });
+            return res.status(500).send({ message: "Error updating status with id " + req.body.RegistrationNo });
         });
 });
 
+/*
+ Inspection Lands route
+ */
 router.get("/getLandsForInspection", function(req, res, next) {
     landRegistration.find({ status: "harvest" }, (error, lands) => {
         if (error) res.status(404).json({ message: "No lAND record Found" });
@@ -384,7 +375,9 @@ router.get("/getLandsForInspection", function(req, res, next) {
 });
 
 // permit('inspector'),
-
+/*
+ Adding Inspection Details route
+ */
 router.post("/inspectionReport", function(req, res, next) {
     console.log(req.body);
     var FarmersPublicKey = keyManager.readpublickey(req.body.Farmeremail)
@@ -404,20 +397,12 @@ router.post("/inspectionReport", function(req, res, next) {
                 return res.status(404).send({ message: "error" });
             } else {
                 if (keyManager.doesKeyExist(req.body.email)) {
-                    if (
-                        (batchlistBytes = prepareTransactions(payload, req.body.email))
-                    ) {
+                    if (batchlistBytes = prepareTransactions(payload, req.body.email)) {
                         SubmitToServer(batchlistBytes).then(respo => {
-                            console.log("respo", respo);
-
                             Inspection.findOne({ RegistrationNo: req.body.RegistrationNo },
                                 function(err, allInspectionData) {
                                     if (err) throw err;
-                                    if (
-                                        allInspectionData != null &&
-                                        allInspectionData.InspectionData.length > 0
-                                    ) {
-                                        console.log("Not empty");
+                                    if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
                                         Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
                                                 $push: {
                                                     InspectionData: {
@@ -429,7 +414,6 @@ router.post("/inspectionReport", function(req, res, next) {
                                             },
                                             function(err, updatedres) {
                                                 if (err) throw err;
-                                                console.log(updatedres);
                                                 res.status(200).send({
                                                     message: "updated inspection details",
                                                     status: "COMMITTED"
@@ -437,7 +421,6 @@ router.post("/inspectionReport", function(req, res, next) {
                                             }
                                         );
                                     } else {
-                                        console.log("empty");
                                         var newInspection = Inspection({
                                             RegistrationNo: req.body.RegistrationNo,
                                             InspectionData: [{
@@ -448,8 +431,6 @@ router.post("/inspectionReport", function(req, res, next) {
                                         });
                                         newInspection.save(function(err) {
                                             if (err) throw err;
-
-                                            console.log("Inspection Data created!");
                                             res.status(200).send({
                                                 message: "updated inspection details",
                                                 status: "COMMITTED"
@@ -465,7 +446,9 @@ router.post("/inspectionReport", function(req, res, next) {
         });
 });
 
-
+/*
+ Harvested Lands for Process Agent route
+ */
 router.get("/getLandsForProcessAgent", function(req, res, next) {
     landRegistration.find({ status: "yield" }, (error, lands) => {
         if (error) res.status(404).json({ message: "No lAND record Found" });
@@ -473,9 +456,10 @@ router.get("/getLandsForProcessAgent", function(req, res, next) {
     });
 });
 
-// Process Agent
+/*
+ Create Package route
+ */
 router.post("/createPackage", function(req, res, next) {
-
     var payload = {
         quantity: req.body.quantity,
         rostingDuration: req.body.rostingDuration,
@@ -494,7 +478,6 @@ router.post("/createPackage", function(req, res, next) {
             else if (package == null) {
                 if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
                     SubmitToServer(batchlistBytes).then(respo => {
-                        console.log("respo", respo);
                         var savepayload = new Process({
                             quantity: req.body.quantity,
                             rostingDuration: req.body.rostingDuration,
@@ -506,58 +489,50 @@ router.post("/createPackage", function(req, res, next) {
                             lands: req.body.lands,
                             ProcessAgentEmail: req.body.email,
                         });
-
                         savepayload.save().then(function(doc) {
-                                console.log(doc);
-                                res.status(200).json({ status: respo });
-                            })
-                            .catch(error => {
-                                console.log("error", error);
-                            });
+                            res.status(200).json({ status: respo });
+                        }).catch(error => {
+                            console.log("error", error);
+                        });
                     });
                 }
             } else {
                 res.status(403).json({ message: "Package already Exists" });
             }
-
         })
-
     }
-
 })
 
-
-// Update Process Agent (setPrice)
+/*
+ Update Price in Process agent route
+ */
 router.post("/updatePackagePrice/:internalBatchNo", function(req, res, next) {
-console.log(req.body)
     var payload = {
         email: req.body.email,
         setPrice: req.body.setPrice,
         verb: "updateProcessDetails"
     };
-    console.log("index Payload", payload)
     if (keyManager.doesKeyExist(req.body.email)) {
         if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
             SubmitToServer(batchlistBytes).then(respo => {
-
                 let updateStatus = { setPrice: req.body.setPrice }
-                Process.updateOne({ internalBatchNo: req.params.internalBatchNo }, { $set: updateStatus }, { new: true })
-                    .then(updatedResponse => {
-                        if (!updatedResponse) {
-                            return res.status(404).send({ message: "error" });
-                        } else {
-                            res.status(200).send({ message: "Updated Successfully" });
-                        }
-                    })
-                    .catch(error => {
-                        console.log("error", error);
-                    });
-
+                Process.updateOne({ internalBatchNo: req.params.internalBatchNo }, { $set: updateStatus }, { new: true }).then(updatedResponse => {
+                    if (!updatedResponse) {
+                        return res.status(404).send({ message: "error" });
+                    } else {
+                        res.status(200).send({ message: "Updated Successfully" });
+                    }
+                }).catch(error => {
+                    console.log("error", error);
+                });
             });
         }
     }
 })
 
+/*
+ get Package Based on email route
+ */
 router.get("/getPackage/:email", function(req, res, next) {
     Process.find({ ProcessAgentEmail: req.params.email }, (error, package) => {
         if (error) res.status(404).json({ message: "No User record Found" });
@@ -565,6 +540,9 @@ router.get("/getPackage/:email", function(req, res, next) {
     });
 });
 
+/*
+ get Package Based on id route
+ */
 router.get("/getPackages/:id", function(req, res, next) {
     console.log(req.params.id);
     Process.findOne({ internalBatchNo: req.params.id }, (error, package) => {
@@ -572,7 +550,10 @@ router.get("/getPackages/:id", function(req, res, next) {
         res.status(200).json({ package: package });
     });
 });
-// Transfer Package By Process Agent
+
+/*
+ Transfer Package route
+ */
 router.post("/transferPackage", function(req, res, next) {
     if (keyManager.doesKeyExist(req.body.retailAgentEmail)) {
         var retailAgentPublicKey = keyManager.readpublickey(req.body.retailAgentEmail)
@@ -582,13 +563,9 @@ router.post("/transferPackage", function(req, res, next) {
             internalBatchNo: req.body.internalBatchNo,
             verb: "transferPackage"
         };
-        console.log("req.body",req.body)
-        console.log("payload",payload)
-
         if (keyManager.doesKeyExist(req.body.email)) {
             Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {
                 if (err) throw err;
-
                 if (package == null) {
                     res.status(404).json({ message: "NO Entry Found" })
                 } else {
@@ -614,7 +591,6 @@ router.post("/transferPackage", function(req, res, next) {
                                     console.log('Data successfully deleted!');
                                     res.status(200).json({ status: respo });
                                 });
-
                             }).catch(error => {
                                 console.log("error", error);
                             });
@@ -626,73 +602,18 @@ router.post("/transferPackage", function(req, res, next) {
 
         }
     } else {
-        res.status(404).json({ message: "Retail Agent Not FOund" })
+        res.status(404).json({ message: "Retail Agent Not Found" })
     }
 })
 
+/*
+ Get Transfered Packages Based on Respective Email onroute 
+ */
 router.post("/getTransferredPackages", function(req, res, next) {
     Retail.find(req.body, function(err, packages) {
         if (err) throw err;
         else res.status(200).json({ packages: packages })
     })
 })
-
-
-/* WARNING!!!!   Do not Go Beyond this*/
-
-// router.get("/create", function(req, res, next) {
-//     var newInspection = Inspection({
-//         RegistrationNo: "123",
-//         InspectionData: [{
-//             InspectorName: "Regi",
-//             InspectionReport: "success",
-//             DateofInspection: new Date(),
-//         }]
-//     });
-
-//     // save the user
-//     newInspection.save(function(err) {
-//         if (err) throw err;
-
-//         console.log('User created!');
-//     });
-// })
-
-// router.get("/findall", function(req, res, next) {
-//     Inspection.find({}, function(err, users) {
-//         if (err) throw err;
-
-//         // object of all the users
-//         console.log(JSON.stringify(users))
-//     });
-// })
-
-// router.get("/add", function(req, res, next) {
-
-//     Inspection.findOne({ RegistrationNo: "123" }, function(err, user) {
-//         if (err) throw err;
-//         console.log(user.InspectionData.length)
-//         if (user.InspectionData.length > 0) {
-
-//         } else {
-
-//         }
-
-//     })
-
-// Inspection.findOneAndUpdate({ "RegistrationNo": "123" }, {
-//         "$push": {
-//             "InspectionData": {
-//                 InspectorName: "Antony",
-//                 InspectionReport: "failed",
-//                 DateofInspection: new Date()
-//             }
-//         }
-//     },
-//     function(err, user) {
-//         if (err) throw err;
-//         console.log(user)
-//     })
-// })
 
 module.exports = router;
