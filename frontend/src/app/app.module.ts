@@ -102,7 +102,7 @@ import { TransferComponent } from './process-agent-dashboard/transfer/transfer.c
     SetPriceComponent,
     TrasferedDashboardComponent,
     ProcessHeaderComponent,
-    TransferComponent
+    TransferComponent,
   ],
   imports: [
     BrowserModule,

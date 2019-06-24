@@ -48,7 +48,7 @@
                 <ng-container matColumnDef="internalBatchNo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> internalBatchNo </th>
                     <!-- <td mat-cell *matCellDef="let row"> <a [routerLink]="['/landDetails', row.internalBatchNo]"> {{row.internalBatchNo}}</a>  </td> -->
-                    <td mat-cell *matCellDef="let row"> {{row.internalBatchNo}}  </td>
+                    <td mat-cell *matCellDef="let row"><a [routerLink]="['/processDetails', row.internalBatchNo]">{{row.internalBatchNo}} </a> </td>
 
                 </ng-container>
 
