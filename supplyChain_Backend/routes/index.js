@@ -386,6 +386,7 @@ router.get("/getLandsForInspection", function(req, res, next) {
 // permit('inspector'),
 
 router.post("/inspectionReport", function(req, res, next) {
+    console.log(req.body);
     var FarmersPublicKey = keyManager.readpublickey(req.body.Farmeremail)
     var payload = {
         InspectionReport: req.body.InspectionReport,

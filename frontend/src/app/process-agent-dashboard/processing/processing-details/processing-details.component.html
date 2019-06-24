@@ -1,1 +1,67 @@
 <app-header></app-header>
+<div class = "display" *ngIf="bool">
+<div class="inner">
+    <div class="outer">
+        <h2>Package Details</h2>
+    </div>
+
+    <div class="grid">
+        <ul class="custom-list">
+            <li class="heading-text">internalBatchNo</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.internalBatchNo}}</li>
+            <li class="clear-float"></li>
+
+            <li class="heading-text">processorName</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.processorName}}</li>
+            <li class="clear-float"></li>
+
+        </ul>
+
+        <ul class="custom-list">
+            <li class="heading-text">quantity</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.quantity}}</li>
+            <li class="clear-float"></li>
+
+            <li class="heading-text">processorAddress</li>
+            <li class="seperator">:</li>
+            <li class="details-text">{{package.processorAddress}}</li>
+            <li class="clear-float"></li>
+        </ul>
+
+        <ul class="custom-list">
+          <li class="heading-text">rostingDuration</li>
+          <li class="seperator">:</li>
+          <li class="details-text">{{package.rostingDuration}}</li>
+          <li class="clear-float"></li>
+
+          <li class="heading-text">packageDateTime</li>
+          <li class="seperator">:</li>
+          <li class="details-text">{{package.packageDateTime}}</li>
+          <li class="clear-float"></li>
+      </ul>
+
+      <ul class="custom-list">
+        <li class="heading-text">lands</li>
+        <li class="seperator">:</li>
+        <li class="details-text">{{package.lands}}</li>
+        <li class="clear-float"></li>
+         
+        <li class="heading-text">temperature</li>
+        <li class="seperator">:</li>
+        <li class="details-text">{{package.temperature}}</li>
+        <li class="clear-float"></li>
+    </ul>
+    <ul class="custom-list">
+        <li class="heading-text"> setPrice</li>
+        <li class="seperator">:</li>
+        <li class="details-text">{{package.setPrice}}</li>
+        <li class="clear-float"></li>
+    </ul>
+        
+    </div>
+
+</div>
+</div>

@@ -44,7 +44,10 @@ export class InspectionComponent implements OnInit {
         RegistrationNo: this.data.RegistrationNo,
         InspectorName: localStorage.getItem("InspectorName"),
         FarmerName: this.data.FarmerName,
+        Farmeremail: this.data.email,
+        email:localStorage.getItem('email')
     }
+    console.log(inspectionData);
     this.service.InspectionReport(inspectionData).subscribe((res:any)=>{
       if(res.status == "COMMITTED")
        this.router.navigate(['inspectorDashboard']);
