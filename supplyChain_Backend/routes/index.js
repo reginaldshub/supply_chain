@@ -382,11 +382,7 @@ router.get("/getLandsForInspection", function(req, res, next) {
  Adding Inspection Details route
  */
 router.post("/inspectionReport", function(req, res, next) {
-<<<<<<< HEAD
     console.log(req.body)
-=======
-    console.log(req.body);
->>>>>>> 46b1f42c077e15a0996f2f4e0fbaeb2ef86c96e4
     var FarmersPublicKey = keyManager.readpublickey(req.body.Farmeremail)
     var payload = {
         InspectionReport: req.body.InspectionReport,
