@@ -1,0 +1,104 @@
+{
+    "Farmer": [{
+            "email": "reginald_farmer@gmail.com",
+            "name": "reginald_farmer",
+            "id": "1",
+            "role": "Farmer",
+            "password": "password"
+        },
+        {
+            "email": "santhosh_farmer@gmail.com",
+            "name": "santhosh_farmer",
+            "id": "2",
+            "role": "Farmer",
+            "password": "password"
+        },
+        {
+            "email": "akhil_farmer@gmail.com",
+            "name": "akhil_farmer",
+            "id": "3",
+            "role": "Farmer",
+            "password": "password"
+        },
+        {
+            "email": "roja_farmer@gmail.com",
+            "name": "roja_farmer",
+            "id": "4",
+            "role": "Farmer",
+            "password": "password"
+        },
+        {
+            "email": "vidya_farmer@gmail.com",
+            "name": "vidya_farmer",
+            "id": "5",
+            "role": "Farmer",
+            "password": "password"
+        }
+    ],
+    "Inspector": [{
+            "email": "mahesh_inspector@gmail.com",
+            "name": "mahesh_inspector",
+            "id": "101",
+            "role": "Inspector",
+            "password": "password"
+        },
+        {
+            "email": "priya_inspector@gmail.com",
+            "name": "priya_inspector",
+            "id": "102",
+            "role": "Inspector",
+            "password": "password"
+        }
+    ],
+    "ProcessAgent": [{
+            "email": "reginald_processagent@gmail.com",
+            "name": "reginald_processagent",
+            "id": "201",
+            "role": "ProcessAgent",
+            "password": "password"
+        },
+        {
+            "email": "santhosh_processagent@gmail.com",
+            "name": "santhosh_processagent",
+            "id": "202",
+            "role": "ProcessAgent",
+            "password": "password"
+        },
+        {
+            "email": "akhil_processagent@gmail.com",
+            "name": "akhil_processagent",
+            "id": "203",
+            "role": "ProcessAgent",
+            "password": "password"
+        },
+        {
+            "email": "roja_processagent@gmail.com",
+            "name": "roja_processagent",
+            "id": "204",
+            "role": "ProcessAgent",
+            "password": "password"
+        },
+        {
+            "email": "vidya_processagent@gmail.com",
+            "name": "vidya_processagent",
+            "id": "205",
+            "role": "ProcessAgent",
+            "password": "password"
+        }
+    ],
+    "RetailAgent": [{
+            "email": "ramesh_retailagent@gmail.com",
+            "name": "ramesh_retailagent",
+            "id": "101",
+            "role": "RetailAgent",
+            "password": "password"
+        },
+        {
+            "email": "kinesh_retailagent@gmail.com",
+            "name": "kinesh_retailagent",
+            "id": "102",
+            "role": "RetailAgent",
+            "password": "password"
+        }
+    ]
+}
