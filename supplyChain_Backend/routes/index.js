@@ -34,33 +34,34 @@ router.post("/registration", function(req, res, next) {
                 email: req.body.email,
                 id: req.body.id,
                 role: req.body.role,
-                password: User.hashPassword(req.body.password)
+                // password: User.hashPassword(req.body.password),
+                password: req.body.password
             });
             // saving the user registration details to db
             user.save().then((doc) => {
                 // sending mail to successfully registered user
-                let transporter = nodeMailer.createTransport({
-                    host: "smtp.gmail.com",
-                    port: 465,
-                    secure: true,
-                    auth: {
-                        user: "anthony7jmj@gmail.com",
-                        pass: "qnoodlnbgotuwodp"
-                    }
-                });
-                let mailOptions = {
-                    from: '"Reginald Anthony" <anthony7jmj@gmail.com>', // sender address
-                    to: user.email, // list of receivers
-                    subject: "Registered Successfully", // Subject line
-                    text: "" // plain text body
-                };
+                // let transporter = nodeMailer.createTransport({
+                //     host: "smtp.gmail.com",
+                //     port: 465,
+                //     secure: true,
+                //     auth: {
+                //         user: "anthony7jmj@gmail.com",
+                //         pass: "qnoodlnbgotuwodp"
+                //     }
+                // });
+                // let mailOptions = {
+                //     from: '"Reginald Anthony" <anthony7jmj@gmail.com>', // sender address
+                //     to: user.email, // list of receivers
+                //     subject: "Registered Successfully", // Subject line
+                //     text: "" // plain text body
+                // };
 
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                        return console.log(error);
-                    }
-                    console.log("Message %s sent: %s", info.messageId, info.response);
-                });
+                // transporter.sendMail(mailOptions, (error, info) => {
+                //     if (error) {
+                //         return console.log(error);
+                //     }
+                //     console.log("Message %s sent: %s", info.messageId, info.response);
+                // });
                 return res.status(201).json({ message: "registered sucessfully" });
             }).catch(function(err) {
                 return res.status(501).json({ message: "Error registering User." });
@@ -73,9 +74,11 @@ router.post("/registration", function(req, res, next) {
   User Login route
  */
 router.post("/login", function(req, res, next) {
+    console.log(req.body)
     User.findOne({ email: req.body.email }).exec().then(function(userDetails) {
         if (userDetails) {
-            if (userDetails.isValid(req.body.password)) {
+            console.log(userDetails)
+            if (userDetails.password == req.body.password) {
                 // generate token with expiry time
                 let token = jwt.sign({ name: userDetails.name }, "secret", {
                     expiresIn: "20m"
@@ -379,7 +382,7 @@ router.get("/getLandsForInspection", function(req, res, next) {
  Adding Inspection Details route
  */
 router.post("/inspectionReport", function(req, res, next) {
-    console.log(req.body);
+    console.log(req.body)
     var FarmersPublicKey = keyManager.readpublickey(req.body.Farmeremail)
     var payload = {
         InspectionReport: req.body.InspectionReport,
