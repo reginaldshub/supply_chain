@@ -26,48 +26,40 @@ message AddressParams{
 	string Farmer_name = 2;
 }
 
-message LandRegistrationParams {
+message LandRegistrationParameters{
 	string Farm_address = 1; 
 	string State = 2; 
 	string Country = 3; 
 	string Exporter_name = 4;
 	string Importer_name = 5; 
 	string Dateof_registration = 6;
-	AddressParams addressparameters = 7;
-	// string Registration_no = 7;
-	// string Farmer_name = 8; 
 }
 
-message StartCultivationParams {
+message TransferPackageParameters {
+	string retail_agent_public_key = 1;
+	int32 internal_batch_no = 2;
+}
+
+message StartCultivationParameters {
 	string Crop_variety = 1;
 	string Dateofstart = 2;
-	AddressParams addressparameters = 3;
-	// string Registration_no = 3;
-	// string Farmer_name = 4; 
 }
-
-message InspectParams {
+message InspectParameters {
 	string Inspection_report = 1;
 	string Dateof_inspection = 2;
 	string Inspector_name = 3;
 	string Farmers_public_key = 4;
-	AddressParams addressparameters = 5;
-	// string Registration_no = 4;
-	// string Farmer_name = 5; 
 }
 
-message PerformHarvestParams {
+message PerformHarvestParameters {
 	string Crop_variety = 1;
 	string Temperature = 2;
 	string Humidity = 3;
 	string Dateofharvest = 4;
 	string Quantity = 5;
-	AddressParams addressparameters = 6;
-	// string Registration_no = 6;
-	// string Farmer_name = 7; 
 }
 
-message CreatePackageParams {
+message CreatePackageParameters {
 	int32 Quantity = 1;
 	string Rosting_duration = 2;
 	string Package_date_time = 3;
@@ -75,16 +67,41 @@ message CreatePackageParams {
 	string Internal_batch_no = 5;
 	string Processor_name = 6;
 	string Processor_address = 7;
-	// AddressParams addressparameters = 8;
-	// string Registration_no = 8;
-	// string Farmer_name = 9; 
 }
 
-message UpdateProcessDetailsParams{
+message UpdateProcessDetailsParameters{
 	int32 set_price = 1;
 	string Processor_name = 2;
 }
+
+message LandRegistrationParams {
+	LandRegistrationParameters landregistrationparameters = 1;
+	AddressParams addressparameters = 2;
+}
+
+message StartCultivationParams {
+	StartCultivationParameters startcultivationparameters = 1;
+	AddressParams addressparameters = 2;
+}
+
+message InspectParams {
+	InspectParameters inspectparameters = 1;
+	AddressParams addressparameters = 2;
+}
+
+message PerformHarvestParams {
+	PerformHarvestParameters performharvestparameters = 1;
+	AddressParams addressparameters = 2; 
+}
+
+message CreatePackageParams {
+	CreatePackageParameters createpackageparameters = 1;
+}
+
+message UpdateProcessDetailsParams{
+	UpdateProcessDetailsParameters updateprocessdetailsparameters = 1;
+}
+
 message TransferPackageParams {
-	string retail_agent_public_key = 1;
-	int32 internal_batch_no = 2;
+	TransferPackageParameters transferpackageparameters = 1;
 }

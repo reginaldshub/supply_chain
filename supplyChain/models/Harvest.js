@@ -9,7 +9,7 @@ var harvest_schema = new Schema({
     Quantity: { type: String, require: true },
     RegistrationNo: { type: String, required: true },
     email: { type: String, required: false },
-    state: { type: String, required: true }
+    // state: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Harvest', harvest_schema);

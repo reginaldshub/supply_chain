@@ -8,12 +8,14 @@ function protobuff(payload) {
         landRegistrationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
         landRegistrationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
         landRegistrationMessage.addressparameters.FarmerName = payload.FarmerName
-        landRegistrationMessage.FarmAddress = payload.FarmAddress
-        landRegistrationMessage.State = payload.State
-        landRegistrationMessage.Country = payload.Country
-        landRegistrationMessage.ExporterName = payload.ExporterName
-        landRegistrationMessage.ImporterName = payload.ImporterName
-        landRegistrationMessage.DateofRegistration = payload.DateOfRegistration
+
+        landRegistrationMessage.landregistrationparameters = protos.supplyChainPackage.LandRegistrationParameters.create()
+        landRegistrationMessage.landregistrationparameters.FarmAddress = payload.FarmAddress
+        landRegistrationMessage.landregistrationparameters.State = payload.State
+        landRegistrationMessage.landregistrationparameters.Country = payload.Country
+        landRegistrationMessage.landregistrationparameters.ExporterName = payload.ExporterName
+        landRegistrationMessage.landregistrationparameters.ImporterName = payload.ImporterName
+        landRegistrationMessage.landregistrationparameters.DateofRegistration = payload.DateOfRegistration
 
         let payloadInstance = protos.supplyChainPackage.PayLoad.create()
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION;
@@ -24,8 +26,10 @@ function protobuff(payload) {
     } else if (payload.verb == 'startcultivation') {
         var startCultivationMessage = protos.supplyChainPackage.StartCultivationParams.create()
 
-        startCultivationMessage.CropVariety = payload.CropVariety
-        startCultivationMessage.Dateofstart = payload.Dateofstart
+        startCultivationMessage.startcultivationparameters = protos.supplyChainPackage.StartCultivationParameters.create()
+        startCultivationMessage.startcultivationparameters.CropVariety = payload.CropVariety
+        startCultivationMessage.startcultivationparameters.Dateofstart = payload.Dateofstart
+
         startCultivationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
         startCultivationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
         startCultivationMessage.addressparameters.FarmerName = payload.FarmerName
@@ -41,11 +45,12 @@ function protobuff(payload) {
         performHarvestMessage.addressparameters.RegistrationNo = payload.RegistrationNo
         performHarvestMessage.addressparameters.FarmerName = payload.FarmerName
 
-        performHarvestMessage.CropVariety = payload.CropVariety
-        performHarvestMessage.Temperature = payload.Temperature
-        performHarvestMessage.Humidity = payload.Humidity
-        performHarvestMessage.Dateofharvest = payload.Dateofharvest
-        performHarvestMessage.Quantity = payload.Quantity
+        performHarvestMessage.performharvestparameters = protos.supplyChainPackage.PerformHarvestParameters.create()
+        performHarvestMessage.performharvestparameters.CropVariety = payload.CropVariety
+        performHarvestMessage.performharvestparameters.Temperature = payload.Temperature
+        performHarvestMessage.performharvestparameters.Humidity = payload.Humidity
+        performHarvestMessage.performharvestparameters.Dateofharvest = payload.Dateofharvest
+        performHarvestMessage.performharvestparameters.Quantity = payload.Quantity
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create()
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST;
@@ -60,10 +65,11 @@ function protobuff(payload) {
         InspectMessage.addressparameters.RegistrationNo = payload.RegistrationNo
         InspectMessage.addressparameters.FarmerName = payload.FarmerName
 
-        InspectMessage.InspectionReport = payload.InspectionReport
-        InspectMessage.DateofInspection = payload.DateofInspection
-        InspectMessage.InspectorName = payload.InspectorName
-        InspectMessage.FarmersPublicKey = payload.FarmersPublicKey
+        InspectMessage.inspectparameters = protos.supplyChainPackage.InspectParameters.create()
+        InspectMessage.inspectparameters.InspectionReport = payload.InspectionReport
+        InspectMessage.inspectparameters.DateofInspection = payload.DateofInspection
+        InspectMessage.inspectparameters.InspectorName = payload.InspectorName
+        InspectMessage.inspectparameters.FarmersPublicKey = payload.FarmersPublicKey
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.INSPECTION;
@@ -75,13 +81,14 @@ function protobuff(payload) {
 
         var CreatePackageMessage = protos.supplyChainPackage.CreatePackageParams.create();
 
-        CreatePackageMessage.Quantity = payload.quantity
-        CreatePackageMessage.RostingDuration = payload.rostingDuration
-        CreatePackageMessage.PackageDateTime = payload.packageDateTime
-        CreatePackageMessage.Temperature = payload.temperature
-        CreatePackageMessage.InternalBatchNo = payload.internalBatchNo
-        CreatePackageMessage.ProcessorName = payload.processorName
-        CreatePackageMessage.processorAddress = payload.processorAddress
+        CreatePackageMessage.createpackageparameters = protos.supplyChainPackage.CreatePackageParameters.create()
+        CreatePackageMessage.createpackageparameters.Quantity = payload.quantity
+        CreatePackageMessage.createpackageparameters.RostingDuration = payload.rostingDuration
+        CreatePackageMessage.createpackageparameters.PackageDateTime = payload.packageDateTime
+        CreatePackageMessage.createpackageparameters.Temperature = payload.temperature
+        CreatePackageMessage.createpackageparameters.InternalBatchNo = payload.internalBatchNo
+        CreatePackageMessage.createpackageparameters.ProcessorName = payload.processorName
+        CreatePackageMessage.createpackageparameters.processorAddress = payload.processorAddress
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE
@@ -92,8 +99,10 @@ function protobuff(payload) {
     } else if (payload.verb == 'updateProcessDetails') {
 
         var updateProcessDetailsMessage = protos.supplyChainPackage.UpdateProcessDetailsParams.create();
-        updateProcessDetailsMessage.setPrice = payload.setPrice
-        updateProcessDetailsMessage.ProcessorName = payload.processorName
+
+        updateProcessDetailsMessage.updateprocessdetailsparameters = protos.supplyChainPackage.UpdateProcessDetailsParameters.create()
+        updateProcessDetailsMessage.updateprocessdetailsparameters.setPrice = payload.setPrice
+        updateProcessDetailsMessage.updateprocessdetailsparameters.ProcessorName = payload.processorName
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS;
@@ -104,8 +113,9 @@ function protobuff(payload) {
     } else if (payload.verb == 'transferPackage') {
         var TransferPackageMessage = protos.supplyChainPackage.TransferPackageParams.create();
 
-        TransferPackageMessage.retailAgentPublicKey = payload.retailAgentPublicKey
-        TransferPackageMessage.internalBatchNo = payload.internalBatchNo
+        TransferPackageMessage.transferpackageparameters = protos.supplyChainPackage.TransferPackageParameters.create()
+        TransferPackageMessage.transferpackageparameters.retailAgentPublicKey = payload.retailAgentPublicKey
+        TransferPackageMessage.transferpackageparameters.internalBatchNo = payload.internalBatchNo
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE;

@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var inspection_schema = new Schema({
     RegistrationNo: { type: String, required: true },
     email: { type: String, required: false },
-    state: { type: String, required: true },
+    // state: { type: String, required: true },
     InspectionData: [{
         InspectorName: { type: String, required: true },
         InspectionReport: { type: String, require: true },

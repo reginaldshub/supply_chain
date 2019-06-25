@@ -3,11 +3,14 @@ var router = express.Router();
 var Cultivation = require("../../models/Cultivation");
 var landRegistration = require("../../models/landRegistration");
 var Harvest = require("../../models/Harvest");
+var Inspection = require("./../../models/Inspection")
 const { prepareTransactions } = require("./../prepareTransaction");
 const { SubmitToServer } = require("./../submitToServer");
 const KeyManager = require("./../keymanager");
 const { permit } = require("../../middleware/previllageValidator.ts");
 nodeMailer = require("nodemailer");
+
+let initWebSocket = require("./../../event_app")
 
 var batchlistBytes = null;
 var keyManager = new KeyManager();
@@ -17,6 +20,7 @@ var keyManager = new KeyManager();
     Land Registration route
  */
 router.post("/landregistration", function(req, res, next) {
+    let EventData = null;
     console.log(req.body)
     var payload = {
         RegistrationNo: req.body.RegistrationNo,
@@ -46,6 +50,8 @@ router.post("/landregistration", function(req, res, next) {
                     if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
                         SubmitToServer(batchlistBytes).then(respo => {
                             console.log("respo", respo.data[0].id);
+                            // if (EventData = initWebSocket("f6aa54")) {
+                            //     console.log("EventData", EventData)
                             var savepayload = new landRegistration({
                                 RegistrationNo: req.body.RegistrationNo,
                                 FarmerName: req.body.FarmerName,
@@ -56,15 +62,18 @@ router.post("/landregistration", function(req, res, next) {
                                 ImporterName: req.body.ImporterName,
                                 email: req.body.email,
                                 DateOfRegistration: new Date(),
-                                state: respo.data[0].id
+                                // state: respo.data[0].id,
+                                status: "cultivate",
                             });
-
                             savepayload.save().then(function(doc) {
                                     res.status(200).json({ status: respo });
                                 })
                                 .catch(error => {
                                     console.log("error", error);
                                 });
+                            // } else {
+
+                            // }
                         });
                     }
                 } else {

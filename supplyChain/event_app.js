@@ -7,34 +7,33 @@ var atob = require('atob');
 // 'ws:localhost:8008/subscriptions'
 var isWebSocketStart = false;
 
-// const initWebSocket = (prefix, cb) => {
-let ws = new WebSocket(WEBSOCKET_URL);
-ws.onopen = () => {
-    ws.send(
-        JSON.stringify({
-            action: 'subscribe',
-            address_prefixes: []
-        })
-    );
-};
-ws.onmessage = message => {
-    const data = JSON.parse(message.data);
-    var allState = data.state_changes;
-    if (isWebSocketStart && allState.length) {
-        handleWebsocketResponse(allState);
-        // console.log(JSON.parse(atob(allState)))
-    }
-    isWebSocketStart = true;
-};
-ws.onclose = e => {
-    console.log(e);
-};
+initWebSocket = (prefix) => {
+    let ws = new WebSocket(WEBSOCKET_URL);
+    ws.onopen = () => {
+        ws.send(
+            JSON.stringify({
+                action: 'subscribe',
+                address_prefixes: [prefix]
+            })
+        );
+    };
+    ws.onmessage = message => {
+        const data = JSON.parse(message.data);
+        var allState = data.state_changes;
+        if (isWebSocketStart && allState.length) {
+            handleWebsocketResponse(allState);
+            // console.log(JSON.parse(atob(allState)))
+        }
+        isWebSocketStart = true;
+    };
+    ws.onclose = e => {
+        console.log(e);
+    };
 
-ws.onerror = e => {
-    console.log(e);
+    ws.onerror = e => {
+        console.log(e);
+    };
 };
-// };
-
 
 const handleWebsocketResponse = allStateData => {
     console.log('web socket received ', allStateData);
@@ -45,6 +44,7 @@ const handleWebsocketResponse = allStateData => {
             var b = new Buffer(data.value, 'base64')
             var s = b.toString();
             console.log("data", s)
+            return s;
             // if (parsed.owner === app.user.public) {
             //   constructTabhtml(parsed);
             // }
@@ -53,3 +53,5 @@ const handleWebsocketResponse = allStateData => {
         }
     });
 };
+
+module.exports = { initWebSocket }

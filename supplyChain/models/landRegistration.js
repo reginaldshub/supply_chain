@@ -11,10 +11,10 @@ var land_schema = new Schema({
     ExporterName: { type: String, required: true },
     ImporterName: { type: String, required: true },
     DateOfRegistration: { type: String, required: true },
-    status: { type: String, required: false },
+    status: { type: String, required: true },
     inspectionStatus: { type: Boolean, required: false },
     email: { type: String, required: true },
-    state: { type: String, required: true }
+    // state: { type: String, required: true }
 });
 
 land_schema.statics.hashPassword = function hashPassword(password) {

@@ -2,25 +2,23 @@ var express = require("express");
 var router = express.Router();
 var jwt = require("jsonwebtoken");
 var User = require("../../models/user");
-var Cultivation = require("../../models/Cultivation");
-var landRegistration = require("../../models/landRegistration");
-var Harvest = require("../../models/Harvest");
-var Inspection = require("../../models/Inspection");
-var Process = require("../../models/process");
-var Retail = require("../../models/retail")
-const { prepareTransactions } = require("./../prepareTransaction");
-const { SubmitToServer } = require("./../submitToServer");
 const KeyManager = require("./../keymanager");
 const { permit } = require("../../middleware/previllageValidator.ts");
 nodeMailer = require("nodemailer");
-
-var batchlistBytes = null;
 var keyManager = new KeyManager();
 
 /*
   User Registration route
  */
 router.post("/registration", function(req, res, next) {
+    // Applicaion Key Generation
+    if (keyManager.doesKeyExist("supplyChain")) {
+        console.log("Application keys are already created");
+    } else {
+        var output = keyManager.createkeys("supplyChain");
+        keyManager.savekeys("supplyChain", output);
+    }
+
     // check if email is already registered
     User.findOne({ email: req.body.email }, (err, userExists) => {
         if (userExists) {
@@ -74,7 +72,14 @@ router.post("/registration", function(req, res, next) {
   User Login route
  */
 router.post("/login", function(req, res, next) {
-    console.log(req.body)
+    // Applicaion Key Generation
+    if (keyManager.doesKeyExist("supplyChain")) {
+        console.log("Application keys are already created");
+    } else {
+        var output = keyManager.createkeys("supplyChain");
+        keyManager.savekeys("supplyChain", output);
+    }
+
     User.findOne({ email: req.body.email }).exec().then(function(userDetails) {
         if (userDetails) {
             console.log(userDetails)

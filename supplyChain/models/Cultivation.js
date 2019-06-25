@@ -6,7 +6,7 @@ var cultivation_schema = new Schema({
     Dateofstart: { type: Date, required: true },
     RegistrationNo: { type: String, required: true },
     email: { type: String, required: false },
-    state: { type: String, required: true }
+    // state: { type: String, required: true }
 });
 
 module.exports = mongoose.model('Cultivation', cultivation_schema);
