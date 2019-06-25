@@ -73,6 +73,7 @@ import { SetPriceComponent } from './process-agent/set-price/set-price.component
 import { TrasferedDashboardComponent } from './process-agent/trasfered-dashboard/trasfered-dashboard.component';
 import { ProcessHeaderComponent } from './process-agent/process-header/process-header.component';
 import { TransferComponent } from './process-agent/transfer/transfer.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -103,6 +104,7 @@ import { TransferComponent } from './process-agent/transfer/transfer.component';
     TrasferedDashboardComponent,
     ProcessHeaderComponent,
     TransferComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
