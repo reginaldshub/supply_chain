@@ -39,7 +39,7 @@ export class ServiceService {
 
   land_register(data){
     console.log(data);
-    return this.http.post("http://localhost:3000/landregistration",data)
+    return this.http.post("http://localhost:3000/farmer/landregistration",data)
   }
   getUserProfile(data){
     return this.http.get("http://localhost:3000/getUserProfile/"+data); 
