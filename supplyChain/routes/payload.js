@@ -59,7 +59,6 @@ function protobuff(payload) {
         return payloadInstance;
 
     } else if (payload.verb == 'landInspection') {
-
         var InspectMessage = protos.supplyChainPackage.InspectParams.create();
         InspectMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
         InspectMessage.addressparameters.RegistrationNo = payload.RegistrationNo

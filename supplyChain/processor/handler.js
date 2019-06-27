@@ -34,8 +34,7 @@ class SupplyChainHandler extends TransactionHandler {
                 newLandRegistrationPayload.landregistrationparameters.Country,
                 newLandRegistrationPayload.landregistrationparameters.ExporterName,
                 newLandRegistrationPayload.landregistrationparameters.ImporterName,
-                newLandRegistrationPayload.landregistrationparameters
-                .DateOfRegistration,
+                newLandRegistrationPayload.landregistrationparameters.DateOfRegistration,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
