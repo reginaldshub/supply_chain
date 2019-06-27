@@ -68,7 +68,7 @@ class SupplyChainHandler extends TransactionHandler {
                 state,
                 newInspectionPayload.inspectparameters.InspectionReport,
                 newInspectionPayload.inspectparameters.DateofInspection,
-                newInspectionPayload.inspectparameters.addressparameters.RegistrationNo,
+                newInspectionPayload.addressparameters.RegistrationNo,
                 newInspectionPayload.inspectparameters.InspectorName,
                 newInspectionPayload.addressparameters.FarmerName,
                 newInspectionPayload.inspectparameters.FarmersPublicKey,
