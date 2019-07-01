@@ -7,8 +7,15 @@ var inspection_schema = new Schema({
     // state: { type: String, required: true },
     InspectionData: [{
         InspectorName: { type: String, required: true },
-        InspectionReport: { type: String, require: true },
-        DateofInspection: { type: Date, required: true },
+        InspectionReport: { type: String, required: true },
+        InspectionDate: { type: Date, required: true },
+        CropVariety: { type: String, required: true },
+        CropSeason: { type: String, required: true },
+        CropName: { type: String, required: true },
+        Temperature: { type: String, required: true },
+        TemerpatureUnit: { type: String, required: true },
+        Humidity: { type: String, required: true },
+        HumidityUnit: { type: String, required: true },
     }]
 });
 

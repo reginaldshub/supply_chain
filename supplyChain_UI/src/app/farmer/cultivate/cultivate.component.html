@@ -58,15 +58,31 @@
         </div>
         <form [formGroup]="cultivate" (submit)="onSubmit()">
             <mat-form-field>
-                <input formControlName="CropVariety" matInput placeholder="Crop Variety">
-                <mat-error>Crop Variety is required.</mat-error>
+                <input formControlName="CropName" matInput placeholder="Crop Name">
+                <mat-error>Crop Name is Not Valid.</mat-error>
+            </mat-form-field>
+
+            <!-- <mat-form-field>
+                <input formControlName="CropSeason" matInput placeholder="Crop Season">
+                <mat-error>Crop Season is required.</mat-error>
+            </mat-form-field> -->
+
+            <mat-form-field>
+                <mat-label>Season</mat-label>
+                <mat-select [(ngModel)]="cropseason" name="CropSeasons" formControlName="CropSeason">
+                    <mat-option *ngFor="let season of CropSeasons" [value]="season.value">
+                        {{season.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Crop Season is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Choose a date">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input formControlName="Dateofstart" matInput placeholder="Choose a date" [disabled]="true">
+                <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                <!-- <mat-datepicker #picker></mat-datepicker> -->
             </mat-form-field>
+
             <div class="end">
                 <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
                   arrow_back

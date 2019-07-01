@@ -2,13 +2,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var harvest_schema = new Schema({
-    CropVariety: { type: String, require: true },
-    Temperature: { type: String, require: true },
-    Humidity: { type: String, require: true },
-    Dateofharvest: { type: String, require: true },
-    Quantity: { type: String, require: true },
+
+    FarmerName: { type: String, required: true },
     RegistrationNo: { type: String, required: true },
-    email: { type: String, required: false },
+    CropVariety: { type: String, required: true },
+    CropMeasureCategory: { type: String, required: true },
+    DateofEnd: { type: String, required: true },
+    Dateofstart: { type: String, required: true },
+    Humidity: { type: String, required: true },
+    HumidityUnit: { type: String, required: true },
+    Quantity: { type: String, required: true },
+    QuantityUnit: { type: String, required: true },
+    TemerpatureUnit: { type: String, required: true },
+    Temperature: { type: String, required: true },
     // state: { type: String, required: true }
 });
 

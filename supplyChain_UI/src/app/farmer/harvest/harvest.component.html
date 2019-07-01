@@ -54,16 +54,23 @@
 
             <div class="grid5">
                 <ul class="custom-list">
-                    <li class="heading-text">Crop Variety</li>
+                    <li class="heading-text">Crop Name</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="details-text">{{details.CropName}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Season</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropSeason}}</li>
                     <li class="clear-float"></li>
                 </ul>
 
                 <ul class="custom-list">
                     <li class="heading-text">Start of Date</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="details-text">{{details.Dateofstart | date}} </li>
                     <li class="clear-float"></li>
                 </ul>
             </div>
@@ -74,9 +81,20 @@
             <h2>Harvest</h2>
         </div>
         <form [formGroup]="harvest" (submit)="onSubmit()">
+
             <mat-form-field>
                 <input formControlName="CropVariety" matInput placeholder="Crop Variety">
                 <mat-error>Crop Variety is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Crop Measure Category</mat-label>
+                <mat-select [(ngModel)]="measurementunit" name="CropMeasureCategories" formControlName="CropMeasureCategory">
+                    <mat-option *ngFor="let unit of CropMeasureCategories" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>CropMeasureCategory is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -85,8 +103,28 @@
             </mat-form-field>
 
             <mat-form-field>
+                <mat-label>Temerpature Unit</mat-label>
+                <mat-select [(ngModel)]="tempunit" name="TemerpatureUnits" formControlName="TemerpatureUnit" (ngModelChange)="TemperatureValidator(tempunit)">
+                    <mat-option *ngFor="let unit of TemerpatureUnits" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>TemerpatureUnit is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
                 <input formControlName="Humidity" matInput placeholder="Humidity">
                 <mat-error>Humidity is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>HumidityUnit</mat-label>
+                <mat-select [(ngModel)]="humidityunit" name="HumidityUnits" formControlName="HumidityUnit">
+                    <mat-option *ngFor="let unit of HumidityUnits" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>HumidityUnit is required.</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -95,10 +133,28 @@
             </mat-form-field>
 
             <mat-form-field>
-                <input formControlName="Dateofstart" matInput [matDatepicker]="picker" placeholder="Date of harvest">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <mat-label>QuantityUnit</mat-label>
+                <mat-select [(ngModel)]="quantitytyunit" name="QuantityUnits" formControlName="QuantityUnit">
+                    <mat-option *ngFor="let unit of QuantityUnits" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>QuantityUnit is required.</mat-error>
             </mat-form-field>
+
+            <mat-form-field class="farmAddress">
+                <input formControlName="Dateofstart" matInput [matDatepicker]="picker1" placeholder="Date of start">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="farmAddress">
+                <input formControlName="DateofEnd" matInput [matDatepicker]="picker2" placeholder="Date of end">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+
+            <br />
             <div class="end">
                 <button mat-mini-fab color="primary" matTooltip="back" (click)="backtodash()"><i class="material-icons">
                         arrow_back

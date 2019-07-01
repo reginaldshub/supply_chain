@@ -21,6 +21,7 @@ crop;
       this.id = +params['id']; // (+) converts string 'id' to a number
       console.log(this.id)
       this.service.harvestDetails(this.id).subscribe((res: any) => {
+        console.log(res)
         this.bool=true;
          this.data = res.land;
          this.crop = res.cultivationDetails;

@@ -23,6 +23,7 @@ import { ProcessedDashboardComponent } from './process-agent/processed-dashboard
 import { SetPriceComponent } from './process-agent/set-price/set-price.component';
 import { TrasferedDashboardComponent } from './process-agent/trasfered-dashboard/trasfered-dashboard.component';
 import { TransferComponent } from './process-agent/transfer/transfer.component';
+import { InspectionReportComponent } from './inspector/inspection-report/inspection-report.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path:'inspectorDashboard',component:InspectorComponent},
   {path:'inspectorView/:id', component: InspectorViewComponent},
   {path:'inspectionDetails/:id',component:InspectionDetailsComponent},
+  {path:'inspectionReport/:id',component:InspectionReportComponent},
   {path:'inspection/:id',component:InspectionComponent},
   {path:'processAgentDashboard',component:ProcessAgentComponent},
   {path:'process',component:ProcessingComponent},

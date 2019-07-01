@@ -11,7 +11,7 @@ var Retail = require("../../models/retail")
 const { prepareTransactions } = require("./../prepareTransaction");
 const { SubmitToServer } = require("./../submitToServer.js");
 const KeyManager = require("./../keymanager");
-const { permit } = require("../../middleware/previllageValidator.ts");
+const { permit } = require("../../Validators/previllageValidator.ts");
 nodeMailer = require("nodemailer");
 
 var batchlistBytes = null;
@@ -32,6 +32,7 @@ router.get("/getLandsForProcessAgent", function(req, res, next) {
  Create Package route
  */
 router.post("/createPackage", function(req, res, next) {
+    console.log(req.body)
     var payload = {
         quantity: req.body.quantity,
         rostingDuration: req.body.rostingDuration,

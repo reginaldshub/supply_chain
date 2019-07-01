@@ -74,6 +74,7 @@ import { TrasferedDashboardComponent } from './process-agent/trasfered-dashboard
 import { ProcessHeaderComponent } from './process-agent/process-header/process-header.component';
 import { TransferComponent } from './process-agent/transfer/transfer.component';
 import { FooterComponent } from './footer/footer.component';
+import { InspectionReportComponent } from './inspector/inspection-report/inspection-report.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { FooterComponent } from './footer/footer.component';
     ProcessHeaderComponent,
     TransferComponent,
     FooterComponent,
+    InspectionReportComponent,
   ],
   imports: [
     BrowserModule,

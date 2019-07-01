@@ -38,22 +38,25 @@ export class InspectionComponent implements OnInit {
   }
 
 
-  SubmitInspectionReport(){
-    let inspectionData = {
-      InspectionReport: "inspected",
-        RegistrationNo: this.data.RegistrationNo,
-        InspectorName: localStorage.getItem("InspectorName"),
-        FarmerName: this.data.FarmerName,
-        Farmeremail: this.data.email,
-        email:localStorage.getItem('email')
-    }
-    console.log(inspectionData);
-    this.service.InspectionReport(inspectionData).subscribe((res:any)=>{
-      if(res.status == "COMMITTED")
-       this.router.navigate(['inspectorDashboard']);
-     console.log("inspector Submit",res)
+  SubmitInspectionReport(data){
+
+    this.router.navigate(['inspectionReport',data]);
+    // let inspectionData = {
+    //   InspectionReport: "inspected",
+    //     RegistrationNo: this.data.RegistrationNo,
+    //     InspectorName: localStorage.getItem("InspectorName"),
+    //     FarmerName: this.data.FarmerName,
+    //     Farmeremail: this.data.email,
+    //     email:localStorage.getItem('email')
+    // }
+    // console.log(inspectionData);
+    // console.log("this.data", this.data);
+    // this.service.InspectionReport(inspectionData).subscribe((res:any)=>{
+    //   if(res.status == "COMMITTED")
+    //    this.router.navigate(['inspectorDashboard']);
+    //  console.log("inspector Submit",res)
       
-    })
+    // })
   } 
 }
 

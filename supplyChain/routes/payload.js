@@ -27,7 +27,8 @@ function protobuff(payload) {
         var startCultivationMessage = protos.supplyChainPackage.StartCultivationParams.create()
 
         startCultivationMessage.startcultivationparameters = protos.supplyChainPackage.StartCultivationParameters.create()
-        startCultivationMessage.startcultivationparameters.CropVariety = payload.CropVariety
+        startCultivationMessage.startcultivationparameters.CropName = payload.CropName
+        startCultivationMessage.startcultivationparameters.CropSeason = payload.CropSeason
         startCultivationMessage.startcultivationparameters.Dateofstart = payload.Dateofstart
 
         startCultivationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
@@ -46,11 +47,17 @@ function protobuff(payload) {
         performHarvestMessage.addressparameters.FarmerName = payload.FarmerName
 
         performHarvestMessage.performharvestparameters = protos.supplyChainPackage.PerformHarvestParameters.create()
+
         performHarvestMessage.performharvestparameters.CropVariety = payload.CropVariety
-        performHarvestMessage.performharvestparameters.Temperature = payload.Temperature
+        performHarvestMessage.performharvestparameters.CropMeasureCategory = payload.CropMeasureCategory
+        performHarvestMessage.performharvestparameters.DateofEnd = payload.DateofEnd
+        performHarvestMessage.performharvestparameters.Dateofstart = payload.Dateofstart
         performHarvestMessage.performharvestparameters.Humidity = payload.Humidity
-        performHarvestMessage.performharvestparameters.Dateofharvest = payload.Dateofharvest
+        performHarvestMessage.performharvestparameters.HumidityUnit = payload.HumidityUnit
         performHarvestMessage.performharvestparameters.Quantity = payload.Quantity
+        performHarvestMessage.performharvestparameters.QuantityUnit = payload.QuantityUnit
+        performHarvestMessage.performharvestparameters.TemerpatureUnit = payload.TemerpatureUnit
+        performHarvestMessage.performharvestparameters.Temperature = payload.Temperature
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create()
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST;
@@ -66,9 +73,16 @@ function protobuff(payload) {
 
         InspectMessage.inspectparameters = protos.supplyChainPackage.InspectParameters.create()
         InspectMessage.inspectparameters.InspectionReport = payload.InspectionReport
-        InspectMessage.inspectparameters.DateofInspection = payload.DateofInspection
         InspectMessage.inspectparameters.InspectorName = payload.InspectorName
         InspectMessage.inspectparameters.FarmersPublicKey = payload.FarmersPublicKey
+        InspectMessage.inspectparameters.InspectionDate = payload.InspectionDate
+        InspectMessage.inspectparameters.CropVariety = payload.CropVariety
+        InspectMessage.inspectparameters.CropSeason = payload.CropSeason
+        InspectMessage.inspectparameters.CropName = payload.CropName
+        InspectMessage.inspectparameters.Temperature = payload.Temperature
+        InspectMessage.inspectparameters.TemerpatureUnit = payload.TemerpatureUnit
+        InspectMessage.inspectparameters.Humidity = payload.Humidity
+        InspectMessage.inspectparameters.HumidityUnit = payload.HumidityUnit
 
         var payloadInstance = protos.supplyChainPackage.PayLoad.create();
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.INSPECTION;

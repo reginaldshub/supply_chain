@@ -5,7 +5,7 @@ var Inspection = require("../../models/Inspection");
 const { prepareTransactions } = require("./../prepareTransaction");
 const { SubmitToServer } = require("./../submitToServer");
 const KeyManager = require("./../keymanager");
-const { permit } = require("./../../middleware/previllageValidator.ts");
+const { permit } = require("./../../Validators/previllageValidator.ts");
 nodeMailer = require("nodemailer");
 
 var batchlistBytes = null;
@@ -27,70 +27,98 @@ router.get("/getLandsForInspection", function(req, res, next) {
  */
 router.post("/inspectionReport", function(req, res, next) {
     console.log(req.body)
-    var FarmersPublicKey = keyManager.readpublickey(req.body.Farmeremail)
-    var payload = {
-        InspectionReport: req.body.InspectionReport,
-        DateofInspection: new Date(),
-        RegistrationNo: req.body.RegistrationNo,
-        InspectorName: req.body.InspectorName,
-        FarmersPublicKey: FarmersPublicKey,
-        FarmerName: req.body.FarmerName,
-        verb: "landInspection"
-    };
-    let updateStatus = { inspectionStatus: "true" };
-    landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
-        .then(updatedResponse => {
-            if (!updatedResponse) {
-                return res.status(404).send({ message: "error" });
-            } else {
-                if (keyManager.doesKeyExist(req.body.email)) {
-                    if (batchlistBytes = prepareTransactions(payload, req.body.email)) {
-                        SubmitToServer(batchlistBytes).then(respo => {
-                            Inspection.findOne({ RegistrationNo: req.body.RegistrationNo },
-                                function(err, allInspectionData) {
-                                    if (err) throw err;
-                                    if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
-                                        Inspection.findOneAndUpdate({ RegistrationNo: req.body.RegistrationNo }, {
-                                                $push: {
-                                                    InspectionData: {
-                                                        InspectorName: req.body.InspectorName,
-                                                        InspectionReport: req.body.InspectionReport,
-                                                        DateofInspection: new Date()
+    if (req.body != null) {
+        let inspectionDetails = req.body.inspection_details;
+        let body = req.body;
+        var FarmersPublicKey = keyManager.readpublickey(req.body.email)
+        var payload = {
+            CropVariety: inspectionDetails.CropVariety,
+            CropSeason: inspectionDetails.CropSeason,
+            CropName: inspectionDetails.CropName,
+            Temperature: inspectionDetails.Temperature,
+            TemerpatureUnit: inspectionDetails.TemerpatureUnit,
+            Humidity: inspectionDetails.Humidity,
+            HumidityUnit: inspectionDetails.HumidityUnit,
+            InspectionDate: inspectionDetails.InspectionDate,
+            InspectionReport: body.InspectionReport,
+            RegistrationNo: body.RegistrationNo,
+            InspectorName: body.InspectorName,
+            FarmersPublicKey: FarmersPublicKey,
+            FarmerName: body.land_details.FarmerName,
+            verb: "landInspection"
+        };
+        let updateStatus = { inspectionStatus: "true" };
+        landRegistration.updateOne({ RegistrationNo: req.body.RegistrationNo }, { $set: updateStatus }, { new: true })
+            .then(updatedResponse => {
+                if (!updatedResponse) {
+                    return res.status(404).send({ message: "error" });
+                } else {
+                    if (keyManager.doesKeyExist(req.body.email)) {
+                        if (batchlistBytes = prepareTransactions(payload, req.body.email)) {
+                            SubmitToServer(batchlistBytes).then(respo => {
+                                Inspection.findOne({ RegistrationNo: req.body.RegistrationNo },
+                                    function(err, allInspectionData) {
+                                        if (err) throw err;
+                                        if (allInspectionData != null && allInspectionData.InspectionData.length > 0) {
+                                            Inspection.findOneAndUpdate({ RegistrationNo: body.RegistrationNo }, {
+                                                    $push: {
+                                                        InspectionData: {
+                                                            CropVariety: inspectionDetails.CropVariety,
+                                                            CropSeason: inspectionDetails.CropSeason,
+                                                            CropName: inspectionDetails.CropName,
+                                                            Temperature: inspectionDetails.Temperature,
+                                                            TemerpatureUnit: inspectionDetails.TemerpatureUnit,
+                                                            Humidity: inspectionDetails.Humidity,
+                                                            HumidityUnit: inspectionDetails.HumidityUnit,
+                                                            InspectionDate: inspectionDetails.InspectionDate,
+                                                            InspectionReport: body.InspectionReport,
+                                                            RegistrationNo: body.RegistrationNo,
+                                                            InspectorName: body.InspectorName,
+                                                        }
                                                     }
+                                                },
+                                                function(err, updatedres) {
+                                                    if (err) throw err;
+                                                    res.status(200).send({
+                                                        message: "updated inspection details",
+                                                        status: "COMMITTED"
+                                                    });
                                                 }
-                                            },
-                                            function(err, updatedres) {
+                                            );
+                                        } else {
+                                            var newInspection = Inspection({
+                                                RegistrationNo: req.body.RegistrationNo,
+                                                InspectionData: [{
+                                                    CropVariety: inspectionDetails.CropVariety,
+                                                    CropSeason: inspectionDetails.CropSeason,
+                                                    CropName: inspectionDetails.CropName,
+                                                    Temperature: inspectionDetails.Temperature,
+                                                    TemerpatureUnit: inspectionDetails.TemerpatureUnit,
+                                                    Humidity: inspectionDetails.Humidity,
+                                                    HumidityUnit: inspectionDetails.HumidityUnit,
+                                                    InspectionDate: inspectionDetails.InspectionDate,
+                                                    InspectionReport: body.InspectionReport,
+                                                    InspectorName: body.InspectorName,
+                                                }]
+                                            });
+                                            newInspection.save(function(err) {
                                                 if (err) throw err;
                                                 res.status(200).send({
                                                     message: "updated inspection details",
                                                     status: "COMMITTED"
                                                 });
-                                            }
-                                        );
-                                    } else {
-                                        var newInspection = Inspection({
-                                            RegistrationNo: req.body.RegistrationNo,
-                                            InspectionData: [{
-                                                InspectorName: req.body.InspectorName,
-                                                InspectionReport: req.body.InspectionReport,
-                                                DateofInspection: new Date()
-                                            }]
-                                        });
-                                        newInspection.save(function(err) {
-                                            if (err) throw err;
-                                            res.status(200).send({
-                                                message: "updated inspection details",
-                                                status: "COMMITTED"
                                             });
-                                        });
+                                        }
                                     }
-                                }
-                            );
-                        });
+                                );
+                            });
+                        }
                     }
                 }
-            }
-        });
+            });
+    } else {
+        return res.status(400).json({ message: "Empty Body." });
+    }
 });
 
 module.exports = router;

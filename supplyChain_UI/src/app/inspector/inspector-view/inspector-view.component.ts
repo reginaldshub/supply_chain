@@ -26,7 +26,7 @@ export class InspectorViewComponent implements OnInit {
       console.log(this.id)
       this.service.getlandbyId(this.id).subscribe((res: any) => {
         this.bool = true;
-        console.log(res);
+        console.log("res",res);
         console.log(this.data = res.land);
          this.details = res.cultivationtionDetails[0];
          if(res.inspectionDetails.length!= 0)

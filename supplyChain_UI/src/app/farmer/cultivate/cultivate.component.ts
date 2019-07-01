@@ -4,6 +4,12 @@ import { ServiceService } from 'src/app/service.service';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+
+export interface SeasonsInterface {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-cultivalte',
   templateUrl: './cultivate.component.html',
@@ -13,6 +19,8 @@ export class CultivalteComponent implements OnInit {
 cultivate:FormGroup;
   constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
  data;
+ today = new Date();
+ date = this.today.getFullYear()+'-'+(this.today.getMonth()+1)+'-'+this.today.getDate();
  bool= false;
 
   ngOnInit() {
@@ -25,25 +33,31 @@ cultivate:FormGroup;
       })
     })
     
-    this.cultivate=this.formBuilder.group({
-      CropVariety:['',Validators.required],
-      Dateofstart:['',Validators.required]
+    this.cultivate = this.formBuilder.group({
+      CropName:['',[ Validators.required, Validators.maxLength(10), Validators.pattern('^[a-zA-Z\']+$') ] ],
+      Dateofstart:[{value: this.date, disabled: true}],
+      CropSeason:['',Validators.required]
+
     })
   }
 
-
 onSubmit(){
-
   this.cultivate.value['RegistrationNo']=localStorage.getItem("id");
   this.cultivate.value['FarmerName']=localStorage.getItem("name");
   this.cultivate.value['email']=localStorage.getItem('email');
-  console.log(this.cultivate.value);
+  this.cultivate.value['Dateofstart'] = this.date;
   this.service.cultivate(this.cultivate.value).subscribe((res:any)=>{
     console.log(res);
     this.route.navigate(['farmer']);
   })
-
 }
+
+CropSeasons: SeasonsInterface[] = [
+  { value: 'summer', viewValue: 'Summer' },
+  { value: 'winter', viewValue: 'Winter' },
+  { value: 'rainy', viewValue: 'Rainy' }
+];
+
 backtodash(){
   
   this.route.navigate(['farmer']);

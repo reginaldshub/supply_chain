@@ -3,17 +3,17 @@ const { get_retail_address } = require('../shared/retail_agent_addressing')
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
 
-create_package = (state, Quantity, RostingDuration, PackageDateTime, Temperature, InternalBatchNo, ProcessorName, processorAddress, process_agents_public_keys) => {
+create_package = (state, createpackageparameters, process_agents_public_keys) => {
     let address = get_process_address(process_agents_public_keys)
     console.log("address", address);
     let process_data = {
-        Quantity: Quantity,
-        RostingDuration: RostingDuration,
-        PackageDateTime: PackageDateTime,
-        Temperature: Temperature,
-        InternalBatchNo: InternalBatchNo,
-        ProcessorName: ProcessorName,
-        processorAddress: processorAddress,
+        Quantity: createpackageparameters.Quantity,
+        RostingDuration: createpackageparameters.RostingDuration,
+        PackageDateTime: createpackageparameters.PackageDateTime,
+        Temperature: createpackageparameters.Temperature,
+        InternalBatchNo: createpackageparameters.InternalBatchNo,
+        ProcessorName: createpackageparameters.ProcessorName,
+        processorAddress: createpackageparameters.processorAddress,
     }
     return state.setState({
         [address]: encode({ process_data, process_agents_public_keys })
@@ -24,7 +24,7 @@ create_package = (state, Quantity, RostingDuration, PackageDateTime, Temperature
     })
 }
 
-update_processDetails = (state, setPrice, ProcessorName, process_agents_public_keys) => {
+update_processDetails = (state, updateprocessdetailsparameters, process_agents_public_keys) => {
     let address = get_process_address(process_agents_public_keys)
     if (!address) {
         throw InvalidTransaction("Failed to load Account", err)
@@ -34,7 +34,7 @@ update_processDetails = (state, setPrice, ProcessorName, process_agents_public_k
             let account = decode(entry);
             console.log("entry", entry);
             console.log("account", account);
-            account.process_data.setPrice = setPrice;
+            account.process_data.setPrice = updateprocessdetailsparameters.setPrice;
             return state.setState({
                 [address]: encode({ account, process_agents_public_keys })
             }).then((result) => {
@@ -47,9 +47,9 @@ update_processDetails = (state, setPrice, ProcessorName, process_agents_public_k
     }
 }
 
-transfer_package = (state, retailAgentPublicKey, internalBatchNo, process_agents_public_keys) => {
+transfer_package = (state, transferpackageparameters, process_agents_public_keys) => {
     let processAgentAddress = get_process_address(process_agents_public_keys)
-    let retailAgentAddress = get_retail_address(retailAgentPublicKey)
+    let retailAgentAddress = get_retail_address(transferpackageparameters.retailAgentPublicKey)
     if (!processAgentAddress) {
         throw InvalidTransaction("Failed to load Account", err)
     } else {
@@ -58,8 +58,9 @@ transfer_package = (state, retailAgentPublicKey, internalBatchNo, process_agents
             let account = decode(entry);
             console.log("entry", entry);
             console.log("account", account);
+            let RetailAgentPublicKey = transferpackageparameters.retailAgentPublicKey;
             return state.setState({
-                [retailAgentAddress]: encode({ account, retailAgentPublicKey })
+                [retailAgentAddress]: encode({ account, RetailAgentPublicKey })
             }).then((result) => {
                 console.log("Updated to Retail Agent" + result)
             }).catch((err) => {

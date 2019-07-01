@@ -4,6 +4,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
+
+export interface UnitsInterface {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-harvest',
   templateUrl: './harvest.component.html',
@@ -13,7 +19,6 @@ export class HarvestComponent implements OnInit {
 
   harvest: FormGroup;
   id: number;
-  private sub: any;
   details;
   data;
   bool: Boolean = false;
@@ -35,24 +40,75 @@ export class HarvestComponent implements OnInit {
     });
 
     this.harvest = this.formBuilder.group({
-      CropVariety: ['', Validators.required],
+      CropVariety: ['',[ Validators.required, Validators.maxLength(10), Validators.pattern('^[a-zA-Z\']+$') ] ],
+      CropMeasureCategory: ['', Validators.required],
       Dateofstart: ['', Validators.required],
-      Temperature: ['', Validators.required],
-      Humidity: ['', Validators.required],
-      Quantity: ['', Validators.required]
+      DateofEnd: ['', Validators.required],
+      Temperature: ['', [Validators.required, Validators.pattern('^[+-][0-9]?[0-9]?$')]],
+      TemerpatureUnit: ['', Validators.required],
+      Humidity: ['', [Validators.required, Validators.pattern('^[0-9]?[0-9]?$')]],
+      HumidityUnit: ['', Validators.required],
+      Quantity: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      QuantityUnit: ['', Validators.required]
     })
+
+    const TemperatureControl = this.harvest.get('Temperature');
+
+    this.harvest.get('TemerpatureUnit').valueChanges
+      .subscribe(TemerpatureUnit => {
+
+        if (TemerpatureUnit === 'Celsius') {
+          TemperatureControl.setValidators([Validators.required, Validators.pattern('^[+-][0-9]?[0-9]?$')]);
+        }
+
+        if (TemerpatureUnit === 'Farenheit') {
+          TemperatureControl.setValidators([Validators.required, Validators.pattern('^[+-][0-9]?[0-9]?[0-9]?$')]);
+        }
+        TemperatureControl.updateValueAndValidity();
+      });
+
   }
 
   onSubmit() {
     this.harvest.value['RegistrationNo'] = localStorage.getItem("id");
     this.harvest.value['FarmerName'] = localStorage.getItem("name");
-    this.harvest.value['email']=localStorage.getItem('email');
-  
-    console.log(this.harvest.value);
-    this.service.harvest(this.harvest.value).subscribe((res: any) => {
+    this.harvest.value['email'] = localStorage.getItem('email');
+
+    let harvestDetails = {
+      harvest_details: this.harvest.value,
+      RegistrationNo: this.id,
+      land_details: this.data
+    }
+    console.log(harvestDetails);
+    this.service.harvest(harvestDetails).subscribe((res: any) => {
       console.log(res);
       this.route.navigate(['farmer']);
     })
+  }
+
+  TemerpatureUnits: UnitsInterface[] = [
+    { value: 'Celsius', viewValue: 'Celsius' },
+    { value: 'Farenheit', viewValue: 'Farenheit' }
+  ];
+
+
+  CropMeasureCategories: UnitsInterface[] = [
+    { value: 'solid', viewValue: 'Solid' },
+    { value: 'liquid', viewValue: 'Liquid' },
+    { value: 'gas', viewValue: 'Gaseous' }
+  ];
+
+  HumidityUnits: UnitsInterface[] = [
+    { value: 'grams', viewValue: 'grams' }
+  ];
+
+  QuantityUnits: UnitsInterface[] = [
+    { value: 'kg', viewValue: 'Kilo grams' },
+    { value: 'lts', viewValue: 'litres' }
+  ];
+
+  reset() {
+    this.harvest.reset();
   }
 
   backtodash() {

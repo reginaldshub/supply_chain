@@ -41,22 +41,35 @@ message TransferPackageParameters {
 }
 
 message StartCultivationParameters {
-	string Crop_variety = 1;
-	string Dateofstart = 2;
+	string Crop_name = 1;
+	string Crop_season = 2;
+	string Dateofstart = 3;
 }
 message InspectParameters {
 	string Inspection_report = 1;
-	string Dateof_inspection = 2;
+	string Inspection_date = 2;
 	string Inspector_name = 3;
 	string Farmers_public_key = 4;
+	string Crop_variety = 5;
+	string Crop_season = 6;
+	string Crop_name = 7;
+	string Temperature = 8;
+	string Temerpature_unit = 9;
+	string Humidity = 10;
+	string Humidity_unit = 11;
 }
 
 message PerformHarvestParameters {
 	string Crop_variety = 1;
-	string Temperature = 2;
-	string Humidity = 3;
-	string Dateofharvest = 4;
-	string Quantity = 5;
+	string Crop_measure_category = 2;
+	string Dateof_end = 3;
+	string Dateofstart = 4;
+	string Humidity = 5;
+	string Humidity_unit = 6;
+	string Quantity = 7;
+	string Quantity_unit = 8;
+	string Temerpature_unit = 9;
+	string Temperature = 10;
 }
 
 message CreatePackageParameters {

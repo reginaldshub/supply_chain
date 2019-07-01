@@ -34,7 +34,6 @@ export class CultivateDetailsComponent implements OnInit {
     });
 
   }
-
 }
 
 export interface cultivateDetails {

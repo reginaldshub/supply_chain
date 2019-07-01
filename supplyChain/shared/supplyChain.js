@@ -1181,7 +1181,8 @@ $root.supplyChainPackage = (function() {
          * Properties of a StartCultivationParameters.
          * @memberof supplyChainPackage
          * @interface IStartCultivationParameters
-         * @property {string|null} [CropVariety] StartCultivationParameters CropVariety
+         * @property {string|null} [CropName] StartCultivationParameters CropName
+         * @property {string|null} [CropSeason] StartCultivationParameters CropSeason
          * @property {string|null} [Dateofstart] StartCultivationParameters Dateofstart
          */
 
@@ -1201,12 +1202,20 @@ $root.supplyChainPackage = (function() {
         }
 
         /**
-         * StartCultivationParameters CropVariety.
-         * @member {string} CropVariety
+         * StartCultivationParameters CropName.
+         * @member {string} CropName
          * @memberof supplyChainPackage.StartCultivationParameters
          * @instance
          */
-        StartCultivationParameters.prototype.CropVariety = "";
+        StartCultivationParameters.prototype.CropName = "";
+
+        /**
+         * StartCultivationParameters CropSeason.
+         * @member {string} CropSeason
+         * @memberof supplyChainPackage.StartCultivationParameters
+         * @instance
+         */
+        StartCultivationParameters.prototype.CropSeason = "";
 
         /**
          * StartCultivationParameters Dateofstart.
@@ -1240,10 +1249,12 @@ $root.supplyChainPackage = (function() {
         StartCultivationParameters.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.CropVariety);
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.CropName);
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.CropSeason);
             if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.Dateofstart);
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.Dateofstart);
             return writer;
         };
 
@@ -1279,9 +1290,12 @@ $root.supplyChainPackage = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.CropVariety = reader.string();
+                    message.CropName = reader.string();
                     break;
                 case 2:
+                    message.CropSeason = reader.string();
+                    break;
+                case 3:
                     message.Dateofstart = reader.string();
                     break;
                 default:
@@ -1319,9 +1333,12 @@ $root.supplyChainPackage = (function() {
         StartCultivationParameters.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
-                if (!$util.isString(message.CropVariety))
-                    return "CropVariety: string expected";
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                if (!$util.isString(message.CropName))
+                    return "CropName: string expected";
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                if (!$util.isString(message.CropSeason))
+                    return "CropSeason: string expected";
             if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
                 if (!$util.isString(message.Dateofstart))
                     return "Dateofstart: string expected";
@@ -1340,8 +1357,10 @@ $root.supplyChainPackage = (function() {
             if (object instanceof $root.supplyChainPackage.StartCultivationParameters)
                 return object;
             var message = new $root.supplyChainPackage.StartCultivationParameters();
-            if (object.CropVariety != null)
-                message.CropVariety = String(object.CropVariety);
+            if (object.CropName != null)
+                message.CropName = String(object.CropName);
+            if (object.CropSeason != null)
+                message.CropSeason = String(object.CropSeason);
             if (object.Dateofstart != null)
                 message.Dateofstart = String(object.Dateofstart);
             return message;
@@ -1361,11 +1380,14 @@ $root.supplyChainPackage = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.CropVariety = "";
+                object.CropName = "";
+                object.CropSeason = "";
                 object.Dateofstart = "";
             }
-            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
-                object.CropVariety = message.CropVariety;
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                object.CropName = message.CropName;
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                object.CropSeason = message.CropSeason;
             if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
                 object.Dateofstart = message.Dateofstart;
             return object;
@@ -1392,9 +1414,16 @@ $root.supplyChainPackage = (function() {
          * @memberof supplyChainPackage
          * @interface IInspectParameters
          * @property {string|null} [InspectionReport] InspectParameters InspectionReport
-         * @property {string|null} [DateofInspection] InspectParameters DateofInspection
+         * @property {string|null} [InspectionDate] InspectParameters InspectionDate
          * @property {string|null} [InspectorName] InspectParameters InspectorName
          * @property {string|null} [FarmersPublicKey] InspectParameters FarmersPublicKey
+         * @property {string|null} [CropVariety] InspectParameters CropVariety
+         * @property {string|null} [CropSeason] InspectParameters CropSeason
+         * @property {string|null} [CropName] InspectParameters CropName
+         * @property {string|null} [Temperature] InspectParameters Temperature
+         * @property {string|null} [TemerpatureUnit] InspectParameters TemerpatureUnit
+         * @property {string|null} [Humidity] InspectParameters Humidity
+         * @property {string|null} [HumidityUnit] InspectParameters HumidityUnit
          */
 
         /**
@@ -1421,12 +1450,12 @@ $root.supplyChainPackage = (function() {
         InspectParameters.prototype.InspectionReport = "";
 
         /**
-         * InspectParameters DateofInspection.
-         * @member {string} DateofInspection
+         * InspectParameters InspectionDate.
+         * @member {string} InspectionDate
          * @memberof supplyChainPackage.InspectParameters
          * @instance
          */
-        InspectParameters.prototype.DateofInspection = "";
+        InspectParameters.prototype.InspectionDate = "";
 
         /**
          * InspectParameters InspectorName.
@@ -1443,6 +1472,62 @@ $root.supplyChainPackage = (function() {
          * @instance
          */
         InspectParameters.prototype.FarmersPublicKey = "";
+
+        /**
+         * InspectParameters CropVariety.
+         * @member {string} CropVariety
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.CropVariety = "";
+
+        /**
+         * InspectParameters CropSeason.
+         * @member {string} CropSeason
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.CropSeason = "";
+
+        /**
+         * InspectParameters CropName.
+         * @member {string} CropName
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.CropName = "";
+
+        /**
+         * InspectParameters Temperature.
+         * @member {string} Temperature
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.Temperature = "";
+
+        /**
+         * InspectParameters TemerpatureUnit.
+         * @member {string} TemerpatureUnit
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.TemerpatureUnit = "";
+
+        /**
+         * InspectParameters Humidity.
+         * @member {string} Humidity
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.Humidity = "";
+
+        /**
+         * InspectParameters HumidityUnit.
+         * @member {string} HumidityUnit
+         * @memberof supplyChainPackage.InspectParameters
+         * @instance
+         */
+        InspectParameters.prototype.HumidityUnit = "";
 
         /**
          * Creates a new InspectParameters instance using the specified properties.
@@ -1470,12 +1555,26 @@ $root.supplyChainPackage = (function() {
                 writer = $Writer.create();
             if (message.InspectionReport != null && message.hasOwnProperty("InspectionReport"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.InspectionReport);
-            if (message.DateofInspection != null && message.hasOwnProperty("DateofInspection"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.DateofInspection);
+            if (message.InspectionDate != null && message.hasOwnProperty("InspectionDate"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.InspectionDate);
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 writer.uint32(/* id 3, wireType 2 =*/26).string(message.InspectorName);
             if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
                 writer.uint32(/* id 4, wireType 2 =*/34).string(message.FarmersPublicKey);
+            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.CropVariety);
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.CropSeason);
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.CropName);
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                writer.uint32(/* id 8, wireType 2 =*/66).string(message.Temperature);
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                writer.uint32(/* id 9, wireType 2 =*/74).string(message.TemerpatureUnit);
+            if (message.Humidity != null && message.hasOwnProperty("Humidity"))
+                writer.uint32(/* id 10, wireType 2 =*/82).string(message.Humidity);
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                writer.uint32(/* id 11, wireType 2 =*/90).string(message.HumidityUnit);
             return writer;
         };
 
@@ -1514,13 +1613,34 @@ $root.supplyChainPackage = (function() {
                     message.InspectionReport = reader.string();
                     break;
                 case 2:
-                    message.DateofInspection = reader.string();
+                    message.InspectionDate = reader.string();
                     break;
                 case 3:
                     message.InspectorName = reader.string();
                     break;
                 case 4:
                     message.FarmersPublicKey = reader.string();
+                    break;
+                case 5:
+                    message.CropVariety = reader.string();
+                    break;
+                case 6:
+                    message.CropSeason = reader.string();
+                    break;
+                case 7:
+                    message.CropName = reader.string();
+                    break;
+                case 8:
+                    message.Temperature = reader.string();
+                    break;
+                case 9:
+                    message.TemerpatureUnit = reader.string();
+                    break;
+                case 10:
+                    message.Humidity = reader.string();
+                    break;
+                case 11:
+                    message.HumidityUnit = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1560,15 +1680,36 @@ $root.supplyChainPackage = (function() {
             if (message.InspectionReport != null && message.hasOwnProperty("InspectionReport"))
                 if (!$util.isString(message.InspectionReport))
                     return "InspectionReport: string expected";
-            if (message.DateofInspection != null && message.hasOwnProperty("DateofInspection"))
-                if (!$util.isString(message.DateofInspection))
-                    return "DateofInspection: string expected";
+            if (message.InspectionDate != null && message.hasOwnProperty("InspectionDate"))
+                if (!$util.isString(message.InspectionDate))
+                    return "InspectionDate: string expected";
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 if (!$util.isString(message.InspectorName))
                     return "InspectorName: string expected";
             if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
                 if (!$util.isString(message.FarmersPublicKey))
                     return "FarmersPublicKey: string expected";
+            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
+                if (!$util.isString(message.CropVariety))
+                    return "CropVariety: string expected";
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                if (!$util.isString(message.CropSeason))
+                    return "CropSeason: string expected";
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                if (!$util.isString(message.CropName))
+                    return "CropName: string expected";
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                if (!$util.isString(message.Temperature))
+                    return "Temperature: string expected";
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                if (!$util.isString(message.TemerpatureUnit))
+                    return "TemerpatureUnit: string expected";
+            if (message.Humidity != null && message.hasOwnProperty("Humidity"))
+                if (!$util.isString(message.Humidity))
+                    return "Humidity: string expected";
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                if (!$util.isString(message.HumidityUnit))
+                    return "HumidityUnit: string expected";
             return null;
         };
 
@@ -1586,12 +1727,26 @@ $root.supplyChainPackage = (function() {
             var message = new $root.supplyChainPackage.InspectParameters();
             if (object.InspectionReport != null)
                 message.InspectionReport = String(object.InspectionReport);
-            if (object.DateofInspection != null)
-                message.DateofInspection = String(object.DateofInspection);
+            if (object.InspectionDate != null)
+                message.InspectionDate = String(object.InspectionDate);
             if (object.InspectorName != null)
                 message.InspectorName = String(object.InspectorName);
             if (object.FarmersPublicKey != null)
                 message.FarmersPublicKey = String(object.FarmersPublicKey);
+            if (object.CropVariety != null)
+                message.CropVariety = String(object.CropVariety);
+            if (object.CropSeason != null)
+                message.CropSeason = String(object.CropSeason);
+            if (object.CropName != null)
+                message.CropName = String(object.CropName);
+            if (object.Temperature != null)
+                message.Temperature = String(object.Temperature);
+            if (object.TemerpatureUnit != null)
+                message.TemerpatureUnit = String(object.TemerpatureUnit);
+            if (object.Humidity != null)
+                message.Humidity = String(object.Humidity);
+            if (object.HumidityUnit != null)
+                message.HumidityUnit = String(object.HumidityUnit);
             return message;
         };
 
@@ -1610,18 +1765,39 @@ $root.supplyChainPackage = (function() {
             var object = {};
             if (options.defaults) {
                 object.InspectionReport = "";
-                object.DateofInspection = "";
+                object.InspectionDate = "";
                 object.InspectorName = "";
                 object.FarmersPublicKey = "";
+                object.CropVariety = "";
+                object.CropSeason = "";
+                object.CropName = "";
+                object.Temperature = "";
+                object.TemerpatureUnit = "";
+                object.Humidity = "";
+                object.HumidityUnit = "";
             }
             if (message.InspectionReport != null && message.hasOwnProperty("InspectionReport"))
                 object.InspectionReport = message.InspectionReport;
-            if (message.DateofInspection != null && message.hasOwnProperty("DateofInspection"))
-                object.DateofInspection = message.DateofInspection;
+            if (message.InspectionDate != null && message.hasOwnProperty("InspectionDate"))
+                object.InspectionDate = message.InspectionDate;
             if (message.InspectorName != null && message.hasOwnProperty("InspectorName"))
                 object.InspectorName = message.InspectorName;
             if (message.FarmersPublicKey != null && message.hasOwnProperty("FarmersPublicKey"))
                 object.FarmersPublicKey = message.FarmersPublicKey;
+            if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
+                object.CropVariety = message.CropVariety;
+            if (message.CropSeason != null && message.hasOwnProperty("CropSeason"))
+                object.CropSeason = message.CropSeason;
+            if (message.CropName != null && message.hasOwnProperty("CropName"))
+                object.CropName = message.CropName;
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                object.Temperature = message.Temperature;
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                object.TemerpatureUnit = message.TemerpatureUnit;
+            if (message.Humidity != null && message.hasOwnProperty("Humidity"))
+                object.Humidity = message.Humidity;
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                object.HumidityUnit = message.HumidityUnit;
             return object;
         };
 
@@ -1646,10 +1822,15 @@ $root.supplyChainPackage = (function() {
          * @memberof supplyChainPackage
          * @interface IPerformHarvestParameters
          * @property {string|null} [CropVariety] PerformHarvestParameters CropVariety
-         * @property {string|null} [Temperature] PerformHarvestParameters Temperature
+         * @property {string|null} [CropMeasureCategory] PerformHarvestParameters CropMeasureCategory
+         * @property {string|null} [DateofEnd] PerformHarvestParameters DateofEnd
+         * @property {string|null} [Dateofstart] PerformHarvestParameters Dateofstart
          * @property {string|null} [Humidity] PerformHarvestParameters Humidity
-         * @property {string|null} [Dateofharvest] PerformHarvestParameters Dateofharvest
+         * @property {string|null} [HumidityUnit] PerformHarvestParameters HumidityUnit
          * @property {string|null} [Quantity] PerformHarvestParameters Quantity
+         * @property {string|null} [QuantityUnit] PerformHarvestParameters QuantityUnit
+         * @property {string|null} [TemerpatureUnit] PerformHarvestParameters TemerpatureUnit
+         * @property {string|null} [Temperature] PerformHarvestParameters Temperature
          */
 
         /**
@@ -1676,12 +1857,28 @@ $root.supplyChainPackage = (function() {
         PerformHarvestParameters.prototype.CropVariety = "";
 
         /**
-         * PerformHarvestParameters Temperature.
-         * @member {string} Temperature
+         * PerformHarvestParameters CropMeasureCategory.
+         * @member {string} CropMeasureCategory
          * @memberof supplyChainPackage.PerformHarvestParameters
          * @instance
          */
-        PerformHarvestParameters.prototype.Temperature = "";
+        PerformHarvestParameters.prototype.CropMeasureCategory = "";
+
+        /**
+         * PerformHarvestParameters DateofEnd.
+         * @member {string} DateofEnd
+         * @memberof supplyChainPackage.PerformHarvestParameters
+         * @instance
+         */
+        PerformHarvestParameters.prototype.DateofEnd = "";
+
+        /**
+         * PerformHarvestParameters Dateofstart.
+         * @member {string} Dateofstart
+         * @memberof supplyChainPackage.PerformHarvestParameters
+         * @instance
+         */
+        PerformHarvestParameters.prototype.Dateofstart = "";
 
         /**
          * PerformHarvestParameters Humidity.
@@ -1692,12 +1889,12 @@ $root.supplyChainPackage = (function() {
         PerformHarvestParameters.prototype.Humidity = "";
 
         /**
-         * PerformHarvestParameters Dateofharvest.
-         * @member {string} Dateofharvest
+         * PerformHarvestParameters HumidityUnit.
+         * @member {string} HumidityUnit
          * @memberof supplyChainPackage.PerformHarvestParameters
          * @instance
          */
-        PerformHarvestParameters.prototype.Dateofharvest = "";
+        PerformHarvestParameters.prototype.HumidityUnit = "";
 
         /**
          * PerformHarvestParameters Quantity.
@@ -1706,6 +1903,30 @@ $root.supplyChainPackage = (function() {
          * @instance
          */
         PerformHarvestParameters.prototype.Quantity = "";
+
+        /**
+         * PerformHarvestParameters QuantityUnit.
+         * @member {string} QuantityUnit
+         * @memberof supplyChainPackage.PerformHarvestParameters
+         * @instance
+         */
+        PerformHarvestParameters.prototype.QuantityUnit = "";
+
+        /**
+         * PerformHarvestParameters TemerpatureUnit.
+         * @member {string} TemerpatureUnit
+         * @memberof supplyChainPackage.PerformHarvestParameters
+         * @instance
+         */
+        PerformHarvestParameters.prototype.TemerpatureUnit = "";
+
+        /**
+         * PerformHarvestParameters Temperature.
+         * @member {string} Temperature
+         * @memberof supplyChainPackage.PerformHarvestParameters
+         * @instance
+         */
+        PerformHarvestParameters.prototype.Temperature = "";
 
         /**
          * Creates a new PerformHarvestParameters instance using the specified properties.
@@ -1733,14 +1954,24 @@ $root.supplyChainPackage = (function() {
                 writer = $Writer.create();
             if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
                 writer.uint32(/* id 1, wireType 2 =*/10).string(message.CropVariety);
-            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.Temperature);
+            if (message.CropMeasureCategory != null && message.hasOwnProperty("CropMeasureCategory"))
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.CropMeasureCategory);
+            if (message.DateofEnd != null && message.hasOwnProperty("DateofEnd"))
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.DateofEnd);
+            if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
+                writer.uint32(/* id 4, wireType 2 =*/34).string(message.Dateofstart);
             if (message.Humidity != null && message.hasOwnProperty("Humidity"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.Humidity);
-            if (message.Dateofharvest != null && message.hasOwnProperty("Dateofharvest"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.Dateofharvest);
+                writer.uint32(/* id 5, wireType 2 =*/42).string(message.Humidity);
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                writer.uint32(/* id 6, wireType 2 =*/50).string(message.HumidityUnit);
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
-                writer.uint32(/* id 5, wireType 2 =*/42).string(message.Quantity);
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.Quantity);
+            if (message.QuantityUnit != null && message.hasOwnProperty("QuantityUnit"))
+                writer.uint32(/* id 8, wireType 2 =*/66).string(message.QuantityUnit);
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                writer.uint32(/* id 9, wireType 2 =*/74).string(message.TemerpatureUnit);
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                writer.uint32(/* id 10, wireType 2 =*/82).string(message.Temperature);
             return writer;
         };
 
@@ -1779,16 +2010,31 @@ $root.supplyChainPackage = (function() {
                     message.CropVariety = reader.string();
                     break;
                 case 2:
-                    message.Temperature = reader.string();
+                    message.CropMeasureCategory = reader.string();
                     break;
                 case 3:
-                    message.Humidity = reader.string();
+                    message.DateofEnd = reader.string();
                     break;
                 case 4:
-                    message.Dateofharvest = reader.string();
+                    message.Dateofstart = reader.string();
                     break;
                 case 5:
+                    message.Humidity = reader.string();
+                    break;
+                case 6:
+                    message.HumidityUnit = reader.string();
+                    break;
+                case 7:
                     message.Quantity = reader.string();
+                    break;
+                case 8:
+                    message.QuantityUnit = reader.string();
+                    break;
+                case 9:
+                    message.TemerpatureUnit = reader.string();
+                    break;
+                case 10:
+                    message.Temperature = reader.string();
                     break;
                 default:
                     reader.skipType(tag & 7);
@@ -1828,18 +2074,33 @@ $root.supplyChainPackage = (function() {
             if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
                 if (!$util.isString(message.CropVariety))
                     return "CropVariety: string expected";
-            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
-                if (!$util.isString(message.Temperature))
-                    return "Temperature: string expected";
+            if (message.CropMeasureCategory != null && message.hasOwnProperty("CropMeasureCategory"))
+                if (!$util.isString(message.CropMeasureCategory))
+                    return "CropMeasureCategory: string expected";
+            if (message.DateofEnd != null && message.hasOwnProperty("DateofEnd"))
+                if (!$util.isString(message.DateofEnd))
+                    return "DateofEnd: string expected";
+            if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
+                if (!$util.isString(message.Dateofstart))
+                    return "Dateofstart: string expected";
             if (message.Humidity != null && message.hasOwnProperty("Humidity"))
                 if (!$util.isString(message.Humidity))
                     return "Humidity: string expected";
-            if (message.Dateofharvest != null && message.hasOwnProperty("Dateofharvest"))
-                if (!$util.isString(message.Dateofharvest))
-                    return "Dateofharvest: string expected";
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                if (!$util.isString(message.HumidityUnit))
+                    return "HumidityUnit: string expected";
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 if (!$util.isString(message.Quantity))
                     return "Quantity: string expected";
+            if (message.QuantityUnit != null && message.hasOwnProperty("QuantityUnit"))
+                if (!$util.isString(message.QuantityUnit))
+                    return "QuantityUnit: string expected";
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                if (!$util.isString(message.TemerpatureUnit))
+                    return "TemerpatureUnit: string expected";
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                if (!$util.isString(message.Temperature))
+                    return "Temperature: string expected";
             return null;
         };
 
@@ -1857,14 +2118,24 @@ $root.supplyChainPackage = (function() {
             var message = new $root.supplyChainPackage.PerformHarvestParameters();
             if (object.CropVariety != null)
                 message.CropVariety = String(object.CropVariety);
-            if (object.Temperature != null)
-                message.Temperature = String(object.Temperature);
+            if (object.CropMeasureCategory != null)
+                message.CropMeasureCategory = String(object.CropMeasureCategory);
+            if (object.DateofEnd != null)
+                message.DateofEnd = String(object.DateofEnd);
+            if (object.Dateofstart != null)
+                message.Dateofstart = String(object.Dateofstart);
             if (object.Humidity != null)
                 message.Humidity = String(object.Humidity);
-            if (object.Dateofharvest != null)
-                message.Dateofharvest = String(object.Dateofharvest);
+            if (object.HumidityUnit != null)
+                message.HumidityUnit = String(object.HumidityUnit);
             if (object.Quantity != null)
                 message.Quantity = String(object.Quantity);
+            if (object.QuantityUnit != null)
+                message.QuantityUnit = String(object.QuantityUnit);
+            if (object.TemerpatureUnit != null)
+                message.TemerpatureUnit = String(object.TemerpatureUnit);
+            if (object.Temperature != null)
+                message.Temperature = String(object.Temperature);
             return message;
         };
 
@@ -1883,21 +2154,36 @@ $root.supplyChainPackage = (function() {
             var object = {};
             if (options.defaults) {
                 object.CropVariety = "";
-                object.Temperature = "";
+                object.CropMeasureCategory = "";
+                object.DateofEnd = "";
+                object.Dateofstart = "";
                 object.Humidity = "";
-                object.Dateofharvest = "";
+                object.HumidityUnit = "";
                 object.Quantity = "";
+                object.QuantityUnit = "";
+                object.TemerpatureUnit = "";
+                object.Temperature = "";
             }
             if (message.CropVariety != null && message.hasOwnProperty("CropVariety"))
                 object.CropVariety = message.CropVariety;
-            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
-                object.Temperature = message.Temperature;
+            if (message.CropMeasureCategory != null && message.hasOwnProperty("CropMeasureCategory"))
+                object.CropMeasureCategory = message.CropMeasureCategory;
+            if (message.DateofEnd != null && message.hasOwnProperty("DateofEnd"))
+                object.DateofEnd = message.DateofEnd;
+            if (message.Dateofstart != null && message.hasOwnProperty("Dateofstart"))
+                object.Dateofstart = message.Dateofstart;
             if (message.Humidity != null && message.hasOwnProperty("Humidity"))
                 object.Humidity = message.Humidity;
-            if (message.Dateofharvest != null && message.hasOwnProperty("Dateofharvest"))
-                object.Dateofharvest = message.Dateofharvest;
+            if (message.HumidityUnit != null && message.hasOwnProperty("HumidityUnit"))
+                object.HumidityUnit = message.HumidityUnit;
             if (message.Quantity != null && message.hasOwnProperty("Quantity"))
                 object.Quantity = message.Quantity;
+            if (message.QuantityUnit != null && message.hasOwnProperty("QuantityUnit"))
+                object.QuantityUnit = message.QuantityUnit;
+            if (message.TemerpatureUnit != null && message.hasOwnProperty("TemerpatureUnit"))
+                object.TemerpatureUnit = message.TemerpatureUnit;
+            if (message.Temperature != null && message.hasOwnProperty("Temperature"))
+                object.Temperature = message.Temperature;
             return object;
         };
 

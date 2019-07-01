@@ -62,18 +62,26 @@
             <div class="outer">
                 <h2>Cultivation Details</h2>
             </div>
+
             <div class="grid">
                 <ul class="custom-list">
-                    <li class="heading-text">Crop Variety</li>
+                    <li class="heading-text">Crop Name</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{crop.CropVariety}}</li>
+                    <li class="details-text">{{details.CropName}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Season</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropSeason}}</li>
                     <li class="clear-float"></li>
                 </ul>
 
                 <ul class="custom-list">
                     <li class="heading-text">Start of Date</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{crop.Dateofstart}}</li>
+                    <li class="details-text">{{details.Dateofstart | date}} </li>
                     <li class="clear-float"></li>
                 </ul>
             </div>
@@ -95,21 +103,53 @@
 
                     <li class="heading-text">Temperature</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.Temperature}}</li>
+                    <li class="details-text">{{details.Temperature}} {{details.TemperatureUnit}}</li>
+                    <li class="clear-float"></li>
+
+                </ul>
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Variety</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">CropMeasureCategory</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropMeasureCategory}}</li>
+                    <li class="clear-float"></li>
+
+                </ul>
+                <ul class="custom-list">
+                    <li class="heading-text">Dateof End</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.DateofEnd}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Dateof start</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="clear-float"></li>
+
+                </ul>
+                <ul class="custom-list">
+                    <li class="heading-text">Humidity</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.Humidity}} {{details.HumidityUnit}}</li>
+                    <li class="clear-float"></li>
+
+                    <li class="heading-text">Quantity</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.Quantity}} {{details.QuantityUnit}}</li>
                     <li class="clear-float"></li>
 
                 </ul>
 
                 <ul class="custom-list">
-                    <li class="heading-text">Humidity</li>
+                    <li class="heading-text">Temperature</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.Humidity}}</li>
+                    <li class="details-text">{{details.Temperature}} {{details.TemperatureUnit}}</li>
                     <li class="clear-float"></li>
 
-                    <li class="heading-text">Dateofharvest</li>
-                    <li class="seperator">:</li>
-                    <li class="details-text">{{details.Dateofharvest}}</li>
-                    <li class="clear-float"></li>
                 </ul>
 
             </div>

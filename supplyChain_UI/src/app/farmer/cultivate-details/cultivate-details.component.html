@@ -65,16 +65,23 @@
 
             <div class="grid">
                 <ul class="custom-list">
-                    <li class="heading-text">Crop Variety</li>
+                    <li class="heading-text">Crop Name</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="details-text">{{details.CropName}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Season</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropSeason}}</li>
                     <li class="clear-float"></li>
                 </ul>
 
                 <ul class="custom-list">
                     <li class="heading-text">Start of Date</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.Dateofstart}}</li>
+                    <li class="details-text">{{details.Dateofstart| date}} </li>
                     <li class="clear-float"></li>
                 </ul>
                 <button mat-mini-fab color="primary" matTooltip="back" [routerLink]="['/farmer']" routerLinkActive="active"><i class="material-icons">

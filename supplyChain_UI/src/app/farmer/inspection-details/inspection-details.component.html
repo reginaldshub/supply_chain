@@ -91,24 +91,48 @@
             <ul class="custom-list">
                 <li class="heading-text">Date of Inspection</li>
                 <li class="seperator">:</li>
-                <li class="details-text">{{det.DateofInspection}}</li>
+                <li class="details-text">{{det.InspectionDate | date}}</li>
                 <li class="clear-float"></li>
 
                 <li class="heading-text">InspectorName</li>
                 <li class="seperator">:</li>
                 <li class="details-text">{{det.InspectorName}}</li>
                 <li class="clear-float"></li>
-            </ul>
 
+                <li class="heading-text">CropVariety</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.CropVariety}}</li>
+                <li class="clear-float"></li>
+
+                <li class="heading-text">CropSeason</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.CropSeason}}</li>
+                <li class="clear-float"></li>
+
+                <li class="heading-text">CropName</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.CropName}}</li>
+                <li class="clear-float"></li>
+
+                <li class="heading-text">Temperature</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.Temperature}} {{det.TemerpatureUnit }} </li>
+                <li class="clear-float"></li>
+
+                <li class="heading-text">Humidity</li>
+                <li class="seperator">:</li>
+                <li class="details-text">{{det.Humidity}} {{det.HumidityUnit}}</li>
+                <li class="clear-float"></li>
+            </ul>
 
             <ul class="custom-list">
                 <li class="heading-text">InspectionReport</li>
                 <li class="seperator">:</li>
                 <li class="details-text">{{det.InspectionReport}}</li>
                 <li class="clear-float"></li>
+
             </ul>
-            <br/>
-            <br />
+            <br /><br /><br />
         </div>
     </div>
 </div>

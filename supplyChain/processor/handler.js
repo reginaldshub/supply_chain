@@ -23,84 +23,52 @@ class SupplyChainHandler extends TransactionHandler {
         console.log("payload", payload);
 
         if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
-            let newLandRegistrationPayload = payload.landRegistration;
-            console.log("newLandRegistrationPayload", newLandRegistrationPayload);
+            console.log("newLandRegistrationPayload", payload.landRegistration);
             return land_registration(
                 state,
-                newLandRegistrationPayload.addressparameters.RegistrationNo,
-                newLandRegistrationPayload.addressparameters.FarmerName,
-                newLandRegistrationPayload.landregistrationparameters.FarmAddress,
-                newLandRegistrationPayload.landregistrationparameters.State,
-                newLandRegistrationPayload.landregistrationparameters.Country,
-                newLandRegistrationPayload.landregistrationparameters.ExporterName,
-                newLandRegistrationPayload.landregistrationparameters.ImporterName,
-                newLandRegistrationPayload.landregistrationparameters.DateOfRegistration,
+                payload.landRegistration.addressparameters,
+                payload.landRegistration.landregistrationparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
-            let newStartCultivationPayload = payload.startCultivation;
-            console.log("newStartCultivationPayload", newStartCultivationPayload);
+            console.log("newStartCultivationPayload", payload.startCultivation);
             return start_cultivation(
                 state,
-                newStartCultivationPayload.addressparameters.RegistrationNo,
-                newStartCultivationPayload.startcultivationparameters.CropVariety,
-                newStartCultivationPayload.startcultivationparameters.Dateofstart,
-                newStartCultivationPayload.addressparameters.FarmerName,
+                payload.startCultivation.addressparameters,
+                payload.startCultivation.startcultivationparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST) {
-            let newPerformHarvestPayload = payload.performHarvest;
-            console.log("newPerformHarvestPayload", newPerformHarvestPayload);
+            console.log("newPerformHarvestPayload", payload.performHarvest);
             return start_harvest(
                 state,
-                newPerformHarvestPayload.addressparameters.RegistrationNo,
-                newPerformHarvestPayload.addressparameters.FarmerName,
-                newPerformHarvestPayload.performharvestparameters.CropVariety,
-                newPerformHarvestPayload.performharvestparameters.Temperature,
-                newPerformHarvestPayload.performharvestparameters.Humidity,
-                newPerformHarvestPayload.performharvestparameters.Dateofharvest,
-                newPerformHarvestPayload.performharvestparameters.Quantity,
+                payload.performHarvest.addressparameters,
+                payload.performHarvest.performharvestparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
-            let newInspectionPayload = payload.inspection;
             return inspect_land(
                 state,
-                newInspectionPayload.inspectparameters.InspectionReport,
-                newInspectionPayload.inspectparameters.DateofInspection,
-                newInspectionPayload.addressparameters.RegistrationNo,
-                newInspectionPayload.inspectparameters.InspectorName,
-                newInspectionPayload.addressparameters.FarmerName,
-                newInspectionPayload.inspectparameters.FarmersPublicKey,
-                this.signer_public_keys
+                payload.inspection.addressparameters,
+                payload.inspection.inspectparameters,
+                this.signer_public_keys,
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
-            let newCreatePackagePayload = payload.createPackage;
             return create_package(
                 state,
-                newCreatePackagePayload.createpackageparameters.Quantity,
-                newCreatePackagePayload.createpackageparameters.RostingDuration,
-                newCreatePackagePayload.createpackageparameters.PackageDateTime,
-                newCreatePackagePayload.createpackageparameters.Temperature,
-                newCreatePackagePayload.createpackageparameters.InternalBatchNo,
-                newCreatePackagePayload.createpackageparameters.ProcessorName,
-                newCreatePackagePayload.createpackageparameters.processorAddress,
+                payload.createPackage.createpackageparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
-            let newUpdateProcessDetailsPayload = payload.updateProcessDetails;
             return update_processDetails(
                 state,
-                newUpdateProcessDetailsPayload.updateprocessdetailsparameters.setPrice,
-                newUpdateProcessDetailsPayload.updateprocessdetailsparameters.ProcessorName,
+                payload.updateProcessDetails.updateprocessdetailsparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
-            let newTransferPackagePayload = payload.transferPackage;
             return transfer_package(
                 state,
-                newTransferPackagePayload.transferpackageparameters.retailAgentPublicKey,
-                newTransferPackagePayload.transferpackageparameters.internalBatchNo,
+                payload.transferPackage.transferpackageparameters,
                 this.signer_public_keys
             );
         } else {

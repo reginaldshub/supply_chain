@@ -1,0 +1,77 @@
+<app-header></app-header>
+<div class="grid">
+    <div></div>
+    <mat-card>
+        <div class="outer">
+            <h2>Inspection Report</h2>
+        </div>
+        <form [formGroup]="InspectionReport" (submit)="onSubmit()">
+            <mat-form-field>
+                <input formControlName="CropName" matInput placeholder="Crop Name">
+                <mat-error>Crop Name is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="CropVariety" matInput placeholder="Crop Variety">
+                <mat-error>Crop Variety is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Season</mat-label>
+                <mat-select [(ngModel)]="cropseason" name="CropSeasons" formControlName="CropSeason">
+                    <mat-option *ngFor="let season of CropSeasons" [value]="season.value">
+                        {{season.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>Crop Season is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="InspectionDate" matInput placeholder="Inspection Date">
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="Temperature" matInput placeholder="Temperature">
+                <mat-error>Temperature is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Temerpature Unit</mat-label>
+                <mat-select matNativeControl [(ngModel)]="tempunit" name="TemerpatureUnits" formControlName="TemerpatureUnit" (ngModelChange)="TemperatureValidator(tempunit)">
+                    <mat-option *ngFor="let unit of TemerpatureUnits" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>TemerpatureUnit is required.</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input formControlName="Humidity" matInput placeholder="Humidity">
+                <mat-error>Humidity is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>HumidityUnit</mat-label>
+                <mat-select [(ngModel)]="humidityunit" name="HumidityUnits" formControlName="HumidityUnit">
+                    <mat-option *ngFor="let unit of HumidityUnits" [value]="unit.value">
+                        {{unit.viewValue}}
+                    </mat-option>
+                </mat-select>
+                <mat-error>HumidityUnit is required.</mat-error>
+            </mat-form-field>
+
+            <button mat-mini-fab color="primary" matTooltip="back" (click)="backtoinspection()"><i class="material-icons">
+              arrow_back
+              </i></button>
+            <br />
+
+            <!-- RegistrationNo inspector_name inspection_details -->
+            <div class="end">
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="InspectionReport.invalid">Submit</button>
+            </div>
+        </form>
+
+    </mat-card>
+    <div></div>
+</div>
