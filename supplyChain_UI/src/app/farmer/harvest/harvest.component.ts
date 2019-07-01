@@ -16,7 +16,7 @@ export interface UnitsInterface {
   styleUrls: ['./harvest.component.css']
 })
 export class HarvestComponent implements OnInit {
-
+  quantitytyunit;
   harvest: FormGroup;
   id: number;
   details;
@@ -37,7 +37,7 @@ export class HarvestComponent implements OnInit {
         this.details = res.cultivationDetails;
         console.log(this.details);
       })
-    });
+ });
 
     this.harvest = this.formBuilder.group({
       CropVariety: ['',[ Validators.required, Validators.maxLength(10), Validators.pattern('^[a-zA-Z\']+$') ] ],
@@ -67,6 +67,23 @@ export class HarvestComponent implements OnInit {
         TemperatureControl.updateValueAndValidity();
       });
 
+
+      const CropMeasureCategoryControl = this.harvest.get('Temperature');
+      this.harvest.get('CropMeasureCategory').valueChanges
+      .subscribe(CropMeasureCategory => {
+
+        if (CropMeasureCategory == 'Solid') {
+          this.quantitytyunit = 'Kilograms';
+          // CropMeasureCategoryControl.setValidators([Validators.required, Validators.pattern('^[+-][0-9]?[0-9]?$')]);
+        }
+
+        if (CropMeasureCategory == 'Liquid') {
+          this.quantitytyunit = 'litres';
+          // CropMeasureCategoryControl.setValidators([Validators.required, Validators.pattern('^[+-][0-9]?[0-9]?[0-9]?$')]);
+        }
+        CropMeasureCategoryControl.updateValueAndValidity();
+      });
+
   }
 
   onSubmit() {
@@ -93,9 +110,9 @@ export class HarvestComponent implements OnInit {
 
 
   CropMeasureCategories: UnitsInterface[] = [
-    { value: 'solid', viewValue: 'Solid' },
-    { value: 'liquid', viewValue: 'Liquid' },
-    { value: 'gas', viewValue: 'Gaseous' }
+    { value: 'Solid', viewValue: 'Solid' },
+    { value: 'Liquid', viewValue: 'Liquid' },
+    // { value: 'Gaseous', viewValue: 'Gaseous' }
   ];
 
   HumidityUnits: UnitsInterface[] = [
@@ -103,8 +120,8 @@ export class HarvestComponent implements OnInit {
   ];
 
   QuantityUnits: UnitsInterface[] = [
-    { value: 'kg', viewValue: 'Kilo grams' },
-    { value: 'lts', viewValue: 'litres' }
+    { value: 'Kilograms', viewValue: 'Kilograms' },
+    { value: 'litres', viewValue: 'litres' }
   ];
 
   reset() {

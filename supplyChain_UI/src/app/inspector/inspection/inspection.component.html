@@ -63,9 +63,15 @@
 
             <div class="grid">
                 <ul class="custom-list">
-                    <li class="heading-text">Crop Variety</li>
+                    <li class="heading-text">Crop Name</li>
                     <li class="seperator">:</li>
-                    <li class="details-text">{{details.CropVariety}}</li>
+                    <li class="details-text">{{details.CropName}}</li>
+                    <li class="clear-float"></li>
+                </ul>
+                <ul class="custom-list">
+                    <li class="heading-text">Crop Season</li>
+                    <li class="seperator">:</li>
+                    <li class="details-text">{{details.CropSeason}}</li>
                     <li class="clear-float"></li>
                 </ul>
 
@@ -91,7 +97,7 @@
             <ul class="custom-list">
                 <li class="heading-text">Date of Inspection</li>
                 <li class="seperator">:</li>
-                <li class="details-text">{{det.DateofInspection | date}}</li>
+                <li class="details-text">{{det.InspectionDate | date}}</li>
                 <li class="clear-float"></li>
 
                 <li class="heading-text">InspectorName</li>
