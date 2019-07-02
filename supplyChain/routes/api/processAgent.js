@@ -33,34 +33,35 @@ router.get("/getLandsForProcessAgent", function(req, res, next) {
  */
 router.post("/createPackage", function(req, res, next) {
     console.log(req.body)
+    let processDetails = req.body.process_details;
     var payload = {
-        quantity: req.body.quantity,
-        rostingDuration: req.body.rostingDuration,
-        packageDateTime: new Date(),
-        temperature: req.body.temperature,
-        internalBatchNo: req.body.internalBatchNo,
-        processorName: req.body.processorName,
-        processorAddress: req.body.processorAddress,
-        lands: req.body.lands,
-        email: req.body.email,
+        Quantity: processDetails.processQuantity,
+        RostingDuration: processDetails.ProcessDuration,
+        PackageDateTime: new Date(),
+        Temperature: processDetails.temperature,
+        internalBatchNo: processDetails.internalBatchNo,
+        processorName: processDetails.processorName,
+        processorAddress: processDetails.processorAddress,
+        lands: processDetails.lands,
+        email: processDetails.email,
         verb: "createPackage"
     };
-    if (keyManager.doesKeyExist(req.body.email)) {
-        Process.findOne({ internalBatchNo: req.body.internalBatchNo }, (err, package) => {
+    if (keyManager.doesKeyExist(processDetails.email)) {
+        Process.findOne({ internalBatchNo: processDetails.internalBatchNo }, (err, package) => {
             if (err) throw err;
             else if (package == null) {
-                if ((batchlistBytes = prepareTransactions(payload, req.body.email))) {
+                if ((batchlistBytes = prepareTransactions(payload, processDetails.email))) {
                     SubmitToServer(batchlistBytes).then(respo => {
                         var savepayload = new Process({
-                            quantity: req.body.quantity,
-                            rostingDuration: req.body.rostingDuration,
+                            quantity: processDetails.processQuantity,
+                            rostingDuration: processDetails.ProcessDuration,
                             packageDateTime: new Date(),
-                            temperature: req.body.temperature,
-                            internalBatchNo: req.body.internalBatchNo,
-                            processorName: req.body.processorName,
-                            processorAddress: req.body.processorAddress,
-                            lands: req.body.lands,
-                            ProcessAgentEmail: req.body.email,
+                            temperature: processDetails.processorTemperature,
+                            internalBatchNo: processDetails.internalBatchNo,
+                            processorName: processDetails.processorName,
+                            processorAddress: processDetails.processorAddress,
+                            lands: processDetails.lands,
+                            ProcessAgentEmail: processDetails.email,
                         });
                         savepayload.save().then(function(doc) {
                             res.status(200).json({ status: respo });

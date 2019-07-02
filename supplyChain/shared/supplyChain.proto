@@ -122,7 +122,6 @@ message CreatePackageParams {
 	PackageData createpackageparameters = 1;
 }
 
-
 message UpdatePackageParams{
 	PackageData package_details = 1;
 	int32 set_price = 2;
@@ -133,13 +132,3 @@ PackageData package_details = 1;
 string retail_agent_public_key = 2;
 int32 internal_batch_no = 3;
 }
-
-
-// message UpdatePackageParams{
-// 	UpdateProcessDetailsParameters updateprocessdetailsparameters = 1;
-// }
-
-// message TransferPackageParams {
-// 	TransferPackageParameters transferpackageparameters = 1;
-// }
-

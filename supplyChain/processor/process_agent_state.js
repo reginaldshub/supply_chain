@@ -6,17 +6,8 @@ const decode = buf => JSON.parse(buf);
 create_package = (state, createpackageparameters, process_agents_public_keys) => {
     let address = get_process_address(process_agents_public_keys)
     console.log("address", address);
-    let process_data = {
-        Quantity: createpackageparameters.Quantity,
-        RostingDuration: createpackageparameters.RostingDuration,
-        PackageDateTime: createpackageparameters.PackageDateTime,
-        Temperature: createpackageparameters.Temperature,
-        InternalBatchNo: createpackageparameters.InternalBatchNo,
-        ProcessorName: createpackageparameters.ProcessorName,
-        processorAddress: createpackageparameters.processorAddress,
-    }
     return state.setState({
-        [address]: encode({ process_data, process_agents_public_keys })
+        [address]: encode({ createpackageparameters, process_agents_public_keys })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {

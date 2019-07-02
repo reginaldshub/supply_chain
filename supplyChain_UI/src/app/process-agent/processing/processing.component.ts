@@ -63,8 +63,8 @@ onSubmit(){
   }
   console.log(processData);
   this.service.process(processData).subscribe((res:any)=>{  
-  //   console.log(res);
-  // this.route.navigate(['processedDashboard']);
+    console.log(res);
+  this.route.navigate(['processedDashboard']);
   })
 }
 

@@ -101,10 +101,10 @@ function protobuff(payload) {
         var CreatePackageMessage = protos.supplyChainPackage.CreatePackageParams.create();
 
         CreatePackageMessage.createpackageparameters = protos.supplyChainPackage.PackageData.create()
-        CreatePackageMessage.createpackageparameters.Quantity = payload.quantity
-        CreatePackageMessage.createpackageparameters.RostingDuration = payload.rostingDuration
-        CreatePackageMessage.createpackageparameters.PackageDateTime = payload.packageDateTime
-        CreatePackageMessage.createpackageparameters.Temperature = payload.temperature
+        CreatePackageMessage.createpackageparameters.Quantity = payload.Quantity
+        CreatePackageMessage.createpackageparameters.RostingDuration = payload.RostingDuration
+        CreatePackageMessage.createpackageparameters.PackageDateTime = payload.PackageDateTime
+        CreatePackageMessage.createpackageparameters.Temperature = payload.Temperature
         CreatePackageMessage.createpackageparameters.InternalBatchNo = payload.internalBatchNo
         CreatePackageMessage.createpackageparameters.ProcessorName = payload.processorName
         CreatePackageMessage.createpackageparameters.processorAddress = payload.processorAddress
