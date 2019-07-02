@@ -10,6 +10,12 @@ land_registration = (state, addressparameters, landregistrationparameters, farme
     let land_data = {
         RegistrationNo: addressparameters.RegistrationNo,
         FarmerName: addressparameters.FarmerName,
+        FarmAddress: addressparameters.FarmAddress,
+        State: addressparameters.State,
+        panchayat: addressparameters.panchayat,
+        landSurveyNumber: addressparameters.landSurveyNumber,
+        ownerName: addressparameters.ownerName,
+        landID: addressparameters.landID,
         FarmAddress: landregistrationparameters.FarmAddress,
         State: landregistrationparameters.State,
         Country: landregistrationparameters.Country,

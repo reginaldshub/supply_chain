@@ -18,20 +18,31 @@ message PayLoad{
     PerformHarvestParams perform_harvest = 5;
     CreatePackageParams create_package = 6;  //Process Agent
 	TransferPackageParams transfer_package = 7;  //Retail Agent
-	UpdateProcessDetailsParams updateProcessDetails = 8;
+	UpdatePackageParams updateProcessDetails = 8;
 }
 
-message AddressParams{
-	string Registration_no = 1;
-	string Farmer_name = 2;
+message Land{
+    string Farmer_name = 1;
+    string Farm_address = 2;
+    string State = 3;
+    string panchayat = 4;
+    string land_survey_number = 5;
+    string owner_name = 6;
+	int32  land_iD = 7;
+	string Registration_no = 8;
 }
 
-message LandRegistrationParameters{
+// message Address{
+// 	string Registration_no = 1;
+// 	string Farmer_name = 2;
+// }
+
+message LandRegistration{
 	string Farm_address = 1; 
-	string State = 2; 
-	string Country = 3; 
+	string State = 2;
+	string Country = 3;
 	string Exporter_name = 4;
-	string Importer_name = 5; 
+	string Importer_name = 5;
 	string Dateof_registration = 6;
 }
 
@@ -40,12 +51,12 @@ message TransferPackageParameters {
 	int32 internal_batch_no = 2;
 }
 
-message StartCultivationParameters {
+message CultivationData {
 	string Crop_name = 1;
 	string Crop_season = 2;
 	string Dateofstart = 3;
 }
-message InspectParameters {
+message InspectionData {
 	string Inspection_report = 1;
 	string Inspection_date = 2;
 	string Inspector_name = 3;
@@ -59,7 +70,7 @@ message InspectParameters {
 	string Humidity_unit = 11;
 }
 
-message PerformHarvestParameters {
+message HarvestData {
 	string Crop_variety = 1;
 	string Crop_measure_category = 2;
 	string Dateof_end = 3;
@@ -72,7 +83,7 @@ message PerformHarvestParameters {
 	string Temperature = 10;
 }
 
-message CreatePackageParameters {
+message PackageData {
 	int32 Quantity = 1;
 	string Rosting_duration = 2;
 	string Package_date_time = 3;
@@ -88,33 +99,47 @@ message UpdateProcessDetailsParameters{
 }
 
 message LandRegistrationParams {
-	LandRegistrationParameters landregistrationparameters = 1;
-	AddressParams addressparameters = 2;
+	LandRegistration landregistrationparameters = 1;
+	Land land = 2;
 }
 
 message StartCultivationParams {
-	StartCultivationParameters startcultivationparameters = 1;
-	AddressParams addressparameters = 2;
+	CultivationData startcultivationparameters = 1;
+	Land land = 2;
 }
 
 message InspectParams {
-	InspectParameters inspectparameters = 1;
-	AddressParams addressparameters = 2;
+	InspectionData inspectparameters = 1;
+	Land land = 2;
 }
 
 message PerformHarvestParams {
-	PerformHarvestParameters performharvestparameters = 1;
-	AddressParams addressparameters = 2; 
+	HarvestData performharvestparameters = 1;
+	Land land = 2; 
 }
 
 message CreatePackageParams {
-	CreatePackageParameters createpackageparameters = 1;
+	PackageData createpackageparameters = 1;
 }
 
-message UpdateProcessDetailsParams{
-	UpdateProcessDetailsParameters updateprocessdetailsparameters = 1;
+
+message UpdatePackageParams{
+	PackageData package_details = 1;
+	int32 set_price = 2;
 }
 
 message TransferPackageParams {
-	TransferPackageParameters transferpackageparameters = 1;
+PackageData package_details = 1;
+string retail_agent_public_key = 2;
+int32 internal_batch_no = 3;
 }
+
+
+// message UpdatePackageParams{
+// 	UpdateProcessDetailsParameters updateprocessdetailsparameters = 1;
+// }
+
+// message TransferPackageParams {
+// 	TransferPackageParameters transferpackageparameters = 1;
+// }
+

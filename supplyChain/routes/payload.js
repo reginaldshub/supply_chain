@@ -5,11 +5,17 @@ function protobuff(payload) {
     console.log("payload", payload)
     if (payload.verb == 'landregistration') {
         var landRegistrationMessage = protos.supplyChainPackage.LandRegistrationParams.create()
-        landRegistrationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        landRegistrationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        landRegistrationMessage.addressparameters.FarmerName = payload.FarmerName
+        landRegistrationMessage.land = protos.supplyChainPackage.Land.create()
+        landRegistrationMessage.land.RegistrationNo = payload.RegistrationNo
+        landRegistrationMessage.land.FarmerName = payload.FarmerName
+        landRegistrationMessage.land.FarmAddress = payload.FarmAddress
+        landRegistrationMessage.land.State = payload.State
+        landRegistrationMessage.land.panchayat = payload.panchayat
+        landRegistrationMessage.land.landSurveyNumber = payload.landSurveyNumber
+        landRegistrationMessage.land.ownerName = payload.State
+        landRegistrationMessage.land.landID = payload.landID
 
-        landRegistrationMessage.landregistrationparameters = protos.supplyChainPackage.LandRegistrationParameters.create()
+        landRegistrationMessage.landregistrationparameters = protos.supplyChainPackage.LandRegistration.create()
         landRegistrationMessage.landregistrationparameters.FarmAddress = payload.FarmAddress
         landRegistrationMessage.landregistrationparameters.State = payload.State
         landRegistrationMessage.landregistrationparameters.Country = payload.Country
@@ -26,14 +32,14 @@ function protobuff(payload) {
     } else if (payload.verb == 'startcultivation') {
         var startCultivationMessage = protos.supplyChainPackage.StartCultivationParams.create()
 
-        startCultivationMessage.startcultivationparameters = protos.supplyChainPackage.StartCultivationParameters.create()
+        startCultivationMessage.startcultivationparameters = protos.supplyChainPackage.CultivationData.create()
         startCultivationMessage.startcultivationparameters.CropName = payload.CropName
         startCultivationMessage.startcultivationparameters.CropSeason = payload.CropSeason
         startCultivationMessage.startcultivationparameters.Dateofstart = payload.Dateofstart
 
-        startCultivationMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        startCultivationMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        startCultivationMessage.addressparameters.FarmerName = payload.FarmerName
+        startCultivationMessage.land = protos.supplyChainPackage.Land.create()
+        startCultivationMessage.land.RegistrationNo = payload.RegistrationNo
+        startCultivationMessage.land.FarmerName = payload.FarmerName
 
         let payloadInstance = protos.supplyChainPackage.PayLoad.create()
         payloadInstance.action = protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION;
@@ -42,11 +48,11 @@ function protobuff(payload) {
         return payloadInstance;
     } else if (payload.verb == 'performharvest') {
         var performHarvestMessage = protos.supplyChainPackage.PerformHarvestParams.create()
-        performHarvestMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        performHarvestMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        performHarvestMessage.addressparameters.FarmerName = payload.FarmerName
+        performHarvestMessage.land = protos.supplyChainPackage.Land.create()
+        performHarvestMessage.land.RegistrationNo = payload.RegistrationNo
+        performHarvestMessage.land.FarmerName = payload.FarmerName
 
-        performHarvestMessage.performharvestparameters = protos.supplyChainPackage.PerformHarvestParameters.create()
+        performHarvestMessage.performharvestparameters = protos.supplyChainPackage.HarvestData.create()
 
         performHarvestMessage.performharvestparameters.CropVariety = payload.CropVariety
         performHarvestMessage.performharvestparameters.CropMeasureCategory = payload.CropMeasureCategory
@@ -67,11 +73,11 @@ function protobuff(payload) {
 
     } else if (payload.verb == 'landInspection') {
         var InspectMessage = protos.supplyChainPackage.InspectParams.create();
-        InspectMessage.addressparameters = protos.supplyChainPackage.AddressParams.create()
-        InspectMessage.addressparameters.RegistrationNo = payload.RegistrationNo
-        InspectMessage.addressparameters.FarmerName = payload.FarmerName
+        InspectMessage.land = protos.supplyChainPackage.Land.create()
+        InspectMessage.land.RegistrationNo = payload.RegistrationNo
+        InspectMessage.land.FarmerName = payload.FarmerName
 
-        InspectMessage.inspectparameters = protos.supplyChainPackage.InspectParameters.create()
+        InspectMessage.inspectparameters = protos.supplyChainPackage.InspectionData.create()
         InspectMessage.inspectparameters.InspectionReport = payload.InspectionReport
         InspectMessage.inspectparameters.InspectorName = payload.InspectorName
         InspectMessage.inspectparameters.FarmersPublicKey = payload.FarmersPublicKey
@@ -94,7 +100,7 @@ function protobuff(payload) {
 
         var CreatePackageMessage = protos.supplyChainPackage.CreatePackageParams.create();
 
-        CreatePackageMessage.createpackageparameters = protos.supplyChainPackage.CreatePackageParameters.create()
+        CreatePackageMessage.createpackageparameters = protos.supplyChainPackage.PackageData.create()
         CreatePackageMessage.createpackageparameters.Quantity = payload.quantity
         CreatePackageMessage.createpackageparameters.RostingDuration = payload.rostingDuration
         CreatePackageMessage.createpackageparameters.PackageDateTime = payload.packageDateTime
@@ -111,7 +117,7 @@ function protobuff(payload) {
 
     } else if (payload.verb == 'updateProcessDetails') {
 
-        var updateProcessDetailsMessage = protos.supplyChainPackage.UpdateProcessDetailsParams.create();
+        var updateProcessDetailsMessage = protos.supplyChainPackage.UpdatePackageParams.create();
 
         updateProcessDetailsMessage.updateprocessdetailsparameters = protos.supplyChainPackage.UpdateProcessDetailsParameters.create()
         updateProcessDetailsMessage.updateprocessdetailsparameters.setPrice = payload.setPrice

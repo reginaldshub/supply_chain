@@ -26,7 +26,7 @@ class SupplyChainHandler extends TransactionHandler {
             console.log("newLandRegistrationPayload", payload.landRegistration);
             return land_registration(
                 state,
-                payload.landRegistration.addressparameters,
+                payload.landRegistration.land,
                 payload.landRegistration.landregistrationparameters,
                 this.signer_public_keys
             );
@@ -34,7 +34,7 @@ class SupplyChainHandler extends TransactionHandler {
             console.log("newStartCultivationPayload", payload.startCultivation);
             return start_cultivation(
                 state,
-                payload.startCultivation.addressparameters,
+                payload.startCultivation.land,
                 payload.startCultivation.startcultivationparameters,
                 this.signer_public_keys
             );
@@ -42,14 +42,14 @@ class SupplyChainHandler extends TransactionHandler {
             console.log("newPerformHarvestPayload", payload.performHarvest);
             return start_harvest(
                 state,
-                payload.performHarvest.addressparameters,
+                payload.performHarvest.land,
                 payload.performHarvest.performharvestparameters,
                 this.signer_public_keys
             );
         } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
             return inspect_land(
                 state,
-                payload.inspection.addressparameters,
+                payload.inspection.land,
                 payload.inspection.inspectparameters,
                 this.signer_public_keys,
             );
