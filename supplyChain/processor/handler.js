@@ -21,60 +21,74 @@ class SupplyChainHandler extends TransactionHandler {
         this.signer_public_keys = header.signerPublicKey;
         let payload = cbor.decode(transactionProcessRequest.payload);
         console.log("payload", payload);
-
-        if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
-            console.log("newLandRegistrationPayload", payload.landRegistration);
-            return land_registration(
-                state,
-                payload.landRegistration.land,
-                payload.landRegistration.landregistrationparameters,
-                this.signer_public_keys
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
-            console.log("newStartCultivationPayload", payload.startCultivation);
-            return start_cultivation(
-                state,
-                payload.startCultivation.land,
-                payload.startCultivation.startcultivationparameters,
-                this.signer_public_keys
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST) {
-            console.log("newPerformHarvestPayload", payload.performHarvest);
-            return start_harvest(
-                state,
-                payload.performHarvest.land,
-                payload.performHarvest.performharvestparameters,
-                this.signer_public_keys
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
-            return inspect_land(
-                state,
-                payload.inspection.land,
-                payload.inspection.inspectparameters,
-                this.signer_public_keys,
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
-            return create_package(
-                state,
-                payload.createPackage.createpackageparameters,
-                this.signer_public_keys
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
-            return update_processDetails(
-                state,
-                payload.updateProcessDetails.updateprocessdetailsparameters,
-                this.signer_public_keys
-            );
-        } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
-            return transfer_package(
-                state,
-                payload.transferPackage.transferpackageparameters,
-                this.signer_public_keys
-            );
+        if (payload == null || payload.action == null) {
+            throw new InvalidTransaction("empty Payload");
         } else {
-            throw new InvalidTransaction(
-                `Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`
-            );
+            if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
+                if (payload.landRegistration.landDetails == null || payload.landRegistration.landRegistrationDetails == null)
+                    throw new InvalidTransaction("empty landRegistration Details");
+                land_registration(
+                    state,
+                    payload.landRegistration.landDetails,
+                    payload.landRegistration.landRegistrationDetails,
+                    this.signer_public_keys
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
+                if (payload.startCultivation.landDetails == null || payload.startCultivation.cultivationDetails == null)
+                    throw new InvalidTransaction("empty Cultivation Details");
+                start_cultivation(
+                    state,
+                    payload.startCultivation.landDetails,
+                    payload.startCultivation.cultivationDetails,
+                    this.signer_public_keys
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST) {
+                if (payload.performHarvest.landDetails == null || payload.performHarvest.harvestDetails == null)
+                    throw new InvalidTransaction("empty Harvest Details");
+                start_harvest(
+                    state,
+                    payload.performHarvest.landDetails,
+                    payload.performHarvest.harvestDetails,
+                    this.signer_public_keys
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
+                if (payload.inspection.landDetails == null || payload.inspection.inspectionDetails == null)
+                    throw new InvalidTransaction("empty Inspection Details");
+                inspect_land(
+                    state,
+                    payload.inspection.landDetails,
+                    payload.inspection.inspectionDetails,
+                    this.signer_public_keys,
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
+                if (payload.createPackage.landDetails == null || payload.createPackage.packageDetails == null)
+                    throw new InvalidTransaction("empty Harvest Details");
+                create_package(
+                    state,
+                    payload.createPackage.packageDetails,
+                    this.signer_public_keys
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
+                if (payload.updateProcessDetails.landDetails == null || payload.updateProcessDetails.updateprocessdetailsparameters == null)
+                    throw new InvalidTransaction("empty Process data");
+                update_processDetails(
+                    state,
+                    payload.updateProcessDetails.updateprocessdetailsparameters,
+                    this.signer_public_keys
+                );
+            } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
+                if (payload.transferPackage.transferpackageparameters == null)
+                    throw new InvalidTransaction("empty Transfer Package Details");
+                transfer_package(
+                    state,
+                    payload.transferPackage.transferpackageparameters,
+                    this.signer_public_keys
+                );
+            } else {
+                throw new InvalidTransaction(
+                    `Didn't recognize Verb "${verb}".\nMust be one of "create_account,deposit_money,make_deposit,withdraw_money or transfer_money"`
+                );
+            }
         }
     }
 }

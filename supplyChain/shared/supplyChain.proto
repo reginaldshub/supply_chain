@@ -13,10 +13,10 @@ message PayLoad{
     }
     Action action = 1;
     LandRegistrationParams land_registration = 2;
-    StartCultivationParams start_cultivation = 3;
+    CultivationParams start_cultivation = 3;
     InspectParams inspection = 4;
-    PerformHarvestParams perform_harvest = 5;
-    CreatePackageParams create_package = 6;  //Process Agent
+    HarvestParams perform_harvest = 5;
+    PackageParams create_package = 6;  //Process Agent
 	TransferPackageParams transfer_package = 7;  //Retail Agent
 	UpdatePackageParams updateProcessDetails = 8;
 }
@@ -32,23 +32,10 @@ message Land{
 	string Registration_no = 8;
 }
 
-// message Address{
-// 	string Registration_no = 1;
-// 	string Farmer_name = 2;
-// }
-
 message LandRegistration{
-	string Farm_address = 1; 
-	string State = 2;
-	string Country = 3;
-	string Exporter_name = 4;
-	string Importer_name = 5;
-	string Dateof_registration = 6;
-}
-
-message TransferPackageParameters {
-	string retail_agent_public_key = 1;
-	int32 internal_batch_no = 2;
+	string Exporter_name = 1;
+	string Importer_name = 2;
+	string Dateof_registration = 3;
 }
 
 message CultivationData {
@@ -93,33 +80,28 @@ message PackageData {
 	string Processor_address = 7;
 }
 
-message UpdateProcessDetailsParameters{
-	int32 set_price = 1;
-	string Processor_name = 2;
-}
-
 message LandRegistrationParams {
-	LandRegistration landregistrationparameters = 1;
-	Land land = 2;
+	LandRegistration land_registration_details = 1;
+	Land land_details = 2;
 }
 
-message StartCultivationParams {
-	CultivationData startcultivationparameters = 1;
-	Land land = 2;
+message CultivationParams {
+	CultivationData cultivation_details = 1;
+	Land land_details = 2;
 }
 
 message InspectParams {
-	InspectionData inspectparameters = 1;
-	Land land = 2;
+	InspectionData inspection_details = 1;
+	Land land_details = 2;
 }
 
-message PerformHarvestParams {
-	HarvestData performharvestparameters = 1;
-	Land land = 2; 
+message HarvestParams {
+	HarvestData harvest_details = 1;
+	Land land_details = 2; 
 }
 
-message CreatePackageParams {
-	PackageData createpackageparameters = 1;
+message PackageParams {
+	PackageData package_details = 1;
 }
 
 message UpdatePackageParams{

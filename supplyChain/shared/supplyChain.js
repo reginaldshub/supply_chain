@@ -805,9 +805,6 @@ $root.supplyChainPackage = (function() {
          * Properties of a LandRegistration.
          * @memberof supplyChainPackage
          * @interface ILandRegistration
-         * @property {string|null} [FarmAddress] LandRegistration FarmAddress
-         * @property {string|null} [State] LandRegistration State
-         * @property {string|null} [Country] LandRegistration Country
          * @property {string|null} [ExporterName] LandRegistration ExporterName
          * @property {string|null} [ImporterName] LandRegistration ImporterName
          * @property {string|null} [DateofRegistration] LandRegistration DateofRegistration
@@ -827,30 +824,6 @@ $root.supplyChainPackage = (function() {
                     if (properties[keys[i]] != null)
                         this[keys[i]] = properties[keys[i]];
         }
-
-        /**
-         * LandRegistration FarmAddress.
-         * @member {string} FarmAddress
-         * @memberof supplyChainPackage.LandRegistration
-         * @instance
-         */
-        LandRegistration.prototype.FarmAddress = "";
-
-        /**
-         * LandRegistration State.
-         * @member {string} State
-         * @memberof supplyChainPackage.LandRegistration
-         * @instance
-         */
-        LandRegistration.prototype.State = "";
-
-        /**
-         * LandRegistration Country.
-         * @member {string} Country
-         * @memberof supplyChainPackage.LandRegistration
-         * @instance
-         */
-        LandRegistration.prototype.Country = "";
 
         /**
          * LandRegistration ExporterName.
@@ -900,18 +873,12 @@ $root.supplyChainPackage = (function() {
         LandRegistration.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message.FarmAddress != null && message.hasOwnProperty("FarmAddress"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message.FarmAddress);
-            if (message.State != null && message.hasOwnProperty("State"))
-                writer.uint32(/* id 2, wireType 2 =*/18).string(message.State);
-            if (message.Country != null && message.hasOwnProperty("Country"))
-                writer.uint32(/* id 3, wireType 2 =*/26).string(message.Country);
             if (message.ExporterName != null && message.hasOwnProperty("ExporterName"))
-                writer.uint32(/* id 4, wireType 2 =*/34).string(message.ExporterName);
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.ExporterName);
             if (message.ImporterName != null && message.hasOwnProperty("ImporterName"))
-                writer.uint32(/* id 5, wireType 2 =*/42).string(message.ImporterName);
+                writer.uint32(/* id 2, wireType 2 =*/18).string(message.ImporterName);
             if (message.DateofRegistration != null && message.hasOwnProperty("DateofRegistration"))
-                writer.uint32(/* id 6, wireType 2 =*/50).string(message.DateofRegistration);
+                writer.uint32(/* id 3, wireType 2 =*/26).string(message.DateofRegistration);
             return writer;
         };
 
@@ -947,21 +914,12 @@ $root.supplyChainPackage = (function() {
                 var tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1:
-                    message.FarmAddress = reader.string();
-                    break;
-                case 2:
-                    message.State = reader.string();
-                    break;
-                case 3:
-                    message.Country = reader.string();
-                    break;
-                case 4:
                     message.ExporterName = reader.string();
                     break;
-                case 5:
+                case 2:
                     message.ImporterName = reader.string();
                     break;
-                case 6:
+                case 3:
                     message.DateofRegistration = reader.string();
                     break;
                 default:
@@ -999,15 +957,6 @@ $root.supplyChainPackage = (function() {
         LandRegistration.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message.FarmAddress != null && message.hasOwnProperty("FarmAddress"))
-                if (!$util.isString(message.FarmAddress))
-                    return "FarmAddress: string expected";
-            if (message.State != null && message.hasOwnProperty("State"))
-                if (!$util.isString(message.State))
-                    return "State: string expected";
-            if (message.Country != null && message.hasOwnProperty("Country"))
-                if (!$util.isString(message.Country))
-                    return "Country: string expected";
             if (message.ExporterName != null && message.hasOwnProperty("ExporterName"))
                 if (!$util.isString(message.ExporterName))
                     return "ExporterName: string expected";
@@ -1032,12 +981,6 @@ $root.supplyChainPackage = (function() {
             if (object instanceof $root.supplyChainPackage.LandRegistration)
                 return object;
             var message = new $root.supplyChainPackage.LandRegistration();
-            if (object.FarmAddress != null)
-                message.FarmAddress = String(object.FarmAddress);
-            if (object.State != null)
-                message.State = String(object.State);
-            if (object.Country != null)
-                message.Country = String(object.Country);
             if (object.ExporterName != null)
                 message.ExporterName = String(object.ExporterName);
             if (object.ImporterName != null)
@@ -1061,19 +1004,10 @@ $root.supplyChainPackage = (function() {
                 options = {};
             var object = {};
             if (options.defaults) {
-                object.FarmAddress = "";
-                object.State = "";
-                object.Country = "";
                 object.ExporterName = "";
                 object.ImporterName = "";
                 object.DateofRegistration = "";
             }
-            if (message.FarmAddress != null && message.hasOwnProperty("FarmAddress"))
-                object.FarmAddress = message.FarmAddress;
-            if (message.State != null && message.hasOwnProperty("State"))
-                object.State = message.State;
-            if (message.Country != null && message.hasOwnProperty("Country"))
-                object.Country = message.Country;
             if (message.ExporterName != null && message.hasOwnProperty("ExporterName"))
                 object.ExporterName = message.ExporterName;
             if (message.ImporterName != null && message.hasOwnProperty("ImporterName"))

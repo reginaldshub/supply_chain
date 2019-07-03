@@ -3,11 +3,11 @@ const { get_retail_address } = require('../shared/retail_agent_addressing')
 const encode = obj => Buffer.from(JSON.stringify(obj))
 const decode = buf => JSON.parse(buf);
 
-create_package = (state, createpackageparameters, process_agents_public_keys) => {
+create_package = (state, packageDetails, process_agents_public_keys) => {
     let address = get_process_address(process_agents_public_keys)
     console.log("address", address);
     return state.setState({
-        [address]: encode({ createpackageparameters, process_agents_public_keys })
+        [address]: encode({ packageDetails, process_agents_public_keys })
     }).then((result) => {
         console.log(result);
     }).catch((err) => {
