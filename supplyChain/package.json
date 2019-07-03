@@ -26,7 +26,6 @@
         "protobufjs": "^6.8.8",
         "pug": "2.0.0-beta11",
         "request": "^2.88.0",
-        "sawtooth-sdk": "^1.0.5",
-        "zmq": "^2.15.3"
+        "sawtooth-sdk": "^1.0.5"
     }
 }

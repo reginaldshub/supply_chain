@@ -141,6 +141,7 @@ router.post("/startcultivation", function(req, res, next) {
                 }
             }
         }).catch(err => {
+            console.log(err);
             // if (err.kind === "ObjectId") {
             //     return res.status(404).send({
             //         message: "Land not found with id " + req.body.RegistrationNo
