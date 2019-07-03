@@ -22,11 +22,11 @@ class SupplyChainHandler extends TransactionHandler {
         let payload = cbor.decode(transactionProcessRequest.payload);
         console.log("payload", payload);
         if (payload == null || payload.action == null) {
-            throw new InvalidTransaction("empty Payload");
+            throw new InvalidTransaction("One or more parameters passed in Payload Details is null or whole Payload is found null");
         } else {
             if (payload.action == protos.supplyChainPackage.PayLoad.Action.LAND_REGISTRATION) {
                 if (payload.landRegistration.landDetails == null || payload.landRegistration.landRegistrationDetails == null)
-                    throw new InvalidTransaction("empty landRegistration Details");
+                    throw new InvalidTransaction("One or more parameters passed in landRegistration Details is null or whole landRegistration details is found null");
                 land_registration(
                     state,
                     payload.landRegistration.landDetails,
@@ -35,7 +35,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.START_CULTIVATION) {
                 if (payload.startCultivation.landDetails == null || payload.startCultivation.cultivationDetails == null)
-                    throw new InvalidTransaction("empty Cultivation Details");
+                    throw new InvalidTransaction("One or more parameters passed in Cultivation Details is null or whole cultivation details is found null");
                 start_cultivation(
                     state,
                     payload.startCultivation.landDetails,
@@ -44,7 +44,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.PERFORM_HARVEST) {
                 if (payload.performHarvest.landDetails == null || payload.performHarvest.harvestDetails == null)
-                    throw new InvalidTransaction("empty Harvest Details");
+                    throw new InvalidTransaction("One or more parameters passed in harvest Details is null or whole harvest details is found null");
                 start_harvest(
                     state,
                     payload.performHarvest.landDetails,
@@ -53,7 +53,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.INSPECTION) {
                 if (payload.inspection.landDetails == null || payload.inspection.inspectionDetails == null)
-                    throw new InvalidTransaction("empty Inspection Details");
+                    throw new InvalidTransaction("One or more parameters passed in inspection Details is null or whole inspection details is found null");
                 inspect_land(
                     state,
                     payload.inspection.landDetails,
@@ -62,7 +62,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.CREATE_PACKAGE) {
                 if (payload.createPackage.landDetails == null || payload.createPackage.packageDetails == null)
-                    throw new InvalidTransaction("empty Harvest Details");
+                    throw new InvalidTransaction("One or more parameters passed in package Details is null or whole package details is found null");
                 create_package(
                     state,
                     payload.createPackage.packageDetails,
@@ -70,7 +70,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.UPDATE_PROCESS_DETAILS) {
                 if (payload.updateProcessDetails.landDetails == null || payload.updateProcessDetails.updateprocessdetailsparameters == null)
-                    throw new InvalidTransaction("empty Process data");
+                    throw new InvalidTransaction("One or more parameters passed in process Details is null or whole process details is found nulla");
                 update_processDetails(
                     state,
                     payload.updateProcessDetails.updateprocessdetailsparameters,
@@ -78,7 +78,7 @@ class SupplyChainHandler extends TransactionHandler {
                 );
             } else if (payload.action == protos.supplyChainPackage.PayLoad.Action.TRANSFER_PACKAGE) {
                 if (payload.transferPackage.transferpackageparameters == null)
-                    throw new InvalidTransaction("empty Transfer Package Details");
+                    throw new InvalidTransaction("One or more parameters passed in transfer package Details is null or whole transfer details is found null");
                 transfer_package(
                     state,
                     payload.transferPackage.transferpackageparameters,

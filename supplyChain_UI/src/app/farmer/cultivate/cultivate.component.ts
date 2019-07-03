@@ -17,10 +17,11 @@ export interface SeasonsInterface {
 })
 export class CultivalteComponent implements OnInit {
 cultivate:FormGroup;
-  constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
+constructor(private router: ActivatedRoute,private formBuilder: FormBuilder,private service:ServiceService,private route:Router) { }
  data;
  today = new Date();
- date = this.today.getFullYear()+'-'+(this.today.getMonth()+1)+'-'+this.today.getDate();
+
+ date = this.today.getDate() +'-'+(this.today.getMonth()+1)+ '-' + this.today.getFullYear();
  bool= false;
 
   ngOnInit() {
